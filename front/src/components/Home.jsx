@@ -1,4 +1,4 @@
-import Navbar from "./Navbar";
+import NavBar from "./Navbar";
 import Footer from "./Footer";
 import { FaUserPlus } from 'react-icons/fa';
 import heroImage from "../assets/heroImage.jpg";
@@ -6,7 +6,7 @@ import heroImage from "../assets/heroImage.jpg";
 const Home = () => {
   return (
     <div className="flex flex-col min-h-screen">
-      <Navbar />
+      <NavBar />
 
       {/* Hero Section */}
       <div
