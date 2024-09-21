@@ -7,12 +7,14 @@ import PerfilAdmin from './components/admin/PerfilAdmin';
 import UserDetail from './components/Users/UserDetail';
 import AllCredits from './components/Credits/AllCredits';
 import CreditDetail from './components/Credits/CreditDetail';
+import Login from './components/views/Login';
 
 const App = () => {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path='/login' element={<Login />}/>
         
         {/* Rutas dentro del Dashboard del Admin */}
         <Route path="/admin" element={<SidebarAdmin />}>
