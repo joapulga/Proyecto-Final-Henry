@@ -1,35 +1,34 @@
-import { Button } from 'bootstrap';
-import { Link, Outlet } from 'react-router-dom';
+import { Link, Outlet } from "react-router-dom";
+
+import { Button } from "react-bootstrap";
 
 const SidebarAdmin = () => {
   return (
     <div className="flex min-h-screen">
       {/* Sidebar */}
       <aside className="flex-shrink-0 w-64 text-white bg-blue-600">
-        <div className="p-4 text-xl font-bold">
-          Admin Panel
-        </div>
+        <div className="p-4 text-xl font-bold">Admin Panel</div>
         <nav>
-          <ul className="p-4 space-y-4">
+          <ul className="p-4 space-y-4 ">
             <li>
-              <Link to="/admin/dashboardadmin" className="block p-2 transition rounded hover:bg-blue-700">
+              <Button as={Link} to="dashboardadmin" className="block  p-2 transition rounded hover:bg-blue-700 w-100">
                 Dashboard
-              </Link>
+              </Button>
             </li>
             <li>
-              <Link to="/admin/solicitudes" className="block p-2 transition rounded hover:bg-blue-700">
+              <Button as={Link} to="solicitudes" className="block w-100 p-2 transition rounded hover:bg-blue-700">
                 Ver Usuarios
-              </Link>
+              </Button>
             </li>
             <li>
-              <Link to="/admin/perfil" className="block p-2 transition rounded hover:bg-blue-700">
+              <Button as={Link} to="perfil" className="block w-100 p-2 transition rounded hover:bg-blue-700">
                 Perfil de Administrador
-              </Link>
+              </Button>
             </li>
             <li>
-              <Link to="/" className="block p-2 transition rounded hover:bg-red-700 ">
+              <Button as={Link} to="/" className="block w-100 p-2 transition rounded hover:bg-red-700 ">
                 Volver al Inicio
-              </Link>
+              </Button>
             </li>
           </ul>
         </nav>

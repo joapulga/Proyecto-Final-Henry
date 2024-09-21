@@ -4,6 +4,9 @@ import SidebarAdmin from './components/Context/SidebarAdmin';
 import DashboardAdmin from './components/admin/DashboardAdmin';
 import AllUsers from './components/Users/AllUsers';
 import PerfilAdmin from './components/admin/PerfilAdmin';
+import UserDetail from './components/Users/UserDetail';
+import AllCredits from './components/Credits/AllCredits';
+import CreditDetail from './components/Credits/CreditDetail';
 
 const App = () => {
   return (
@@ -16,6 +19,10 @@ const App = () => {
           <Route path="dashboardadmin" element={<DashboardAdmin />} />
           <Route path="solicitudes" element={<AllUsers />} />
           <Route path="perfil" element={<PerfilAdmin />} />
+          <Route path="AllUsers" element={<AllUsers/>} />
+          <Route path="user" element={<UserDetail/>} />
+          <Route path="AllCredits" element={<AllCredits/>} />
+          <Route path="credit" element={<CreditDetail/>} />
         </Route>
       </Routes>
     </Router>
