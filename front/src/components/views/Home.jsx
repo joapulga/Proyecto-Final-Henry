@@ -1,7 +1,7 @@
-import NavBar from "./Navbar";
-import Footer from "./Footer";
+import NavBar from "./common/Navbar";
+import Footer from "./common/Footer";
 import { FaUserPlus } from 'react-icons/fa';
-import heroImage from "../assets/heroImage.jpg";
+import heroImage from "../../assets/heroImage.jpg";
 
 const Home = () => {
   return (

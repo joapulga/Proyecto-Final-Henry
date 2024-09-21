@@ -1,3 +1,4 @@
+import { Button } from 'bootstrap';
 import { Link, Outlet } from 'react-router-dom';
 
 const SidebarAdmin = () => {
@@ -26,7 +27,7 @@ const SidebarAdmin = () => {
               </Link>
             </li>
             <li>
-              <Link to="/" className="block p-2 transition rounded hover:bg-red-700">
+              <Link to="/" className="block p-2 transition rounded hover:bg-red-700 ">
                 Volver al Inicio
               </Link>
             </li>
