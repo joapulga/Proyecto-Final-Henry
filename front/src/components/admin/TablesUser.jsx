@@ -8,14 +8,12 @@ const TablesUser = () => {
     <Container>
       <CardsTop></CardsTop>
       <Row className="pt-5">
-      <Col>
-      <h2 className="text-center">Clientes</h2>
-      <AllUsers></AllUsers>
-      </Col>
-      <Col>
-      <h2 className="text-center">Creditos</h2>
-      <AllCredits></AllCredits>
-      </Col>
+        <Col>
+          <AllUsers></AllUsers>
+        </Col>
+        <Col>
+          <AllCredits></AllCredits>
+        </Col>
       </Row>
     </Container>
   );
