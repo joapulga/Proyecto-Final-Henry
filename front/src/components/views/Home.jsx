@@ -1,9 +1,20 @@
+import { useNavigate } from "react-router-dom";  // O `import { useNavigate } from 'react-router-dom';` si usas React Router
 import NavBar from "./common/Navbar";
 import Footer from "./common/Footer";
 import { FaUserPlus } from 'react-icons/fa';
 import heroImage from "../../assets/heroImage.jpg";
 
 const Home = () => {
+  const navigate = useNavigate();
+
+  // Función para manejar el envío del formulario
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Aquí puedes manejar la lógica para registrar al usuario o realizar validaciones
+    // Simulación de registro y redirección al login
+   navigate('/login');
+  };
+
   return (
     <div className="flex flex-col min-h-screen">
       <NavBar />
@@ -83,9 +94,9 @@ const Home = () => {
       {/* Solicitud de Usuario Section */}
       <section id="cuenta" className="flex-grow py-12 bg-gray-100">
         <div className="container px-4 mx-auto">
-          <h2 className="mb-8 text-3xl font-semibold text-center">Registro</h2>
+          <h2 className="mb-8 text-3xl font-semibold text-center">Solicita tu cuenta</h2>
 
-          <form className="max-w-lg p-8 mx-auto bg-white rounded-lg shadow-lg">
+          <form onSubmit={handleSubmit} className="max-w-lg p-8 mx-auto bg-white rounded-lg shadow-lg">
             <div className="mb-4">
               <label className="block mb-2 text-sm font-bold text-gray-700">Nombre</label>
               <input
@@ -130,7 +141,7 @@ const Home = () => {
               type="submit"
               className="w-full py-2 text-white transition duration-300 bg-blue-600 rounded-lg hover:bg-blue-700"
             >
-              Registrarse
+              Enviar registro
             </button>
           </form>
         </div>
