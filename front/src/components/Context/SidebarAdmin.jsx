@@ -16,8 +16,13 @@ const SidebarAdmin = () => {
               </Button>
             </li>
             <li>
-              <Button as={Link} to="solicitudes" className="block w-100 p-2 transition rounded hover:bg-blue-700">
+              <Button as={Link} to="AllUsers" className="block w-100 p-2 transition rounded hover:bg-blue-700">
                 Ver Usuarios
+              </Button>
+            </li>
+            <li>
+              <Button as={Link} to="AllCredits" className="block w-100 p-2 transition rounded hover:bg-blue-700">
+                Ver Creditos
               </Button>
             </li>
             <li>
