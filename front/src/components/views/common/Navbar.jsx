@@ -8,9 +8,6 @@ const Navbar = () => {
           <div className="text-xl font-bold text-white">MiSistema</div>
           <ul className="flex space-x-6">
             <li>
-              <Link to="/" className="text-white transition duration-300 hover:text-gray-300">Home</Link>
-            </li>
-            <li>
               <Link to="/admin" className="text-white transition duration-300 hover:text-gray-300">Admin</Link>
             </li>
           </ul>
