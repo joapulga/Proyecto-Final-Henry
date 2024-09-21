@@ -1,9 +1,9 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Home from './components/Home'; 
-import SidebarAdmin from './Context/SidebarAdmin'; 
-import DashboardAdmin from './components/DashboardAdmin';
-import AllUsers from './components/AllUsers';
-import PerfilAdmin from './components/PerfilAdmin';
+import Home from './components/views/Home'; 
+import SidebarAdmin from './components/Context/SidebarAdmin'; 
+import DashboardAdmin from './components/admin/DashboardAdmin';
+import AllUsers from './components/Users/AllUsers';
+import PerfilAdmin from './components/admin/PerfilAdmin';
 
 const App = () => {
   return (
