@@ -1,12 +1,23 @@
-import Navbar from "./Navbar";
-import Footer from "./Footer";
+import { useNavigate } from "react-router-dom";  // O `import { useNavigate } from 'react-router-dom';` si usas React Router
+import NavBar from "./common/Navbar";
+import Footer from "./common/Footer";
 import { FaUserPlus } from 'react-icons/fa';
-import heroImage from "../assets/heroImage.jpg";
+import heroImage from "../../assets/heroImage.jpg";
 
 const Home = () => {
+  const navigate = useNavigate();
+
+  // Función para manejar el envío del formulario
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Aquí puedes manejar la lógica para registrar al usuario o realizar validaciones
+    // Simulación de registro y redirección al login
+   navigate('/login');
+  };
+
   return (
     <div className="flex flex-col min-h-screen">
-      <Navbar />
+      <NavBar />
 
       {/* Hero Section */}
       <div
@@ -18,13 +29,13 @@ const Home = () => {
             Bienvenido al Sistema de Gestión
           </h1>
           <p className="mb-6 text-lg animate-fadeInUp">
-            Envía tu solicitud para crear una cuenta
+            Completa el formulario para crear una cuenta
           </p>
           <a
-            href="#solicitud"
+            href="#cuenta"
             className="px-6 py-2 text-blue-600 transition duration-300 bg-white rounded-full shadow-lg hover:bg-gray-100 animate-fadeIn"
           >
-            Enviar Solicitud <FaUserPlus className="inline ml-2" />
+            Crear cuenta <FaUserPlus className="inline ml-2" />
           </a>
         </div>
       </div>
@@ -81,17 +92,33 @@ const Home = () => {
       </section>
 
       {/* Solicitud de Usuario Section */}
-      <section id="solicitud" className="flex-grow py-12 bg-gray-100">
+      <section id="cuenta" className="flex-grow py-12 bg-gray-100">
         <div className="container px-4 mx-auto">
           <h2 className="mb-8 text-3xl font-semibold text-center">Solicita tu cuenta</h2>
 
-          <form className="max-w-lg p-8 mx-auto bg-white rounded-lg shadow-lg">
+          <form onSubmit={handleSubmit} className="max-w-lg p-8 mx-auto bg-white rounded-lg shadow-lg">
             <div className="mb-4">
-              <label className="block mb-2 text-sm font-bold text-gray-700">Nombre Completo</label>
+              <label className="block mb-2 text-sm font-bold text-gray-700">Nombre</label>
               <input
                 type="text"
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Ingresa tu nombre completo"
+                placeholder="Ingresa tu nombre"
+              />
+            </div>
+            <div className="mb-4">
+              <label className="block mb-2 text-sm font-bold text-gray-700">Apellido</label>
+              <input
+                type="text"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Ingresa tu apellido"
+              />
+            </div>
+            <div className="mb-4">
+              <label className="block mb-2 text-sm font-bold text-gray-700">DNI</label>
+              <input
+                type="number"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Ingresa tu DNI"
               />
             </div>
             <div className="mb-4">
@@ -110,59 +137,13 @@ const Home = () => {
                 placeholder="Ingresa tu contraseña"
               />
             </div>
-            <div className="mb-4">
-              <label className="block mb-2 text-sm font-bold text-gray-700">Mensaje</label>
-              <textarea
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Escribe un mensaje para el administrador"
-                rows="4"
-              />
-            </div>
             <button
               type="submit"
               className="w-full py-2 text-white transition duration-300 bg-blue-600 rounded-lg hover:bg-blue-700"
             >
-              Enviar Solicitud
+              Enviar registro
             </button>
           </form>
-        </div>
-      </section>
-
-      {/* Sección de Preguntas Frecuentes */}
-      <section className="py-12 bg-white">
-        <div className="container px-4 mx-auto">
-          <h2 className="mb-8 text-3xl font-semibold text-center">Preguntas Frecuentes</h2>
-          <div className="space-y-4">
-            <details className="p-4 bg-gray-100 rounded-lg shadow-lg">
-              <summary className="font-semibold">¿Cómo puedo crear una cuenta?</summary>
-              <p className="mt-2">
-                Para crear una cuenta, simplemente rellena el formulario de solicitud y uno de nuestros administradores revisará tu solicitud.
-              </p>
-            </details>
-            <details className="p-4 bg-gray-100 rounded-lg shadow-lg">
-              <summary className="font-semibold">¿Cuánto tiempo tarda en aprobarse una cuenta?</summary>
-              <p className="mt-2">
-                Normalmente, tu solicitud será revisada dentro de 24 a 48 horas.
-              </p>
-            </details>
-            <details className="p-4 bg-gray-100 rounded-lg shadow-lg">
-              <summary className="font-semibold">¿Qué puedo hacer si tengo problemas técnicos?</summary>
-              <p className="mt-2">
-                Puedes ponerte en contacto con nuestro equipo de soporte técnico a través de la plataforma, y recibirás asistencia personalizada.
-              </p>
-            </details>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Sección */}
-      <section className="py-12 text-white bg-blue-600">
-        <div className="container px-4 mx-auto text-center">
-          <h2 className="mb-4 text-3xl font-semibold">¿Listo para comenzar?</h2>
-          <p className="mb-8 text-lg">Solicita una cuenta hoy mismo y comienza a gestionar tu equipo con nuestra plataforma.</p>
-          <a href="#solicitud" className="px-8 py-3 text-lg text-blue-600 bg-white rounded-full hover:bg-gray-200">
-            Solicitar una cuenta
-          </a>
         </div>
       </section>
 
