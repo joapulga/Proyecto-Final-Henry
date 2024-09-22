@@ -21,11 +21,11 @@ export class BalanceService {
     return await this.balanceRepository.find();
   }
 
-  async findOne(id: number): Promise<Balance | null> {
+  async findOne(id: string): Promise<Balance | null> {
     return await this.balanceRepository.findOneBy({ id });
   }
 
-  async update(id: number, updateBalanceDto: UpdateBalanceDto): Promise<Balance | null> {
+  async update(id: string, updateBalanceDto: UpdateBalanceDto): Promise<Balance | null> {
     const balance = await this.balanceRepository.findOneBy({ id });
     if (!balance) {
       return null;
@@ -37,7 +37,7 @@ export class BalanceService {
     return await this.balanceRepository.findOneBy({ id });
   }
 
-  async remove(id: number): Promise<void> {
+  async remove(id: string): Promise<void> {
     await this.balanceRepository.delete(id);
   }
 }

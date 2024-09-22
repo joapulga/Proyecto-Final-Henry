@@ -20,11 +20,11 @@ export class StatesService {
   async findAll(): Promise<State[]> {
     return await this.statesRepository.find();
   }
-  async findOne(id: number): Promise<State | null> {
+  async findOne(id: string): Promise<State | null> {
     return await this.statesRepository.findOneBy({ id });
   }
 
-  async update(id: number, updateStateDto: UpdateStateDto): Promise<State | null> {
+  async update(id: string, updateStateDto: UpdateStateDto): Promise<State | null> {
     const state = await this.statesRepository.findOneBy({ id });
     if (!state) {
       return null; // Or throw an error if you prefer
@@ -34,7 +34,7 @@ export class StatesService {
     return await this.statesRepository.save(state);
   }
 
-  async remove(id: number): Promise<void> {
+  async remove(id: string): Promise<void> {
     await this.statesRepository.delete({ id });
   }
 }
