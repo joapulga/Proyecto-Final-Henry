@@ -5,17 +5,17 @@ export class CreateShareDto {
   idCredit: string;
 
   @IsNumber()
-  numberSha: number;
+  numberSha: Number;
 
   @IsDate()
-  expireDate: Date;
+  expireDate:Date;
 
   @IsNumber()
-  capital: number;
+  capital: Number;
 
   @IsNumber()
-  interests: number;
+  interests: Number;
 
   @IsNumber()
-  amount: number;
+  amount: Number;
 }

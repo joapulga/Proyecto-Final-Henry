@@ -4,6 +4,8 @@ import { registerAs } from "@nestjs/config";
 
 config({path: '.env.development'})
 
+
+
 const db_config = {
     type: 'postgres',
     database: process.env.DB_NAME,

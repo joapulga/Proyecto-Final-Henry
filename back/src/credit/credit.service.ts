@@ -13,10 +13,12 @@ export class CreditService {
     private readonly creditRepository: Repository<Credit>,
   ) {}
 
-  async create(createCreditDto: CreditCreateDto): Promise<Credit> {
+  async create(createCreditDto: CreditCreateDto) {
     const credit = new Credit();
-    Object.assign(credit, createCreditDto);
-    return await this.creditRepository.save(credit);
+    Object.assign(credit, createCreditDto); 
+    const creditCreated = await this.creditRepository.save(credit);
+    console.log(creditCreated);
+    return creditCreated;
   }
 
   async findAll(): Promise<Credit[]> {
