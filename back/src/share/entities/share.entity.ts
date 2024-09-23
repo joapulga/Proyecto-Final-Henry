@@ -8,7 +8,7 @@ import { v4 as uuid } from "uuid"
 })
 export class Share {
     @PrimaryGeneratedColumn('uuid')
-    id: string = uuid()
+    id: string = uuid() 
 
     @Column({
         type: "int"
@@ -27,21 +27,21 @@ export class Share {
     paid_date: Date
 
     @Column({
-        type: "date"
+        type: "decimal"
     })
-    capital: number
+    capital: Number
 
     @Column({
-        type: "date"
+        type: "decimal"
     })
-    interes: number
+    interes: Number
 
     @Column({
         type: "decimal",
         scale: 2,
         precision: 10
     })
-    amount: number
+    amount: Number
 
     @ManyToOne(() => Credit, (credit) => credit.shares)
     credit: Credit
