@@ -7,7 +7,7 @@ import { FaUserPlus } from 'react-icons/fa';
 import heroImage from "../../assets/heroImage.jpg";
 
 const Home = () => {
-  const { register } = useAuth(); // Obtener la función de registro del contexto
+  const { register } = useAuth();
 
   const [formData, setFormData] = useState({
     name: "",
@@ -16,7 +16,7 @@ const Home = () => {
     phone: "",
     email: "",
     password: "",
-    address: "",
+    address: "", // Solo mantener los campos que necesitas
   });
 
   const handleChange = (e) => {
@@ -29,11 +29,10 @@ const Home = () => {
 
   const navigate = useNavigate();
 
-  // Función para manejar el envío del formulario
   const handleSubmit = (e) => {
     e.preventDefault();
     register(formData); // Llamar a la función de registro
-    navigate('/login');
+    navigate('/login'); // Redirigir al login después de registrar
   };
 
   return (
@@ -122,7 +121,9 @@ const Home = () => {
               <label className="block mb-2 text-sm font-bold text-gray-700">Nombre</label>
               <input
                 type="text"
+                name="name"
                 onChange={handleChange}
+                value={formData.name} // Vincular valor
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Ingresa tu nombre"
               />
@@ -131,7 +132,9 @@ const Home = () => {
               <label className="block mb-2 text-sm font-bold text-gray-700">Apellido</label>
               <input
                 type="text"
+                name="lastname"
                 onChange={handleChange}
+                value={formData.lastname} // Vincular valor
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Ingresa tu apellido"
               />
@@ -140,25 +143,31 @@ const Home = () => {
               <label className="block mb-2 text-sm font-bold text-gray-700">DNI</label>
               <input
                 type="number"
+                name="dni"
                 onChange={handleChange}
+                value={formData.dni} // Vincular valor
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Ingresa tu DNI"
               />
             </div>
             <div className="mb-4">
-              <label className="block mb-2 text-sm font-bold text-gray-700">Numero de telefono</label>
+              <label className="block mb-2 text-sm font-bold text-gray-700">Número de Teléfono</label>
               <input
                 type="number"
+                name="phone"
                 onChange={handleChange}
+                value={formData.phone} // Vincular valor
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Ingresa tu numero de telefono"
+                placeholder="Ingresa tu número de teléfono"
               />
             </div>
             <div className="mb-4">
               <label className="block mb-2 text-sm font-bold text-gray-700">Correo Electrónico</label>
               <input
                 type="email"
+                name="email"
                 onChange={handleChange}
+                value={formData.email} // Vincular valor
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Ingresa tu correo electrónico"
               />
@@ -167,25 +176,26 @@ const Home = () => {
               <label className="block mb-2 text-sm font-bold text-gray-700">Contraseña</label>
               <input
                 type="password"
+                name="password"
                 onChange={handleChange}
+                value={formData.password} // Vincular valor
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Ingresa tu contraseña"
               />
             </div>
             <div className="mb-4">
-              <label className="block mb-2 text-sm font-bold text-gray-700">Ubicación</label>
+              <label className="block mb-2 text-sm font-bold text-gray-700">Dirección</label>
               <input
                 type="text"
+                name="address"
                 onChange={handleChange}
+                value={formData.address} // Vincular valor
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Ingresa tu ubicación"
+                placeholder="Ingresa tu dirección"
               />
             </div>
-            <button
-              type="submit"
-              className="w-full py-2 text-white transition duration-300 bg-blue-600 rounded-lg hover:bg-blue-700"
-            >
-              Enviar registro
+            <button type="submit" className="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded-lg hover:bg-blue-600">
+              Crear Cuenta
             </button>
           </form>
         </div>

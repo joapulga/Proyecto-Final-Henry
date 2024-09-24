@@ -1,6 +1,6 @@
 import { createContext, useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { registerUser, loginUser } from "../service/authService";  // Importar las funciones
+import { registerUser, loginUser } from "../service/authService";
 
 const AuthContext = createContext();
 
@@ -9,36 +9,46 @@ export const useAuth = () => {
 };
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState([]);
+  const [error, setError] = useState(null); // Estado para errores
   const navigate = useNavigate();
 
   useEffect(() => {
-    const storedUser = JSON.parse(localStorage.getItem("user"));
-    if (storedUser) {
-      setUser(storedUser);
+    const storedUser = localStorage.getItem("user"); // Obtén el valor sin parsear primero
+    if (storedUser) { // Solo intenta parsear si existe
+      try {
+        const user = JSON.parse(storedUser) || [];
+        setUser(user);
+      } catch (error) {
+        console.error("Error al parsear el usuario del localStorage:", error);
+        // Opcional: limpiar el localStorage si hay un error de parseo
+        localStorage.removeItem("user");
+      }
     }
   }, []);
+  
 
-  // Función para manejar el registro
   const register = async (userData) => {
     try {
-      const data = await registerUser(userData); // Usar la función del authService
-      setUser(data.user);
-      localStorage.setItem("user", JSON.stringify(data.user));
+      // const data = 
+      await registerUser(userData).then((res) => {
+        localStorage.setItem("user", JSON.stringify(res.id))
+      });
       navigate("/login");
     } catch (error) {
+      setError(error.message); // Guardar el mensaje de error
       console.error("Error en el registro:", error);
     }
   };
 
-  // Función para manejar el inicio de sesión
   const login = async (loginData) => {
     try {
-      const data = await loginUser(loginData); // Usar la función del authService
+      const data = await loginUser(loginData);
       setUser(data.user);
       localStorage.setItem("user", JSON.stringify(data.user));
-      navigate("/dashboard");
+      navigate("/admin");
     } catch (error) {
+      setError(error.message); // Guardar el mensaje de error
       console.error("Error en el inicio de sesión:", error);
     }
   };
@@ -54,6 +64,7 @@ export const AuthProvider = ({ children }) => {
     register,
     login,
     logout,
+    error, // Proporcionar el estado de error
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
