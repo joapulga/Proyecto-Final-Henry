@@ -1,26 +1,43 @@
 import { Injectable } from '@nestjs/common';
 import { CreateBalanceDto } from './dto/create-balance.dto';
 import { UpdateBalanceDto } from './dto/update-balance.dto';
+import { Balance } from './entities/balance.entity';
+import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class BalanceService {
-  create(createBalanceDto: CreateBalanceDto) {
-    return 'This action adds a new balance';
+  constructor(
+    @InjectRepository(Balance)
+    private balanceRepository: Repository<Balance>,
+  ) {}
+
+  async create(createBalanceDto: CreateBalanceDto): Promise<Balance> {
+    const newBalance = this.balanceRepository.create(createBalanceDto);
+    return await this.balanceRepository.save(newBalance);
   }
 
-  findAll() {
-    return `This action returns all balance`;
+  async findAll(): Promise<Balance[]> {
+    return await this.balanceRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} balance`;
+  async findOne(id: string ): Promise<Balance | null> {
+    return await this.balanceRepository.findOneBy({ id });
   }
 
-  update(id: number, updateBalanceDto: UpdateBalanceDto) {
-    return `This action updates a #${id} balance`;
+  async update(id: string, updateBalanceDto: UpdateBalanceDto): Promise<Balance | null> {
+    const balance = await this.balanceRepository.findOneBy({ id });
+    if (!balance) {
+      return null;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} balance`;
+    // Actualización parcial utilizando TypeORM
+    await this.balanceRepository.update(id, updateBalanceDto);
+
+    return await this.balanceRepository.findOneBy({ id });
+  }
+
+  async remove(id: string): Promise<void> {
+    await this.balanceRepository.delete(id);
   }
 }

@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { CreditService } from './credit.service';
 import { CreateCreditDto } from './dto/create-credit.dto';
-import { UpdateCreditDto } from './dto/update-credit.dto';
+import { UploadCreditDto } from './dto/update-credit.dto';
 
 @Controller('credit')
 export class CreditController {
@@ -19,16 +19,16 @@ export class CreditController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.creditService.findOne(+id);
+    return this.creditService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCreditDto: UpdateCreditDto) {
-    return this.creditService.update(+id, updateCreditDto);
+  update(@Param('id') id: string, @Body() UploadCreditDto: UploadCreditDto) {
+    return this.creditService.update(id, UploadCreditDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.creditService.remove(+id);
+    return this.creditService.remove(id);
   }
 }

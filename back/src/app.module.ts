@@ -4,7 +4,7 @@ import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
 import { CreditModule } from './credit/credit.module';
 import { ShareModule } from './share/share.module';
-import { StateModule } from './state/state.module';
+import { StateModule } from './state/states.module';
 import { BalanceModule } from './balance/balance.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';

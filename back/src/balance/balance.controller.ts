@@ -19,16 +19,16 @@ export class BalanceController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.balanceService.findOne(+id);
+    return this.balanceService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateBalanceDto: UpdateBalanceDto) {
-    return this.balanceService.update(+id, updateBalanceDto);
+    return this.balanceService.update(id, updateBalanceDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.balanceService.remove(+id);
+    return this.balanceService.remove(id);
   }
 }

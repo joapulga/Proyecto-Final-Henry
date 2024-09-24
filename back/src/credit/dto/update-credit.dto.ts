@@ -1,4 +1,20 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { CreateCreditDto } from './create-credit.dto';
+import { IsDecimal, IsInt, IsUUID, IsNotEmpty } from 'class-validator';
 
-export class UpdateCreditDto extends PartialType(CreateCreditDto) {}
+export class UploadCreditDto {
+  @IsUUID()
+  @IsNotEmpty()
+  id: string;
+
+  @IsDecimal()
+  @IsInt({ message: 'Amount must be an integer' }) // Enforce integer for amount
+  @IsNotEmpty()
+  amount: number;
+
+  @IsInt()
+  @IsNotEmpty()
+  months: number;
+
+  @IsDecimal()
+  @IsNotEmpty()
+  interest: number;
+}

@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { ShareService } from './share.service';
 import { CreateShareDto } from './dto/create-share.dto';
-import { UpdateShareDto } from './dto/update-share.dto';
+import { UploadShareDto } from './dto/update-share.dto';
 
 @Controller('share')
 export class ShareController {
@@ -19,16 +19,16 @@ export class ShareController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.shareService.findOne(+id);
+    return this.shareService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateShareDto: UpdateShareDto) {
-    return this.shareService.update(+id, updateShareDto);
+  update(@Param('id') id: string, @Body() UploadShareDto: UploadShareDto) {
+    return this.shareService.update(id, UploadShareDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.shareService.remove(+id);
+    return this.shareService.remove(id);
   }
 }

@@ -1,14 +1,16 @@
 import { IsEmail, IsEmpty, IsNotEmpty, IsString, IsStrongPassword, Length, minLength } from "class-validator"
 
 export class CreateUserDto {
-    
+
     /**
      * Will be the name of the user
      * @example Javier
      */
     @IsString()
     @Length(2, 15)
-    name: string
+  @IsString()
+  @IsNotEmpty()
+  name: string;
 
     /**
      * Last Name of the user who is going to register
