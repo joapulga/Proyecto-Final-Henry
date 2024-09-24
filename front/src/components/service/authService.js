@@ -25,13 +25,14 @@ export const registerUser = async (userData) => {
 
 export const loginUser = async (loginData) => {
   try {
-    const response = await axios.post(`${apiURL}/login`, loginData, {
+    const response = await axios.post(`${apiURL}/auth/signin`, loginData, {
       headers: {
         "Content-Type": "application/json",
       },
     });
-
+    console.log(response.data)
     return response.data; // Devuelve los datos de respuesta en caso de éxito
+    
   } catch (error) {
     // Manejo de errores
     if (error.response) {
