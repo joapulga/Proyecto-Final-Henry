@@ -1,18 +1,39 @@
-import { useNavigate } from "react-router-dom";  // O `import { useNavigate } from 'react-router-dom';` si usas React Router
+import { useState } from "react";
+import { useNavigate } from "react-router-dom"; 
+import { useAuth } from "../Context/AuthContext";
 import NavBar from "./common/Navbar";
 import Footer from "./common/Footer";
 import { FaUserPlus } from 'react-icons/fa';
 import heroImage from "../../assets/heroImage.jpg";
 
 const Home = () => {
+  const { register } = useAuth(); // Obtener la función de registro del contexto
+
+  const [formData, setFormData] = useState({
+    name: "",
+    lastname: "",
+    dni: "",
+    phone: "",
+    email: "",
+    password: "",
+    address: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
   const navigate = useNavigate();
 
   // Función para manejar el envío del formulario
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Aquí puedes manejar la lógica para registrar al usuario o realizar validaciones
-    // Simulación de registro y redirección al login
-   navigate('/login');
+    register(formData); // Llamar a la función de registro
+    navigate('/login');
   };
 
   return (
@@ -101,6 +122,7 @@ const Home = () => {
               <label className="block mb-2 text-sm font-bold text-gray-700">Nombre</label>
               <input
                 type="text"
+                onChange={handleChange}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Ingresa tu nombre"
               />
@@ -109,6 +131,7 @@ const Home = () => {
               <label className="block mb-2 text-sm font-bold text-gray-700">Apellido</label>
               <input
                 type="text"
+                onChange={handleChange}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Ingresa tu apellido"
               />
@@ -117,14 +140,25 @@ const Home = () => {
               <label className="block mb-2 text-sm font-bold text-gray-700">DNI</label>
               <input
                 type="number"
+                onChange={handleChange}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Ingresa tu DNI"
+              />
+            </div>
+            <div className="mb-4">
+              <label className="block mb-2 text-sm font-bold text-gray-700">Numero de telefono</label>
+              <input
+                type="number"
+                onChange={handleChange}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Ingresa tu numero de telefono"
               />
             </div>
             <div className="mb-4">
               <label className="block mb-2 text-sm font-bold text-gray-700">Correo Electrónico</label>
               <input
                 type="email"
+                onChange={handleChange}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Ingresa tu correo electrónico"
               />
@@ -133,8 +167,18 @@ const Home = () => {
               <label className="block mb-2 text-sm font-bold text-gray-700">Contraseña</label>
               <input
                 type="password"
+                onChange={handleChange}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Ingresa tu contraseña"
+              />
+            </div>
+            <div className="mb-4">
+              <label className="block mb-2 text-sm font-bold text-gray-700">Ubicación</label>
+              <input
+                type="text"
+                onChange={handleChange}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Ingresa tu ubicación"
               />
             </div>
             <button
