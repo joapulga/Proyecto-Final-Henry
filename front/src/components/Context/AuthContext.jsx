@@ -15,7 +15,8 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user"); // Obtén el valor sin parsear primero
-    if (storedUser) { // Solo intenta parsear si existe
+    if (storedUser) {
+      // Solo intenta parsear si existe
       try {
         const user = JSON.parse(storedUser) || [];
         setUser(user);
@@ -26,13 +27,11 @@ export const AuthProvider = ({ children }) => {
       }
     }
   }, []);
-  
 
   const register = async (userData) => {
     try {
-      // const data = 
       await registerUser(userData).then((res) => {
-        localStorage.setItem("user", JSON.stringify(res.id))
+        localStorage.setItem("user", JSON.stringify({ id: res.id, is_admin: res.is_admin }));
       });
       navigate("/login");
     } catch (error) {
@@ -43,12 +42,16 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (loginData) => {
     try {
-      const data = await loginUser(loginData);
-      setUser(data.user);
-      localStorage.setItem("user", JSON.stringify(data.user));
-      navigate("/admin");
+      await loginUser(loginData).then((res) => {
+        localStorage.setItem("user", JSON.stringify({ token: res.token, id_admin: res.is_admin }));
+        if (res.is_admin) {
+          navigate("/admin/dashboardadmin");
+        }
+        navigate("/");
+      });
+      // Redirige al usuario a la página de admin
     } catch (error) {
-      setError(error.message); // Guardar el mensaje de error
+      setError(error.message); // Guarda el mensaje de error
       console.error("Error en el inicio de sesión:", error);
     }
   };
