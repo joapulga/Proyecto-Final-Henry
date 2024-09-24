@@ -26,7 +26,7 @@ const Navbar = () => {
       <div className="container px-4 mx-auto">
         <div className="flex items-center justify-between py-4">
           {/* Logo del sistema */}
-          <div className="text-3xl font-bold text-white">MiSistema</div>
+          <Link className="text-3xl font-bold text-white no-underline" to="/">MiSistema</Link>
 
           {/* Menú de navegación */}
           <ul className="flex items-center justify-center space-x-6">
