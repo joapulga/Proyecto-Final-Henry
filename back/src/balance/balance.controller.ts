@@ -2,7 +2,9 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { BalanceService } from './balance.service';
 import { CreateBalanceDto } from './dto/create-balance.dto';
 import { UpdateBalanceDto } from './dto/update-balance.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Balance')
 @Controller('balance')
 export class BalanceController {
   constructor(private readonly balanceService: BalanceService) {}
