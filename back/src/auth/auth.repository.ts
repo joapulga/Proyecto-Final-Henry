@@ -26,7 +26,7 @@ export class AuthRepository{
                     name: user.name
                 }
                 const JWT = this.jwtService.sign(payload)
-                return {success: 'User login', token: JWT, is_admin: user.is_admin}
+                return {success: 'User login', token: JWT}
             }else{
                 throw new BadRequestException('Bad Password or User')
             }
