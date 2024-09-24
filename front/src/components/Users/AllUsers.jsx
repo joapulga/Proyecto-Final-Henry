@@ -1,13 +1,23 @@
-import { useEffect } from "react";
 import { Table, Button, Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { getUsers } from "../service/queris";
-const AllUsers = () => {
-  useEffect(() => {
-    getUsers().then((r) => {
-      console.log(r.data);
+const AllUsers = ({ users }) => {
+  const mapeo = () => {
+    return users.map((u) => {
+      return (
+        <tr key={u.id}>
+          <td>{u.id}</td>
+          <td>{u.name}</td>
+          <td>{u.dni}</td>
+          <td>{u.phone}</td>
+          <td>
+            <Button as={Link} to="/admin/user">
+              Ver Más
+            </Button>
+          </td>
+        </tr>
+      );
     });
-  }, []);
+  };
   return (
     <Container>
       <h1 className="text-center">Clientes</h1>
@@ -21,41 +31,7 @@ const AllUsers = () => {
             <th>Funtions</th>
           </tr>
         </thead>
-        <tbody>
-          <tr>
-            <td>1</td>
-            <td>123</td>
-            <td>42499732</td>
-            <td>1,2,3</td>
-            <td>
-              <Button as={Link} to="/admin/user">
-                Ver Más
-              </Button>
-            </td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>1,2,3</td>
-            <td>
-              <Button as={Link} to="/admin/user">
-                Ver Más
-              </Button>
-            </td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>Larry the Bird</td>
-            <td>12/10/24</td>
-            <td>1,2,3</td>
-            <td>
-              <Button as={Link} to="/admin/user">
-                Ver Más
-              </Button>
-            </td>
-          </tr>
-        </tbody>
+        <tbody>{mapeo()}</tbody>
       </Table>
     </Container>
   );

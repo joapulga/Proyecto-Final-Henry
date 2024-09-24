@@ -11,6 +11,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 import typeOrmConfig from './config/typeorm'
 import { JwtModule } from '@nestjs/jwt';
+import { CloudinaryService } from './service/cloudinary/cloudinary.service';
 
 @Module({
   imports: [
@@ -37,6 +38,6 @@ import { JwtModule } from '@nestjs/jwt';
     AuthModule
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, CloudinaryService],
 })
 export class AppModule {}
