@@ -1,5 +1,9 @@
 import { Share } from "src/share/entities/share.entity";
+<<<<<<< HEAD
 import { State } from "src/states/entities/state.entity";
+=======
+import { State } from "src/state/entities/state.entity";
+>>>>>>> 7c256ddaf63da8759abbb0a84fb65f9e7d658f01
 import { User } from "src/user/entities/user.entity";
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToOne, JoinColumn, OneToMany } from "typeorm";
 import { v4 as uuid } from "uuid"
@@ -38,4 +42,8 @@ export class Credit {
 
     @ManyToOne(() => State, (state) => state.credits)
     state?: State
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 7c256ddaf63da8759abbb0a84fb65f9e7d658f01

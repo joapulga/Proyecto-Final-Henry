@@ -34,4 +34,8 @@ export class Balance {
         length: 255
     })
     observations: string
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 7c256ddaf63da8759abbb0a84fb65f9e7d658f01

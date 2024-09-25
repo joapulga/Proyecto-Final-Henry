@@ -17,4 +17,8 @@ export class AuthService {
     return await this.authRepository.singUp(createUserDto)
   }
   
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 7c256ddaf63da8759abbb0a84fb65f9e7d658f01
