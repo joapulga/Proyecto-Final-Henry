@@ -56,8 +56,8 @@ export class User {
     })
     is_admin: boolean
 
-    @Column({type:"varchar"})
-    img_url:string
+    @Column({type:"varchar", nullable:true})
+    img_url?:string
 
     @OneToMany(() => Credit, (credit) => credit.user)
     credits: Credit[]
