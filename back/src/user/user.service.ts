@@ -26,6 +26,7 @@ export class UserService {
 async becomeAdmin(id: string){
   const user = await this.userRepository.findOneBy({id});
   user.is_admin=true;
+  await this.userRepository.save(user);
   return user;
 }
 
