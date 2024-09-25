@@ -1,5 +1,7 @@
 import { Credit } from "src/credit/entities/credit.entity";
-import { State } from "src/states/entities/state.entity";
+
+import { State } from "src/state/entities/state.entity";
+
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { v4 as uuid } from "uuid"
 
@@ -56,8 +58,11 @@ export class User {
     })
     is_admin: boolean
 
+
     @Column({type:"varchar", nullable:true})
     img_url?:string
+
+
 
     @OneToMany(() => Credit, (credit) => credit.user)
     credits: Credit[]

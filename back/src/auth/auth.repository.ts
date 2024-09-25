@@ -7,6 +7,9 @@ import { Repository } from "typeorm";
 import { JwtService } from "@nestjs/jwt";
 import  * as bcrypt from "bcrypt"
 
+import { ExceptionsHandler } from "@nestjs/core/exceptions/exceptions-handler";
+
+
 @Injectable()
 export class AuthRepository{
 
@@ -26,7 +29,10 @@ export class AuthRepository{
                     name: user.name
                 }
                 const JWT = this.jwtService.sign(payload)
-                return {success: 'User login', token: JWT}
+
+                return {success: 'User login', token: JWT, is_admin: user.is_admin}
+
+
             }else{
                 throw new BadRequestException('Bad Password or User')
             }
@@ -36,11 +42,17 @@ export class AuthRepository{
     }
 
     async singUp(createUserDto: CreateUserDto){
-        const salt = await bcrypt.genSalt(10)
-        const hashPassword = await bcrypt.hash(createUserDto.password, salt)
-        const newUser = {...createUserDto, password: hashPassword}
-        await this.userRepository.save(newUser)
-        delete newUser.password
-        return newUser
+
+        try {
+            const salt = await bcrypt.genSalt(10)
+            const hashPassword = await bcrypt.hash(createUserDto.password, salt)
+            const newUser = {...createUserDto, password: hashPassword}
+            await this.userRepository.save(newUser)
+            delete newUser.password
+            return newUser
+        } catch (error) {
+            throw new BadRequestException({message: 'Error al almacenar el usuario', error: error.driverError.detail})
+        }
+
     }
 }

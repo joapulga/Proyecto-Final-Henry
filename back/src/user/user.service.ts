@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { UploadFileDto } from 'src/file-upload/dto/upload-file.dto';
-import { FileUploadService } from 'src/file-upload/file-upload.service';
+//import { UploadFileDto } from 'src/file-upload/dto/upload-file.dto';
+//import { FileUploadService } from 'src/file-upload/file-upload.service';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity'; // Assuming you have a User entity defined
 import { Repository } from 'typeorm';
@@ -14,7 +14,7 @@ export class UserService {
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
-     private readonly fileUploadService: FileUploadService,
+     //private readonly fileUploadService: FileUploadService,
   ) {}
 
   async create(createUserDto: CreateUserDto) {
@@ -22,13 +22,6 @@ export class UserService {
     await this.userRepository.save(newUser);
     return newUser;
   }
-
-async becomeAdmin(id: string){
-  const user = await this.userRepository.findOneBy({id});
-  user.is_admin=true;
-  await this.userRepository.save(user);
-  return user;
-}
 
   findAll() {
     return this.userRepository.find();
@@ -59,22 +52,22 @@ async becomeAdmin(id: string){
 
 
 
-  async uploadFile(file, id: string) {
-     const url = await this.fileUploadService.uploadFile({
-       filedname: file.filedname,
-       buffer: file.buffer,
-       originalname: file.originalname,
-       mimetype: file.mimetype,
-       size: file.size,
-     });
+  // async uploadFile(file: UploadFileDto, id: string) {
+  //   const url = await this.fileUploadService.uploadFile({
+  //     filedname: file.filedname,
+  //     buffer: file.buffer,
+  //     originalname: file.originalname,
+  //     mimetype: file.mimetype,
+  //     size: file.size,
+  //   });
 
-     const user = await this.userRepository.findOneBy({ id });
-     if (!user) {
-       throw new Error(`User with id ${id} not found`);
-     }
-     user.img_url = url;
-     await this.userRepository.save(user);
-     return { imgUrl: url };
-   }
+  //   const user = await this.userRepository.findOneBy({ id });
+  //   if (!user) {
+  //     throw new Error(`User with id ${id} not found`);
+  //   }
+  //   user.imgUrl = url;
+  //   await this.userRepository.save(user);
+  //   return { imgUrl: url };
+  // }
 }
 
