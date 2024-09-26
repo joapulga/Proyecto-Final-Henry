@@ -1,20 +1,3 @@
-<<<<<<< HEAD
-import { IsString,  IsDate } from 'class-validator';
-
-export class CreateBalanceDto {
-  @IsString()
-  income: number;
-
-  @IsString()
-  expenses: number;
-
-  @IsString()
-  gain: number;
-
-  @IsDate()
-  date: Date;
-
-=======
 import { IsString,  IsDate, IsNumber } from 'class-validator';
 
 export class CreateBalanceDto {
@@ -52,7 +35,6 @@ export class CreateBalanceDto {
    * Cuando se realiza una determinada transacción dejar una observación
    * @example "Se concede un préstamo por 3000 $"
    */
->>>>>>> 7c256ddaf63da8759abbb0a84fb65f9e7d658f01
   @IsString()
   observations: string;
 }
