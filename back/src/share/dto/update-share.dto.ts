@@ -1,31 +1,3 @@
-<<<<<<< HEAD
-import { IsString, IsNumber, IsDate, IsOptional } from 'class-validator';
-export class UpdateShareDto{
-    @IsString()
-    @IsOptional()
-    idCredit?: string;
-  
-    @IsNumber()
-    @IsOptional()
-    numberSha?: number;
-  
-    @IsDate()
-    @IsOptional()
-    expireDate?: Date;
-  
-    @IsNumber()
-    @IsOptional()
-    capital?: number;
-  
-    @IsNumber()
-    @IsOptional()
-    interests?: number;
-  
-    @IsNumber()
-    @IsOptional()
-    amount?: number;
-  }
-=======
 import { IsDate, IsDecimal, IsOptional, IsInt, IsNotEmpty, IsUUID } from 'class-validator';
 
 export class UploadShareDto {
@@ -65,4 +37,3 @@ export class UploadShareDto {
   @IsOptional()
   stateId?: string; // Optional state for update
 }
->>>>>>> 7c256ddaf63da8759abbb0a84fb65f9e7d658f01
