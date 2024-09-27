@@ -17,6 +17,10 @@ export class StatesService {
     return await this.statesRepository.save(state);
   }
 
+  async findOneByName(name: string){
+    return await this.statesRepository.findOneBy({name: name})
+  }
+
   async findAll(): Promise<State[]> {
     return await this.statesRepository.find();
   }

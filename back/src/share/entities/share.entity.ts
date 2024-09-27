@@ -27,12 +27,16 @@ export class Share {
     paid_date: Date
 
     @Column({
-        type: "date"
+        type: "decimal",
+        scale: 2,
+        precision: 10
     })
     capital: number
 
     @Column({
-        type: "date"
+        type: "decimal",
+        scale: 2,
+        precision: 10
     })
     interes: number
 

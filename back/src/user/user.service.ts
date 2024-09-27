@@ -6,6 +6,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity'; // Assuming you have a User entity defined
 import { Repository } from 'typeorm';
+import { State } from 'src/state/entities/state.entity';
 
 
 
@@ -13,14 +14,15 @@ import { Repository } from 'typeorm';
 export class UserService {
   constructor(
     @InjectRepository(User)
-    private readonly userRepository: Repository<User>,
+    private readonly userRepository: Repository<User>, @InjectRepository(State) private readonly stateRepository: Repository<State>
      //private readonly fileUploadService: FileUploadService,
   ) {}
 
   async create(createUserDto: CreateUserDto) {
-    const newUser = this.userRepository.create(createUserDto);
-    await this.userRepository.save(newUser);
-    return newUser;
+    createUserDto.state = await this.stateRepository.findOneBy({name: 'Active'})
+    // const newUser = this.userRepository.create(createUserDto);
+    // await this.userRepository.save(newUser);
+    return createUserDto;
   }
 
   findAll() {
