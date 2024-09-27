@@ -1,8 +1,40 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Table, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { findUserByID } from "../service/querisUsers";
 
 const UserDetail = () => {
+  const { id } = useParams();
+  const [user, setUser] = useState({});
+  const [usersCredits, setCredits] = useState([]);
+  console.log(user);
+  useEffect(() => {
+    findUserByID(id).then((r) => {
+      try {
+        setUser(r);
+      } catch (error) {
+        console.log(error);
+      }
+    });
+  }, []);
+
+  const mapeo = () => {
+    return usersCredits.map((u) => {
+      return (
+        <tr key={u.id}>
+          <td>{u.id}</td>
+          <td>{u.name}</td>
+          <td>{u.dni}</td>
+          <td>{u.phone}</td>
+          <td>
+            <Button as={Link} to={`/admin/credit/${u.id}`}>
+              Ver Más
+            </Button>
+          </td>
+        </tr>
+      );
+    });
+  };
   return (
     <Container>
       <div className="mb-5">
@@ -12,7 +44,7 @@ const UserDetail = () => {
             <h2>ID Client</h2>
           </Col>
           <Col>
-            <h4>123</h4>
+            <h4>{user.id}</h4>
           </Col>
           <Col></Col>
         </Row>
@@ -21,7 +53,7 @@ const UserDetail = () => {
             <h2>Name Client</h2>
           </Col>
           <Col>
-            <h4>pedro</h4>
+            <h4>{user.name}</h4>
           </Col>
           <Col></Col>
         </Row>
@@ -30,7 +62,7 @@ const UserDetail = () => {
             <h2>LastName Client</h2>
           </Col>
           <Col>
-            <h4>perez</h4>
+            <h4>{user.lastname}</h4>
           </Col>
           <Col></Col>
         </Row>
@@ -39,7 +71,7 @@ const UserDetail = () => {
             <h2>D.N.I</h2>
           </Col>
           <Col>
-            <h4>42499732</h4>
+            <h4>{user.dni}</h4>
           </Col>
           <Col></Col>
         </Row>
@@ -48,7 +80,7 @@ const UserDetail = () => {
             <h2>Phone</h2>
           </Col>
           <Col>
-            <h4>+54 9 381-352-8658</h4>
+            <h4>{user.phone}</h4>
           </Col>
           <Col></Col>
         </Row>
@@ -57,7 +89,7 @@ const UserDetail = () => {
             <h2>Email</h2>
           </Col>
           <Col>
-            <h4>pedro.perez@gmail.com</h4>
+            <h4>{user.email}</h4>
           </Col>
           <Col></Col>
         </Row>
@@ -73,38 +105,7 @@ const UserDetail = () => {
               <th>Funtions</th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <td>1</td>
-              <td>123</td>
-              <td>12/10/24</td>
-              <td>
-                <Button as={Link} to="/admin/credit">
-                  Ver Más
-                </Button>
-              </td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>Jacob</td>
-              <td>Thornton</td>
-              <td>
-                <Button as={Link} to="/admin/credit">
-                  Ver Más
-                </Button>
-              </td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td>Larry the Bird</td>
-              <td>12/10/24</td>
-              <td>
-                <Button as={Link} to="/admin/credit">
-                  Ver Más
-                </Button>
-              </td>
-            </tr>
-          </tbody>
+          <tbody>{mapeo()}</tbody>
         </Table>
       </Row>
     </Container>

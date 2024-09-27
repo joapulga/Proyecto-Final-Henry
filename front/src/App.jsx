@@ -29,8 +29,8 @@ const App = () => {
               <Route path="/admin" element={<SidebarAdmin />}>
                 <Route path="dashboardadmin" element={<DashboardAdmin />} />
                 <Route path="AllUsers" element={<AllUsers />} />
-                <Route path="user" element={<UserDetail />} />
-                <Route path="credit" element={<CreditDetail />} />
+                <Route path={`user/:id`} element={<UserDetail/>} />
+                <Route path="credit/:id" element={<CreditDetail />} />
                 <Route path="perfil" element={<PerfilAdmin />} />
                 <Route path="AllCredits" element={<AllCredits />} />
               </Route>
