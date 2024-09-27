@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Card, Col, Container, Row } from "react-bootstrap";
+import { useEffect, useState } from "react";
+import { Col, Container, Row } from "react-bootstrap";
 import CardsTop from "./CardsTop";
 import AllUsers from "../Users/AllUsers";
 import AllCredits from "../Credits/AllCredits";
@@ -12,6 +12,7 @@ const TablesUser = () => {
   const [credits, setCredits] = useState([]);
 
   useEffect(() => {
+    //const token= JSON.parse(localStorage.getItem("user"))||[]
     findAllUsers().then((res) => {
       try {
         console.log(res.data)
