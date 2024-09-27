@@ -12,6 +12,7 @@ const TablesUser = () => {
   const [credits, setCredits] = useState([]);
 
   useEffect(() => {
+    //const token= JSON.parse(localStorage.getItem("user"))||[]
     findAllUsers().then((res) => {
       try {
         console.log(res.data)
