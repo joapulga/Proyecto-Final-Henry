@@ -4,15 +4,39 @@ import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
 import { CreditModule } from './credit/credit.module';
 import { ShareModule } from './share/share.module';
+import { StateModule } from './state/states.module';
 import { BalanceModule } from './balance/balance.module';
-import { StatesModule } from './states/states.module';
-import { CloudinaryService } from './service/cloudinary/cloudinary.service';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
-import { FileUploadModule } from './file-upload/file-upload.module';
+import typeOrmConfig from './config/typeorm'
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
-  imports: [UserModule, CreditModule, ShareModule, BalanceModule, StatesModule, AuthModule, FileUploadModule],
+  imports: [
+    UserModule, 
+    CreditModule, 
+    ShareModule, 
+    StateModule, 
+    BalanceModule,
+    ConfigModule.forRoot({
+      isGlobal: true,
+      load: [typeOrmConfig]
+    }),
+    TypeOrmModule.forRootAsync({
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => configService.get('typeorm')
+    }),
+    JwtModule.register({
+      secret: process.env.JWT_SECRET,
+      global: true,
+      signOptions: {
+        expiresIn: "1h"
+      }
+    }),
+    AuthModule
+  ],
   controllers: [AppController],
-  providers: [AppService, CloudinaryService],
+  providers: [AppService],
 })
 export class AppModule {}

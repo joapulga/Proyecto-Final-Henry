@@ -12,4 +12,4 @@ import { State } from './entities/state.entity';
   controllers: [StatesController],
   providers: [StatesService],
 })
-export class StatesModule {}
+export class StateModule {}

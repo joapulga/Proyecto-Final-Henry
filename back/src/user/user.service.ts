@@ -1,11 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { UploadFileDto } from 'src/file-upload/dto/upload-file.dto';
-import { FileUploadService } from 'src/file-upload/file-upload.service';
+//import { UploadFileDto } from 'src/file-upload/dto/upload-file.dto';
+//import { FileUploadService } from 'src/file-upload/file-upload.service';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity'; // Assuming you have a User entity defined
 import { Repository } from 'typeorm';
+import { State } from 'src/state/entities/state.entity';
 
 
 
@@ -13,25 +14,26 @@ import { Repository } from 'typeorm';
 export class UserService {
   constructor(
     @InjectRepository(User)
-    private readonly userRepository: Repository<User>,
-     private readonly fileUploadService: FileUploadService,
+    private readonly userRepository: Repository<User>, @InjectRepository(State) private readonly stateRepository: Repository<State>
+     //private readonly fileUploadService: FileUploadService,
   ) {}
 
   async create(createUserDto: CreateUserDto) {
-    const newUser = this.userRepository.create(createUserDto);
-    await this.userRepository.save(newUser);
-    return newUser;
+    createUserDto.state = await this.stateRepository.findOneBy({name: 'Active'})
+    // const newUser = this.userRepository.create(createUserDto);
+    // await this.userRepository.save(newUser);
+    return createUserDto;
   }
 
   findAll() {
     return this.userRepository.find();
   }
 
-  findOne(id: number) {
+  findOne(id: string) {
     return this.userRepository.findOneBy({ id});
   }
 
-  async update(id: number, updateUserDto: UpdateUserDto) {
+  async update(id: string, updateUserDto: UpdateUserDto) {
     const user = await this.userRepository.findOneBy({id });
     if (!user) {
       throw new Error(`User with ID ${id} not found`);
@@ -41,7 +43,7 @@ export class UserService {
     return user;
   }
 
-  async remove(id: number) {
+  async remove(id: string) {
     const user = await this.userRepository.findOneBy({id});
     if (!user) {
       throw new Error(`User with ID ${id} not found`);
@@ -50,7 +52,13 @@ export class UserService {
     return `User with ID ${id} deleted`;
   }
 
-
+  async becomeAdmin(id: string){
+    const user = await this.userRepository.findOneBy({id});
+    user.is_admin=true;
+   
+     this.userRepository.save(user);
+    return user;
+  }
 
   // async uploadFile(file: UploadFileDto, id: string) {
   //   const url = await this.fileUploadService.uploadFile({

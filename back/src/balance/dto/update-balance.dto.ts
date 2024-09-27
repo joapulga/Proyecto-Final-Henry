@@ -1,23 +1,4 @@
-import { IsString, IsDate, IsOptional } from 'class-validator';
+import { PartialType } from '@nestjs/mapped-types';
+import { CreateBalanceDto } from './create-balance.dto';
 
-export class UpdateBalanceDto {
-    @IsString()
-    @IsOptional()
-    income?: number;
-  
-    @IsString()
-    @IsOptional()
-    expenses?: number;
-  
-    @IsString()
-    @IsOptional()
-    gain?: number;
-  
-    @IsDate()
-    @IsOptional()
-    date?: Date;
-  
-    @IsString()
-    @IsOptional()
-    observations?: string;
-  }
+export class UpdateBalanceDto extends PartialType(CreateBalanceDto) {}

@@ -2,7 +2,9 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { StatesService } from './states.service';
 import { CreateStateDto } from './dto/create-state.dto';
 import { UpdateStateDto } from './dto/update-state.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('States')
 @Controller('states')
 export class StatesController {
   constructor(private readonly statesService: StatesService) {}
@@ -19,16 +21,16 @@ export class StatesController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.statesService.findOne(+id);
+    return this.statesService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateStateDto: UpdateStateDto) {
-    return this.statesService.update(+id, updateStateDto);
+    return this.statesService.update(id, updateStateDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.statesService.remove(+id);
+    return this.statesService.remove(id);
   }
 }

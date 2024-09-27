@@ -1,21 +1,36 @@
-import { IsUUID, IsDate, IsNumber } from 'class-validator';
+import { IsDecimal, IsInt, IsNotEmpty, IsOptional, IsUUID } from 'class-validator';
+import { State } from 'src/state/entities/state.entity';
+import { User } from 'src/user/entities/user.entity';
 
-export class CreditCreateDto {
-  @IsUUID()
-  clientId: string;
+export class CreateCreditDto {
 
-  @IsDate()
-  creditDate: Date;
-
-  @IsNumber()
+  /**
+   * The amount of some credit
+   * @example 3000
+   */
+  @IsInt() // Enforce integer for amount
+  @IsNotEmpty()
   amount: number;
 
-  @IsNumber()
+  /**
+   * Quantity of months for some credit
+   * @example 18
+   */
+  @IsInt()
+  @IsNotEmpty()
   months: number;
 
-  @IsNumber()
+  /**
+   * The interest could be decimal or integer the number won't be empty
+   * @example 2.5 
+   */
+  @IsDecimal()
+  @IsNotEmpty()
   interest: number;
 
-  @IsUUID()
-  idState: string;
+  @IsOptional()
+  user: User;
+
+  @IsOptional()
+  state: State; // Optional state for creation
 }

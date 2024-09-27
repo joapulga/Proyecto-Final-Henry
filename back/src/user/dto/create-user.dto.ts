@@ -1,28 +1,77 @@
-import { IsString, IsNumber, IsEmail} from 'class-validator';
+import { IsEmail, IsEmpty, IsNotEmpty, IsString, IsStrongPassword, Length, minLength } from "class-validator"
+import { State } from "src/state/entities/state.entity";
 
 export class CreateUserDto {
+
+    /**
+     * Will be the name of the user
+     * @example Javier
+     */
+    @IsString()
+    @Length(2, 15)
+    @IsString()
+    @IsNotEmpty()
+    name: string;
+
+  /**
+   * Last Name of the user who is going to register
+   * @example Alcivar
+   */
   @IsString()
-  name: string;
+  @Length(2, 15)
+  lastname: string;
 
+  /**
+   * it should be the identification of the user
+   * @example 2222222222
+   */
   @IsString()
-  lastName: string;
+  @Length(8)
+  dni: string;
 
-  @IsNumber()
-  dni: number;
+  /**
+   * Define a phone number for this user
+   * @example 0000000000
+   */
+  @IsString()
+  @Length(2, 20)
+  phone: string;
 
-  @IsNumber()
-  phone: number;
-
+  /**
+   * Email it's necesary for supscritption of a new user
+   * @example javier@email.com
+   */
+  @IsNotEmpty()
   @IsEmail()
   email: string;
 
-  @IsString()
+  /**
+   * Password should be strong
+   * @example MyUs3er@175
+   */
+  @IsNotEmpty()
+  @IsStrongPassword({
+    minLength: 8,
+    minLowercase: 1,
+    minNumbers: 1,
+    minSymbols: 1,
+    minUppercase: 1,
+  })
   password: string;
 
-  @IsString()
-  imgUrl: string;
+    /**
+     * Defiene the image that all the users will have
+     * @example "https://profile.png"
+     */
+    @IsString()
+    img_url: string;
 
-  @IsString()
-  address: string;
+     /**
+     * Define if the user is or not Admin
+     * @example false
+     */
+    @IsEmpty()
+    is_admin: boolean
+
+    state?: State
 }
-

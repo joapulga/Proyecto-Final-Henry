@@ -2,7 +2,9 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { BalanceService } from './balance.service';
 import { CreateBalanceDto } from './dto/create-balance.dto';
 import { UpdateBalanceDto } from './dto/update-balance.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Balance')
 @Controller('balance')
 export class BalanceController {
   constructor(private readonly balanceService: BalanceService) {}
@@ -19,16 +21,16 @@ export class BalanceController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.balanceService.findOne(+id);
+    return this.balanceService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateBalanceDto: UpdateBalanceDto) {
-    return this.balanceService.update(+id, updateBalanceDto);
+    return this.balanceService.update(id, updateBalanceDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.balanceService.remove(+id);
+    return this.balanceService.remove(id);
   }
 }

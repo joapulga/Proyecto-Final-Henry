@@ -4,12 +4,11 @@ import { ShareController } from './share.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Share } from './entities/share.entity';
 
-
-
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Share])//importar la entidad Share
-],
+    // FileUploadModule,
+     TypeOrmModule.forFeature([Share])//importar la entidad User 
+ ],
   controllers: [ShareController],
   providers: [ShareService],
 })

@@ -11,27 +11,27 @@ const SidebarAdmin = () => {
         <nav>
           <ul className="p-4 space-y-4 ">
             <li>
-              <Button as={Link} to="dashboardadmin" className="block  p-2 transition rounded hover:bg-blue-700 w-100">
+              <Button as={Link} to="dashboardadmin" className="block p-2 transition rounded hover:bg-blue-700 w-100">
                 Dashboard
               </Button>
             </li>
             <li>
-              <Button as={Link} to="AllUsers" className="block w-100 p-2 transition rounded hover:bg-blue-700">
+              <Button as={Link} to="AllUsers" className="block p-2 transition rounded w-100 hover:bg-blue-700">
                 Ver Usuarios
               </Button>
             </li>
             <li>
-              <Button as={Link} to="AllCredits" className="block w-100 p-2 transition rounded hover:bg-blue-700">
+              <Button as={Link} to="AllCredits" className="block p-2 transition rounded w-100 hover:bg-blue-700">
                 Ver Creditos
               </Button>
             </li>
             <li>
-              <Button as={Link} to="perfil" className="block w-100 p-2 transition rounded hover:bg-blue-700">
+              <Button as={Link} to="perfil" className="block p-2 transition rounded w-100 hover:bg-blue-700">
                 Perfil de Administrador
               </Button>
             </li>
             <li>
-              <Button as={Link} to="/" className="block w-100 p-2 transition rounded hover:bg-red-700 ">
+              <Button as={Link} to="/" className="block p-2 transition rounded w-100 hover:bg-red-700 ">
                 Volver al Inicio
               </Button>
             </li>

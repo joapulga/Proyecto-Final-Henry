@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { CreateShareDto } from './dto/create-share.dto';
-import { UpdateShareDto } from './dto/update-share.dto';
+import { UploadShareDto } from './dto/update-share.dto';
 import { Share } from './entities/share.entity'; //remplazar por la entidad correspondiente
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -12,10 +12,9 @@ export class ShareService {
     private readonly shareRepository: Repository<Share>, //por nombre de la entidad dentro de repository
   ) {}
 
-  async create(createShareDto: CreateShareDto): Promise<Share> {
-    const share = new Share();
-    Object.assign(share, createShareDto); // copia las propiedades de un objeto a otro
-    return await this.shareRepository.save(share);
+  async create(createShareDto: CreateShareDto[]): Promise<Share> {
+    let shares = await this.shareRepository.save(createShareDto);
+    return shares[0]
   }
 
   async findAll(): Promise<Share[]> {
@@ -26,12 +25,12 @@ export class ShareService {
     return await this.shareRepository.findOneBy({ id });
   }
 
-  async update(id: string, updateShareDto: UpdateShareDto): Promise<Share | null> {
+  async update(id: string, UploadShareDto: UploadShareDto): Promise<Share | null> {
     const share = await this.findOne(id);
     if (!share) {
       return null; // Or throw an error if you prefer
     }
-    Object.assign(share, updateShareDto);
+    Object.assign(share, UploadShareDto);
     return await this.shareRepository.save(share);
   }
 

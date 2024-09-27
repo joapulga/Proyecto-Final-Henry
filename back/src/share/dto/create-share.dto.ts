@@ -1,21 +1,36 @@
-import { IsString, IsNumber, IsDate, IsOptional } from 'class-validator';
+import { IsDate, IsDecimal, IsInt, IsNotEmpty, IsOptional, IsUUID } from 'class-validator';
+import { Credit } from 'src/credit/entities/credit.entity';
+import { State } from 'src/state/entities/state.entity';
 
 export class CreateShareDto {
-  @IsString()
-  idCredit: string;
 
-  @IsNumber()
-  numberSha: number;
+  @IsInt()
+  @IsNotEmpty()
+  number_share: number;
 
   @IsDate()
-  expireDate: Date;
+  @IsNotEmpty()
+  expirate_date: Date;
 
-  @IsNumber()
+  @IsDate()
+  @IsNotEmpty()
+  paid_date?: Date;
+
+  @IsDecimal()
+  @IsNotEmpty()
   capital: number;
 
-  @IsNumber()
-  interests: number;
+  @IsDecimal()
+  @IsNotEmpty()
+  interest: number;
 
-  @IsNumber()
+  @IsDecimal()
+  @IsNotEmpty()
   amount: number;
+
+  @IsNotEmpty()
+  credit: Credit;
+
+  @IsNotEmpty()
+  state: State; // Optional state for creation
 }
