@@ -12,6 +12,7 @@ export class AuthController {
 
   @Post('signin')
   signin(@Body() createAuthDto: CreateAuthDto) {
+    console.log(createAuthDto)
     return this.authService.signin(createAuthDto);
   }
 

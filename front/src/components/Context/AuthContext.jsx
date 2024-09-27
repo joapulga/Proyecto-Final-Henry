@@ -29,6 +29,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const register = async (userData) => {
+    console.log(userData)
     try {
       await registerUser(userData).then((res) => {
         localStorage.setItem("user", JSON.stringify({ id: res.id, is_admin: res.is_admin }));

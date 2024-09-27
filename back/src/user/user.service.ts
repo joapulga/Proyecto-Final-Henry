@@ -50,7 +50,13 @@ export class UserService {
     return `User with ID ${id} deleted`;
   }
 
-
+  async becomeAdmin(id: string){
+    const user = await this.userRepository.findOneBy({id});
+    user.is_admin=true;
+   
+     this.userRepository.save(user);
+    return user;
+  }
 
   // async uploadFile(file: UploadFileDto, id: string) {
   //   const url = await this.fileUploadService.uploadFile({
