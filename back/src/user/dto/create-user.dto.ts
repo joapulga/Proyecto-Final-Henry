@@ -64,7 +64,7 @@ export class CreateUserDto {
      * @example "https://profile.png"
      */
     @IsString()
-    imgUrl: string;
+    img_url: string;
 
      /**
      * Define if the user is or not Admin

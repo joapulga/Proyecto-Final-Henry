@@ -7,10 +7,10 @@ import { UploadShareDto } from './dto/update-share.dto';
 export class ShareController {
   constructor(private readonly shareService: ShareService) {}
 
-  @Post()
-  create(@Body() createShareDto: CreateShareDto) {
-    return this.shareService.create(createShareDto);
-  }
+  // @Post()
+  // create(@Body() createShareDto: CreateShareDto) {
+  //   return this.shareService.create(createShareDto);
+  // }
 
   @Get()
   findAll() {

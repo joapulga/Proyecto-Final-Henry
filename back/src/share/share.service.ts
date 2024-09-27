@@ -12,10 +12,9 @@ export class ShareService {
     private readonly shareRepository: Repository<Share>, //por nombre de la entidad dentro de repository
   ) {}
 
-  async create(createShareDto: CreateShareDto): Promise<Share> {
-    const share = new Share();
-    Object.assign(share, createShareDto); // copia las propiedades de un objeto a otro
-    return await this.shareRepository.save(share);
+  async create(createShareDto: CreateShareDto[]): Promise<Share> {
+    let shares = await this.shareRepository.save(createShareDto);
+    return shares[0]
   }
 
   async findAll(): Promise<Share[]> {

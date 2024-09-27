@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-export class SeederState1727374928186 implements MigrationInterface {
+export class SeederStates1727458177628 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query("INSERT INTO states (name, description) VALUES ('Active', 'Define if the yield is active')")

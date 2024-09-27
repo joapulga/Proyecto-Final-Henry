@@ -69,5 +69,5 @@ export class User {
     credits: Credit[]
 
     @ManyToOne(() => State, (state) => state.users)
-    state?: State
+    state: State
 }
