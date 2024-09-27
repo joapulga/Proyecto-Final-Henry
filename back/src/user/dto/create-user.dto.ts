@@ -13,51 +13,51 @@ export class CreateUserDto {
     @IsNotEmpty()
     name: string;
 
-    /**
-     * Last Name of the user who is going to register
-     * @example Alcivar
-     */
-    @IsString()
-    @Length(2, 15)
-    lastname: string
+  /**
+   * Last Name of the user who is going to register
+   * @example Alcivar
+   */
+  @IsString()
+  @Length(2, 15)
+  lastname: string;
 
-    /**
-     * it should be the identification of the user
-     * @example 2222222222
-     */
-    @IsString()
-    @Length(10)
-    dni: string
+  /**
+   * it should be the identification of the user
+   * @example 2222222222
+   */
+  @IsString()
+  @Length(8)
+  dni: string;
 
-    /**
-     * Define a phone number for this user
-     * @example 0000000000
-     */
-    @IsString()
-    @Length(2, 20)
-    phone: string
+  /**
+   * Define a phone number for this user
+   * @example 0000000000
+   */
+  @IsString()
+  @Length(2, 20)
+  phone: string;
 
-    /**
-     * Email it's necesary for supscritption of a new user
-     * @example javier@email.com
-     */
-    @IsNotEmpty()
-    @IsEmail()
-    email: string
+  /**
+   * Email it's necesary for supscritption of a new user
+   * @example javier@email.com
+   */
+  @IsNotEmpty()
+  @IsEmail()
+  email: string;
 
-    /**
-     * Password should be strong
-     * @example MyUs3er@175
-     */
-    @IsNotEmpty()
-    @IsStrongPassword({
-        minLength: 8,
-        minLowercase: 1,
-        minNumbers: 1,
-        minSymbols: 1,
-        minUppercase: 1,
-    })
-    password: string
+  /**
+   * Password should be strong
+   * @example MyUs3er@175
+   */
+  @IsNotEmpty()
+  @IsStrongPassword({
+    minLength: 8,
+    minLowercase: 1,
+    minNumbers: 1,
+    minSymbols: 1,
+    minUppercase: 1,
+  })
+  password: string;
 
     /**
      * Defiene the image that all the users will have

@@ -2,15 +2,16 @@ import axios from "axios";
 
 const URL = "http://localhost:3000";
 
-//USERS
 export const findAllUsers = async () => {
   try {
-    const users = await axios.get(URL + "/user");
-    return users;
+    const response = await axios.get(URL + "/user");
+    return response.data; 
   } catch (error) {
-    console.log(error);
+    console.error('Error obteniendo usuarios:', error);
+    throw error; 
   }
 };
+
 
 export const findOneUser = async () => {
   try {
