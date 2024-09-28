@@ -21,6 +21,11 @@ const SidebarAdmin = () => {
               </Button>
             </li>
             <li>
+              <Button as={Link} to="cargarCreditos" className="block p-2 transition rounded w-100 hover:bg-blue-700">
+                Cargar Creditos
+              </Button>
+            </li>
+            <li>
               <Button as={Link} to="AllCredits" className="block p-2 transition rounded w-100 hover:bg-blue-700">
                 Ver Creditos
               </Button>

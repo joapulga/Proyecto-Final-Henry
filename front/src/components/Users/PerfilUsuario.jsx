@@ -1,10 +1,13 @@
 import { useState, useEffect } from 'react';
-import { findAllUsers } from '../service/querisUsers';// Importa la función desde el archivo de servicio
+import { useAuth } from '../Context/AuthContext';
+import { getUserData } from '../service/querisUsers'; 
+import avatarImg from "../../assets/default-avatar.png";
 
 const UserProfile = () => {
-  const [profileImage, setProfileImage] = useState('/default-avatar.png');
-  const [selectedFile, setSelectedFile] = useState(null); 
-  const [user, setUser] = useState({
+  const { user } = useAuth(); 
+  const [profileImage, setProfileImage] = useState(avatarImg);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [userData, setUserData] = useState({
     name: "",
     email: "",
     dni: "",
@@ -12,55 +15,60 @@ const UserProfile = () => {
     direccion: "",
   });
 
-  // Función para manejar el cambio de archivo (nueva imagen)
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
       setSelectedFile(file);
       const reader = new FileReader();
       reader.onloadend = () => {
-        setProfileImage(reader.result); 
+        setProfileImage(reader.result);
       };
       reader.readAsDataURL(file);
     }
   };
 
   useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const users = await findAllUsers();
-        console.log(users);
-      } catch (error) {
-        console.error('Error al obtener usuarios:', error);
-      }
-    };
-  
-    fetchUsers();
-  }, []);
+    console.log(user); // Asegúrate de que el id esté presente en el objeto user
+    if (user && user.id) { 
+      getUserData(user.id)
+        .then((data) => {
+          setUserData({
+            name: data.name,
+            email: data.email,
+            dni: data.dni,
+            telefono: data.telefono,
+            direccion: data.direccion,
+          });
+        })
+        .catch((error) => {
+          console.error('Error obteniendo los datos del usuario:', error);
+        });
+    }
+  }, [user]); // El efecto depende de que `user` esté disponible
+   
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Aquí se puede enviar la imagen al servidor, en este caso solo se imprime en consola
     console.log('Imagen subida:', selectedFile);
   };
 
   return (
-    <div className="container p-8 mx-auto">
-      <div className="max-w-md mx-auto overflow-hidden bg-white rounded-lg shadow-lg">
-        <div className="p-6 text-center bg-gray-200 border-b">
+    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+      <div className="w-full max-w-2xl p-8 mx-auto bg-white rounded-lg shadow-lg">
+        <div className="p-6 text-center bg-blue-600 border-b">
           <img
-            className="w-24 h-24 mx-auto rounded-full"
+            className="w-32 h-32 mx-auto rounded-full"
             src={profileImage}
             alt="Imagen de perfil"
           />
-          <p className="pt-2 text-lg font-semibold">{user.name}</p>
-          <p className="text-sm text-gray-600">{user.email}</p>
+          <p className="pt-2 text-xl font-semibold">{userData.name}</p>
+          <p className="text-sm text-gray-600">{userData.email}</p>
         </div>
 
         <div className="p-6">
-          <p><strong>DNI:</strong> {user.dni}</p>
-          <p><strong>Teléfono:</strong> {user.telefono}</p>
-          <p><strong>Dirección:</strong> {user.direccion}</p>
+          <p><strong>DNI:</strong> {userData.dni}</p>
+          <p><strong>Teléfono:</strong> {userData.telefono}</p>
+          <p><strong>Dirección:</strong> {userData.direccion}</p>
 
           {/* Formulario para subir nueva imagen */}
           <form onSubmit={handleSubmit} className="mt-4">
@@ -74,7 +82,9 @@ const UserProfile = () => {
               className="w-full p-2 border rounded"
             />
             {selectedFile && (
-              <p className="mt-2 text-sm text-gray-500">Archivo seleccionado: {selectedFile.name}</p>
+              <p className="mt-2 text-sm text-gray-500">
+                Archivo seleccionado: {selectedFile.name}
+              </p>
             )}
             <button
               type="submit"

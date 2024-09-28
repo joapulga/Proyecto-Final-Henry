@@ -3,22 +3,16 @@ import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 const Navbar = () => {
-  console.log(localStorage.token);
-
-  const user = JSON.parse(localStorage.getItem("user")) || [];
-  const [userLogin, setUserLogin] = useState([]);
-
-  useEffect(() => {
-    if (localStorage.length) {
-      setUserLogin(user);
-    }
-  }, []);
+  const [userLogin, setUserLogin] = useState(() => {
+    // Obtiene el usuario de localStorage solo una vez cuando el componente se monta
+    return JSON.parse(localStorage.getItem("user")) || [];
+  });
 
   const logout = () => {
     localStorage.removeItem("user");
     setUserLogin([]);
   };
-  console.log(userLogin);
+
   return (
     <nav className="bg-blue-600 shadow-lg">
       <div className="container px-4 mx-auto">
@@ -33,27 +27,49 @@ const Navbar = () => {
             {!userLogin.token ? (
               <>
                 <Button>
-                  <Link to="/login" className="text-xl text-white no-underline transition duration-300 hover:text-gray-300">
+                  <Link
+                    to="/login"
+                    className="text-xl text-white no-underline transition duration-300 hover:text-gray-300"
+                  >
                     Login
                   </Link>
                 </Button>
               </>
             ) : (
               <>
-                {userLogin.is_admin == true ? (
+                {userLogin.is_admin ? (
                   <>
-                    <Button className="text-xl text-white no-underline transition duration-300 hover:text-gray-300 fs-5" onClick={logout}>
+                    {/* Botón de Admin */}
+                    <Button>
+                      <Link
+                        to="/admin"
+                        className="text-xl text-white no-underline transition duration-300 hover:text-gray-300"
+                      >
+                        Administrador
+                      </Link>
+                    </Button>
+                    <Button
+                      className="text-xl text-white no-underline transition duration-300 hover:text-gray-300 fs-5"
+                      onClick={logout}
+                    >
                       Salir
                     </Button>
                   </>
                 ) : (
                   <>
+                    {/* Botón de User (solo para usuarios no admin) */}
                     <Button>
-                      <Link to="/admin" className="text-xl text-white no-underline transition duration-300 hover:text-gray-300">
-                        Admin
+                      <Link
+                        to="/user"
+                        className="text-xl text-white no-underline transition duration-300 hover:text-gray-300"
+                      >
+                        Usuario
                       </Link>
                     </Button>
-                    <Button className="text-xl text-white no-underline transition duration-300 hover:text-gray-300 fs-5" onClick={logout}>
+                    <Button
+                      className="text-xl text-white no-underline transition duration-300 hover:text-gray-300 fs-5"
+                      onClick={logout}
+                    >
                       Salir
                     </Button>
                   </>
