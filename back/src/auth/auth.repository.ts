@@ -28,7 +28,8 @@ export class AuthRepository{
                 const payload = {
                     id: user.id,
                     email: user.email,
-                    name: user.name
+                    name: user.name,
+                    is_admin: user.is_admin
                 }
                 const JWT = this.jwtService.sign(payload)
 
@@ -53,7 +54,8 @@ export class AuthRepository{
             await this.userRepository.save(newUser)
             delete newUser.password
             return newUser
-        } catch (error) {
+        } catch (error) { 
+            console.log(error)
             throw new BadRequestException({message: 'Error al almacenar el usuario', error: error.driverError.detail})
         }
 

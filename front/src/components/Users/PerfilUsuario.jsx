@@ -28,7 +28,7 @@ const UserProfile = () => {
   };
 
   useEffect(() => {
-    console.log(user); // Asegúrate de que el id esté presente en el objeto user
+    console.log(user); 
     if (user && user.id) { 
       getUserData(user.id)
         .then((data) => {
@@ -44,7 +44,7 @@ const UserProfile = () => {
           console.error('Error obteniendo los datos del usuario:', error);
         });
     }
-  }, [user]); // El efecto depende de que `user` esté disponible
+  }, [user]);
    
 
   const handleSubmit = (e) => {
@@ -61,8 +61,8 @@ const UserProfile = () => {
             src={profileImage}
             alt="Imagen de perfil"
           />
-          <p className="pt-2 text-xl font-semibold">{userData.name}</p>
-          <p className="text-sm text-gray-600">{userData.email}</p>
+          <p className="pt-2 text-xl font-bold">{userData.name}</p>
+          <p className="text-sm text-white">{userData.email}</p>
         </div>
 
         <div className="p-6">

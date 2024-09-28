@@ -29,7 +29,7 @@ const VerCreditos = () => {
 
   return (
     <Container>
-      <h1 className="text-center">Credits</h1>
+      <h1 className="m-4 text-center">Creditos</h1>
       {error && <p className="text-center text-danger">{error}</p>}
 
       <Table striped bordered hover variant="dark">
