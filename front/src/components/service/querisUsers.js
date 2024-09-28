@@ -13,10 +13,10 @@ export const findAllUsers = async () => {
 };
 
 
-export const findOneUser = async () => {
+export const findUserByID = async (id) => {
   try {
-    const users = await axios.get(URL + "/credit");
-    return users;
+    const users = await axios.get(URL + `/user/${id}`);
+    return users.data;
   } catch (error) {
     console.log(error);
   }

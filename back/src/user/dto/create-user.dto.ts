@@ -1,23 +1,17 @@
-import {
-  IsEmail,
-  IsEmpty,
-  IsNotEmpty,
-  IsString,
-  IsStrongPassword,
-  Length,
-  minLength,
-} from 'class-validator';
+import { IsEmail, IsEmpty, IsNotEmpty, IsString, IsStrongPassword, Length, minLength } from "class-validator"
+import { State } from "src/state/entities/state.entity";
 
 export class CreateUserDto {
-  /**
-   * Will be the name of the user
-   * @example Javier
-   */
-  @IsString()
-  @Length(2, 15)
-  @IsString()
-  @IsNotEmpty()
-  name: string;
+
+    /**
+     * Will be the name of the user
+     * @example Javier
+     */
+    @IsString()
+    @Length(2, 15)
+    @IsString()
+    @IsNotEmpty()
+    name: string;
 
   /**
    * Last Name of the user who is going to register
@@ -65,10 +59,19 @@ export class CreateUserDto {
   })
   password: string;
 
-  /**
-   * Define if the user is or not Admin
-   * @example false
-   */
-  @IsEmpty()
-  is_admin: boolean;
+    /**
+     * Defiene the image that all the users will have
+     * @example "https://profile.png"
+     */
+    @IsString()
+    img_url: string;
+
+     /**
+     * Define if the user is or not Admin
+     * @example false
+     */
+    @IsEmpty()
+    is_admin: boolean
+
+    state?: State
 }

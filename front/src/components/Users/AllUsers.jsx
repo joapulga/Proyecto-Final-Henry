@@ -1,6 +1,22 @@
 import { Table, Button, Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
-const AllUsers = ({ users }) => {
+import { findAllUsers } from "../service/querisUsers";
+import { useEffect, useState } from "react";
+const AllUsers = () => {
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    //const token= JSON.parse(localStorage.getItem("user"))||[]
+    findAllUsers().then((res) => {
+      console.log(res);
+      try {
+        console.log(res);
+        setUsers(res);
+      } catch (error) {
+        console.log(error);
+      }
+    });
+  }, []);
   const mapeo = () => {
     return users.map((u) => {
       return (
@@ -10,7 +26,7 @@ const AllUsers = ({ users }) => {
           <td>{u.dni}</td>
           <td>{u.phone}</td>
           <td>
-            <Button as={Link} to="/admin/user">
+            <Button as={Link} to={`/admin/user/${u.id}`} >
               Ver Más
             </Button>
           </td>
@@ -18,6 +34,8 @@ const AllUsers = ({ users }) => {
       );
     });
   };
+ 
+  
   return (
     <Container>
       <h1 className="text-center">Clientes</h1>

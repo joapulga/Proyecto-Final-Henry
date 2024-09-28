@@ -7,9 +7,9 @@ import { UploadCreditDto } from './dto/update-credit.dto';
 export class CreditController {
   constructor(private readonly creditService: CreditService) {}
 
-  @Post()
-  create(@Body() createCreditDto: CreateCreditDto) {
-    return this.creditService.create(createCreditDto);
+  @Post(':id')
+  create(@Param('id') id: string, @Body() createCreditDto: CreateCreditDto) {
+    return this.creditService.create(id, createCreditDto);
   }
 
   @Get()
