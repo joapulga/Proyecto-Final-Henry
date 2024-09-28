@@ -1,6 +1,7 @@
 import { createContext, useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { registerUser, loginUser } from "../service/authService";
+import { getUserDash } from "../service/querisUsers";
 
 const AuthContext = createContext();
 
@@ -29,7 +30,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const register = async (userData) => {
-    console.log(userData)
+    console.log(userData);
     try {
       await registerUser(userData).then((res) => {
         localStorage.setItem("user", JSON.stringify({ id: res.id, is_admin: res.is_admin }));
@@ -44,11 +45,14 @@ export const AuthProvider = ({ children }) => {
   const login = async (loginData) => {
     try {
       await loginUser(loginData).then((res) => {
-        localStorage.setItem("user", JSON.stringify({ id: res.id, token: res.token, id_admin: res.is_admin }));
-        if (res.is_admin) {
+        getUserDash(res.token).then((data) => {
+          console.log(data.is_admin);
+          localStorage.setItem("user", JSON.stringify(data));
+          if (data.is_admin !== true) {
+            navigate("/");
+          }
           navigate("/admin/dashboardadmin");
-        }
-        navigate("/");
+        });
       });
       // Redirige al usuario a la página de admin
     } catch (error) {

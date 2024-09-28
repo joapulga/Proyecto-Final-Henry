@@ -40,3 +40,17 @@ export const getUserData = async (userId) => {
     throw error; // Lanza el error para que pueda ser manejado en el componente
   }
 };
+export const getUserDash = async (token) => {
+  
+  try {
+    const response = await axios.get(`${URL}/user/dashboard`,{
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+    return response.data; // Retorna los datos del usuario
+  } catch (error) {
+    console.error('Error obteniendo los datos del usuario:', error);
+    throw error; // Lanza el error para que pueda ser manejado en el componente
+  }
+};

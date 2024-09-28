@@ -33,6 +33,7 @@ export class UserController {
     const request1 = request.headers['authorization']
     const token = request1.split(' ')[1]
     let payload = await this.jwtService.decode(token)
+    console.log(request)
     return payload
   }
 

@@ -13,7 +13,7 @@ export class AuthService {
     return await this.authRepository.singIn(createAuthDto)
   }
 
-  async singup(createUserDto: CreateUserDto){
+  async singup(createUserDto: CreateUserDto){  
     return await this.authRepository.singUp(createUserDto)
   }
   
