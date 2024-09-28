@@ -30,3 +30,13 @@ export const createAdmin = async (id) => {
     console.log(error);
   }
 };
+
+export const getUserData = async (userId) => {
+  try {
+    const response = await axios.get(`${URL}/user/${userId}`);
+    return response.data; // Retorna los datos del usuario
+  } catch (error) {
+    console.error('Error obteniendo los datos del usuario:', error);
+    throw error; // Lanza el error para que pueda ser manejado en el componente
+  }
+};

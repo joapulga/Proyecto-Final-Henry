@@ -44,7 +44,7 @@ export const AuthProvider = ({ children }) => {
   const login = async (loginData) => {
     try {
       await loginUser(loginData).then((res) => {
-        localStorage.setItem("user", JSON.stringify({ token: res.token, id_admin: res.is_admin }));
+        localStorage.setItem("user", JSON.stringify({ id: res.id, token: res.token, id_admin: res.is_admin }));
         if (res.is_admin) {
           navigate("/admin/dashboardadmin");
         }
