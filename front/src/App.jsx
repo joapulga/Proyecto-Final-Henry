@@ -11,7 +11,7 @@ import CreditDetail from './components/Credits/CreditDetail';
 import Login from './components/views/Login';
 import { AuthProvider } from './components/Context/AuthContext';
 import DashboardUser from "./components/Users/DashboardUser"
-import Credits from "./components/Users/Credits"
+import Credits from "./components/admin/Credits"
 import ViewCredits from './components/Users/ViewCredits';
 import PerfilUsuario from './components/Users/PerfilUsuario';
 
@@ -29,8 +29,14 @@ const App = () => {
               <Route path="/admin" element={<SidebarAdmin />}>
                 <Route path="dashboardadmin" element={<DashboardAdmin />} />
                 <Route path="AllUsers" element={<AllUsers />} />
+
+                <Route path="user" element={<UserDetail />} />
+                <Route path="cargarCreditos" element={<Credits />} />
+                <Route path="credit" element={<CreditDetail />} />
+
                 <Route path={`user/:id`} element={<UserDetail/>} />
                 <Route path="credit/:id" element={<CreditDetail />} />
+
                 <Route path="perfil" element={<PerfilAdmin />} />
                 <Route path="AllCredits" element={<AllCredits />} />
               </Route>
@@ -38,7 +44,6 @@ const App = () => {
               {/* Rutas del Dashboard del Usuario */}
               <Route path="/user" element={<SidebarUsers />}>
                 <Route path="dashboarduser" element={<DashboardUser />} />
-                <Route path="cargarCreditos" element={<Credits />} />
                 <Route path="allcredits" element={<ViewCredits />} />
                 <Route path="perfiluser" element={<PerfilUsuario />} />
               </Route>
