@@ -1,6 +1,7 @@
 import { createContext, useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { registerUser, loginUser } from "../service/authService";
+import { getUserDash } from "../service/querisUsers";
 
 const AuthContext = createContext();
 
@@ -44,13 +45,16 @@ export const AuthProvider = ({ children }) => {
   const login = async (loginData) => {
     try {
       await loginUser(loginData).then((res) => {
-        localStorage.setItem("user", JSON.stringify({ id: res.id, token: res.token, id_admin: res.is_admin }));
-        if (res.is_admin) {
-          navigate("/admin/dashboardadmin");
-        }
-        navigate("/");
-      });
-      // Redirige al usuario a la página de admin
+        getUserDash(res.token).then((data) => {
+          console.log(data)
+          localStorage.setItem("user", JSON.stringify(data))
+          if(data.is_admin !== true) {
+            navigate("/")
+          } else {
+            navigate("/admin/dashboardadmin")
+          }
+        })
+      })
     } catch (error) {
       setError(error.message); // Guarda el mensaje de error
       console.error("Error en el inicio de sesión:", error);

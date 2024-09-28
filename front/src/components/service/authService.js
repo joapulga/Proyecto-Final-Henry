@@ -19,7 +19,7 @@ export const registerUser = async (userData) => {
     } else if (error.request) {
       throw new Error("No se recibió respuesta del servidor");
     } else {
-      throw new Error("Error: " + error.message);
+      throw new Error("Error: " + error);
     }
   }
 };
