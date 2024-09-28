@@ -70,6 +70,14 @@ export class CreditService {
     return await this.creditRepository.find();
   }
 
+  async findUsersAll(id: string){
+    const user = await this.userService.findOne(id)
+    if(!user){
+      throw new BadRequestException("the users doesn't have credits")
+    }
+    return await this.creditRepository.findBy({user: user})
+  }
+
   async findOne(id: string): Promise<Credit> {
     const credit = await this.creditRepository.findOneBy({ id });
     if (!credit) {
