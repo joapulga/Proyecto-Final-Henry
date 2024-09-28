@@ -13,10 +13,10 @@ export const findAllUsers = async () => {
 };
 
 
-export const findOneUser = async () => {
+export const findUserByID = async (id) => {
   try {
-    const users = await axios.get(URL + "/credit");
-    return users;
+    const users = await axios.get(URL + `/user/${id}`);
+    return users.data;
   } catch (error) {
     console.log(error);
   }
@@ -28,5 +28,15 @@ export const createAdmin = async (id) => {
     return userAdmin;
   } catch (error) {
     console.log(error);
+  }
+};
+
+export const getUserData = async (userId) => {
+  try {
+    const response = await axios.get(`${URL}/user/${userId}`);
+    return response.data; // Retorna los datos del usuario
+  } catch (error) {
+    console.error('Error obteniendo los datos del usuario:', error);
+    throw error; // Lanza el error para que pueda ser manejado en el componente
   }
 };

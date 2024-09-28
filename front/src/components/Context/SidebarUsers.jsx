@@ -16,11 +16,6 @@ const SidebarUsers = () => {
               </Button>
             </li>
             <li>
-              <Button as={Link} to="cargarcreditos" className="block p-2 transition rounded w-100 hover:bg-blue-700">
-                Cargar Creditos
-              </Button>
-            </li>
-            <li>
               <Button as={Link} to="allcredits" className="block p-2 transition rounded w-100 hover:bg-blue-700">
                 Ver Creditos
               </Button>
