@@ -27,7 +27,7 @@ export class User {
     
     @Column({
         type: "varchar",
-        length: 8,
+        length: 10,
         unique: true
     })
     dni: string
