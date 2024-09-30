@@ -20,19 +20,20 @@ export class UserController {
     return this.userService.create(createUserDto);
   }
 
-  @ApiBearerAuth()
+  //@ApiBearerAuth()
   @Get()
-  @UseGuards(AuthGuard)
+  //@UseGuards(AuthGuard)
   findAll() {
     return this.userService.findAll();
   }
 
-  @ApiBearerAuth()
+  //@ApiBearerAuth()
   @Get('dashboard')
   async findLoggedUser(@Req() request: Request){
     const request1 = request.headers['authorization']
     const token = request1.split(' ')[1]
     let payload = await this.jwtService.decode(token)
+    console.log(request)
     return payload
   }
 

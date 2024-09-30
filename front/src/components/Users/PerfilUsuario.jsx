@@ -35,8 +35,9 @@ const UserProfile = () => {
           setUserData({
             name: data.name,
             email: data.email,
+            id: data.id,
             dni: data.dni,
-            telefono: data.telefono,
+            phone: data.phone,
             direccion: data.direccion,
           });
         })
@@ -73,13 +74,13 @@ const UserProfile = () => {
             alt="Imagen de perfil"
           />
           <p className="pt-2 text-xl font-bold">{userData.name}</p>
-          <p className="text-sm text-white">{userData.email}</p>
+          <p className="text-sm text-white">{userData.id}</p>
         </div>
 
         <div className="p-6">
           <p><strong>DNI:</strong> {userData.dni}</p>
-          <p><strong>Teléfono:</strong> {userData.telefono}</p>
-          <p><strong>Dirección:</strong> {userData.direccion}</p>
+          <p><strong>Teléfono:</strong> {userData.phone}</p>
+          <p><strong>Email:</strong> {userData.email}</p>
 
           {/* Formulario para subir nueva imagen */}
           <form onSubmit={handleSubmit} className="mt-4">

@@ -20,8 +20,8 @@ export class UserService {
 
   async create(createUserDto: CreateUserDto) {
     createUserDto.state = await this.stateRepository.findOneBy({name: 'Active'})
-    // const newUser = this.userRepository.create(createUserDto);
-    // await this.userRepository.save(newUser);
+    const newUser = this.userRepository.create(createUserDto);
+    await this.userRepository.save(newUser);
     return createUserDto;
   }
 
