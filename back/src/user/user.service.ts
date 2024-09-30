@@ -25,12 +25,12 @@ export class UserService {
     return createUserDto;
   }
 
-  findAll() {
-    return this.userRepository.find();
+  async findAll() {
+    return await this.userRepository.find();
   }
 
-  findOne(id: string) {
-    return this.userRepository.findOneBy({ id});
+  async findOne(id: string) {
+    return await this.userRepository.findOneBy({ id});
   }
 
   async update(id: string, updateUserDto: UpdateUserDto) {
