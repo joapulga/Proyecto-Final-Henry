@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '../Context/AuthContext';
 import { getUserData } from '../service/querisUsers'; 
 import avatarImg from "../../assets/default-avatar.png";
+import { uploadProfileImage } from '../service/querisUsers';
 
 const UserProfile = () => {
   const { user } = useAuth(); 
@@ -28,7 +29,6 @@ const UserProfile = () => {
   };
 
   useEffect(() => {
-    console.log(user); // Asegúrate de que el id esté presente en el objeto user
     if (user && user.id) { 
       getUserData(user.id)
         .then((data) => {
@@ -44,12 +44,23 @@ const UserProfile = () => {
           console.error('Error obteniendo los datos del usuario:', error);
         });
     }
-  }, [user]); // El efecto depende de que `user` esté disponible
-   
-
-  const handleSubmit = (e) => {
+  }, [user]);
+  
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Imagen subida:', selectedFile);
+
+    if (!selectedFile) {
+      alert("Por favor selecciona una imagen antes de subirla.");
+      return;
+    }
+
+    try {
+      const data = await uploadProfileImage(user.id, selectedFile);
+      console.log('Respuesta del servidor:', data);
+      alert('Imagen subida correctamente');
+    } catch (error) {
+      alert('Hubo un error al subir la imagen:', error);
+    }
   };
 
   return (
@@ -61,8 +72,8 @@ const UserProfile = () => {
             src={profileImage}
             alt="Imagen de perfil"
           />
-          <p className="pt-2 text-xl font-semibold">{userData.name}</p>
-          <p className="text-sm text-gray-600">{userData.email}</p>
+          <p className="pt-2 text-xl font-bold">{userData.name}</p>
+          <p className="text-sm text-white">{userData.email}</p>
         </div>
 
         <div className="p-6">

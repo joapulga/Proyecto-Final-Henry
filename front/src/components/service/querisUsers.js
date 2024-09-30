@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios';
 
 const URL = "http://localhost:3000";
 
@@ -11,7 +11,6 @@ export const findAllUsers = async () => {
     throw error; 
   }
 };
-
 
 export const findUserByID = async (id) => {
   try {
@@ -52,5 +51,22 @@ export const getUserDash = async (token) => {
   } catch (error) {
     console.error('Error obteniendo los datos del usuario:', error);
     throw error; // Lanza el error para que pueda ser manejado en el componente
+  }
+};
+
+export const uploadProfileImage = async (userId, selectedFile) => {
+  const formData = new FormData();
+  formData.append('image', selectedFile);
+
+  try {
+    const response = await axios.post(`${URL}/user/${userId}`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error al subir la imagen:', error);
+    throw error;
   }
 };
