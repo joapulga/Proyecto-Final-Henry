@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '../Context/AuthContext';
 import { getUserData } from '../service/querisUsers'; 
 import avatarImg from "../../assets/default-avatar.png";
+import { uploadProfileImage } from '../service/querisUsers';
 
 const UserProfile = () => {
   const { user } = useAuth(); 
@@ -28,7 +29,6 @@ const UserProfile = () => {
   };
 
   useEffect(() => {
-    console.log(user); 
     if (user && user.id) { 
       getUserData(user.id)
         .then((data) => {
@@ -45,11 +45,22 @@ const UserProfile = () => {
         });
     }
   }, [user]);
-   
-
-  const handleSubmit = (e) => {
+  
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Imagen subida:', selectedFile);
+
+    if (!selectedFile) {
+      alert("Por favor selecciona una imagen antes de subirla.");
+      return;
+    }
+
+    try {
+      const data = await uploadProfileImage(user.id, selectedFile);
+      console.log('Respuesta del servidor:', data);
+      alert('Imagen subida correctamente');
+    } catch (error) {
+      alert('Hubo un error al subir la imagen:', error);
+    }
   };
 
   return (
