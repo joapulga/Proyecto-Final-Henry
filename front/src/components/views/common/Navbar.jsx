@@ -1,17 +1,9 @@
-import { useEffect, useState } from "react";
+import { useAuth } from "../../Context/AuthContext";  // Importa el contexto de autenticación
 import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 const Navbar = () => {
-  const [userLogin, setUserLogin] = useState(() => {
-    // Obtiene el usuario de localStorage solo una vez cuando el componente se monta
-    return JSON.parse(localStorage.getItem("user")) || [];
-  });
-
-  const logout = () => {
-    localStorage.removeItem("user");
-    setUserLogin([]);
-  };
+  const { user, logout } = useAuth(); // Obtén el usuario y la función de logout del contexto
 
   return (
     <nav className="bg-blue-600 shadow-lg">
@@ -24,56 +16,43 @@ const Navbar = () => {
 
           {/* Menú de navegación */}
           <ul className="flex items-center justify-center space-x-6">
-            {!userLogin.token ? (
-              <>
-                <Button>
-                  <Link
-                    to="/login"
-                    className="text-xl text-white no-underline transition duration-300 hover:text-gray-300"
-                  >
-                    Login
-                  </Link>
-                </Button>
-              </>
+            {!user?.id ? ( // Si no hay usuario logueado
+              <Button>
+                <Link
+                  to="/login"
+                  className="text-xl text-white no-underline transition duration-300 hover:text-gray-300"
+                >
+                  Login
+                </Link>
+              </Button>
             ) : (
               <>
-                {userLogin.is_admin ? (
-                  <>
-                    {/* Botón de Admin */}
-                    <Button>
-                      <Link
-                        to="/admin"
-                        className="text-xl text-white no-underline transition duration-300 hover:text-gray-300"
-                      >
-                        Administrador
-                      </Link>
-                    </Button>
-                    <Button
-                      className="text-xl text-white no-underline transition duration-300 hover:text-gray-300 fs-5"
-                      onClick={logout}
+                {user.is_admin === true ? ( // Si el usuario es administrador
+                  <Button>
+                    <Link
+                      to="/admin/dashboardadmin"
+                      className="text-xl text-white no-underline transition duration-300 hover:text-gray-300"
                     >
-                      Salir
-                    </Button>
-                  </>
-                ) : (
-                  <>
-                    {/* Botón de User (solo para usuarios no admin) */}
-                    <Button>
-                      <Link
-                        to="/user"
-                        className="text-xl text-white no-underline transition duration-300 hover:text-gray-300"
-                      >
-                        Usuario
-                      </Link>
-                    </Button>
-                    <Button
-                      className="text-xl text-white no-underline transition duration-300 hover:text-gray-300 fs-5"
-                      onClick={logout}
+                      Administrador
+                    </Link>
+                  </Button>
+                ) : ( // Si el usuario no es administrador
+                  <Button>
+                    <Link
+                      to="/user/dashboarduser"
+                      className="text-xl text-white no-underline transition duration-300 hover:text-gray-300"
                     >
-                      Salir
-                    </Button>
-                  </>
+                      Usuario
+                    </Link>
+                  </Button>
                 )}
+                {/* Botón para cerrar sesión */}
+                <Button
+                  className="text-xl text-white no-underline transition duration-300 hover:text-gray-300 fs-5"
+                  onClick={logout}
+                >
+                  Salir
+                </Button>
               </>
             )}
           </ul>
