@@ -2,15 +2,17 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { ShareService } from './share.service';
 import { CreateShareDto } from './dto/create-share.dto';
 import { UploadShareDto } from './dto/update-share.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Shares')
 @Controller('share')
 export class ShareController {
   constructor(private readonly shareService: ShareService) {}
 
-  @Post()
-  create(@Body() createShareDto: CreateShareDto) {
-    return this.shareService.create(createShareDto);
-  }
+  // @Post()
+  // create(@Body() createShareDto: CreateShareDto) {
+  //   return this.shareService.create(createShareDto);
+  // }
 
   @Get()
   findAll() {

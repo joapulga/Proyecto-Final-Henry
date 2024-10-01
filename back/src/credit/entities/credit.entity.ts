@@ -12,9 +12,7 @@ export class Credit {
     id: string = uuid()
 
     @Column({
-        type: "decimal",
-        scale: 4,
-        precision: 10
+        type: "int"
     })
     amount: number
 

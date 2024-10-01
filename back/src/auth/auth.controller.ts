@@ -12,11 +12,13 @@ export class AuthController {
 
   @Post('signin')
   signin(@Body() createAuthDto: CreateAuthDto) {
+    console.log(createAuthDto)
     return this.authService.signin(createAuthDto);
   }
 
   @Post('signup')
   signup(@Body() createUserDto: CreateUserDto) {
+    console.log(createUserDto)
     return this.authService.singup(createUserDto);
   }
 

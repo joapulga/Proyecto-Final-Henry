@@ -2,12 +2,19 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '../Context/AuthContext';
 import { getUserData } from '../service/querisUsers'; 
 import avatarImg from "../../assets/default-avatar.png";
+import { uploadProfileImage } from '../service/querisUsers';
 
-const PerfilAdmin = () => {
+const UserProfile = () => {
   const { user } = useAuth(); 
   const [profileImage, setProfileImage] = useState(avatarImg);
   const [selectedFile, setSelectedFile] = useState(null);
-  const [userData, setUserData] = useState([]);
+  const [userData, setUserData] = useState({
+    name: "",
+    email: "",
+    dni: "",
+    telefono: "",
+    direccion: "",
+  });
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -22,24 +29,39 @@ const PerfilAdmin = () => {
   };
 
   useEffect(() => {
-    console.log(user); 
     if (user && user.id) { 
       getUserData(user.id)
         .then((data) => {
-          console.log(data)
-          setUserData(data);
-          console.log(userData)
+          setUserData({
+            name: data.name,
+            email: data.email,
+            id: data.id,
+            dni: data.dni,
+            phone: data.phone,
+            direccion: data.direccion,
+          });
         })
         .catch((error) => {
           console.error('Error obteniendo los datos del usuario:', error);
         });
     }
   }, [user]);
-   
-
-  const handleSubmit = (e) => {
+  
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Imagen subida:', selectedFile);
+
+    if (!selectedFile) {
+      alert("Por favor selecciona una imagen antes de subirla.");
+      return;
+    }
+
+    try {
+      const data = await uploadProfileImage(user.id, selectedFile);
+      console.log('Respuesta del servidor:', data);
+      alert('Imagen subida correctamente');
+    } catch (error) {
+      alert('Hubo un error al subir la imagen:', error);
+    }
   };
 
   return (
@@ -89,5 +111,4 @@ const PerfilAdmin = () => {
   );
 };
 
-export default PerfilAdmin;
-
+export default UserProfile;

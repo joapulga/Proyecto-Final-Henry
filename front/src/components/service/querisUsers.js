@@ -1,21 +1,21 @@
-import axios from "axios";
+import axios from 'axios';
 
 const URL = "http://localhost:3000";
 
-//USERS
 export const findAllUsers = async () => {
   try {
-    const users = await axios.get(URL + "/user");
-    return users;
+    const response = await axios.get(URL + "/user");
+    return response.data; 
   } catch (error) {
-    console.log(error);
+    console.error('Error obteniendo usuarios:', error);
+    throw error; 
   }
 };
 
-export const findOneUser = async () => {
+export const findUserByID = async (id) => {
   try {
-    const users = await axios.get(URL + "/credit");
-    return users;
+    const users = await axios.get(URL + `/user/${id}`);
+    return users.data;
   } catch (error) {
     console.log(error);
   }
@@ -27,5 +27,46 @@ export const createAdmin = async (id) => {
     return userAdmin;
   } catch (error) {
     console.log(error);
+  }
+};
+
+export const getUserData = async (userId) => {
+  try {
+    const response = await axios.get(`${URL}/user/${userId}`);
+    return response.data; // Retorna los datos del usuario
+  } catch (error) {
+    console.error('Error obteniendo los datos del usuario:', error);
+    throw error; // Lanza el error para que pueda ser manejado en el componente
+  }
+};
+export const getUserDash = async (token) => {
+  
+  try {
+    const response = await axios.get(`${URL}/user/dashboard`,{
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+    return response.data; // Retorna los datos del usuario
+  } catch (error) {
+    console.error('Error obteniendo los datos del usuario:', error);
+    throw error; // Lanza el error para que pueda ser manejado en el componente
+  }
+};
+
+export const uploadProfileImage = async (userId, selectedFile) => {
+  const formData = new FormData();
+  formData.append('image', selectedFile);
+
+  try {
+    const response = await axios.post(`${URL}/user/${userId}`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error al subir la imagen:', error);
+    throw error;
   }
 };
