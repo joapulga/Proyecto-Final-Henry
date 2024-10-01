@@ -135,7 +135,7 @@ const Home = () => {
                 placeholder="Ingresa tu contraseña"
               />
             </div>
-            <div className="mb-4">
+            {/* <div className="mb-4">
               <label className="block mb-2 text-sm font-bold text-gray-700">Dirección</label>
               <input
                 type="text"
@@ -145,7 +145,7 @@ const Home = () => {
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Ingresa tu dirección"
               />
-            </div>
+            </div> */}
             <button type="submit" className="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded-lg hover:bg-blue-600">
               Crear Cuenta
             </button>
