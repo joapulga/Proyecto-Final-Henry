@@ -29,6 +29,7 @@ export class UserController {
 
   @ApiBearerAuth()
   @Get('dashboard')
+  @UseGuards(AuthGuard)
   async findLoggedUser(@Req() request: Request){
     const request1 = request.headers['authorization']
     const token = request1.split(' ')[1]

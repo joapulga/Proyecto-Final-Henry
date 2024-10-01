@@ -11,7 +11,6 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 import typeOrmConfig from './config/typeorm'
 import { JwtModule } from '@nestjs/jwt';
-import { EmailService } from './service/email/email.service';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 
@@ -61,6 +60,6 @@ import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handleba
     AuthModule
   ],
   controllers: [AppController],
-  providers: [AppService, EmailService],
+  providers: [AppService],
 })
 export class AppModule {}

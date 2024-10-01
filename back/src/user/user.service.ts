@@ -26,7 +26,19 @@ export class UserService {
   }
 
   async findAll() {
-    return await this.userRepository.find();
+    return await this.userRepository.find({
+      select: {
+        id: true,
+        name: true,
+        lastname: true,
+        dni: true,
+        phone: true,
+        email: true,
+        password: false,
+        is_admin: true,
+        img_url: true
+      },
+    });
   }
 
   async findOne(id: string) {
