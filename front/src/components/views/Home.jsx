@@ -7,7 +7,7 @@ import { FaUserPlus } from 'react-icons/fa';
 import heroImage from "../../assets/heroImage.jpg";
 
 const Home = () => {
-  const { register } = useAuth();
+  const { register, error } = useAuth(); // Añadir error del contexto
 
   const [formData, setFormData] = useState({
     name: "",
@@ -16,7 +16,7 @@ const Home = () => {
     phone: "",
     email: "",
     password: "",
-    address: "", // Solo mantener los campos que necesitas
+    address: "",
   });
 
   const handleChange = (e) => {
@@ -27,12 +27,9 @@ const Home = () => {
     }));
   };
 
-  const navigate = useNavigate();
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    register(formData); // Llamar a la función de registro
-    navigate('/login'); // Redirigir al login después de registrar
+    register(formData);
   };
 
   return (
@@ -60,61 +57,16 @@ const Home = () => {
         </div>
       </div>
 
-      {/* Sección de Características */}
-      <section className="py-12 bg-white">
-        <div className="container px-4 mx-auto">
-          <h2 className="mb-8 text-3xl font-semibold text-center">Características del Sistema</h2>
-          <div className="grid gap-8 md:grid-cols-3">
-            <div className="p-6 text-center bg-gray-100 rounded-lg shadow-lg">
-              <h3 className="mb-4 text-2xl font-bold">Gestión de Usuarios</h3>
-              <p>
-                Administra fácilmente las cuentas de usuarios, con opciones para crear, editar y eliminar usuarios.
-              </p>
-            </div>
-            <div className="p-6 text-center bg-gray-100 rounded-lg shadow-lg">
-              <h3 className="mb-4 text-2xl font-bold">Relevamientos Técnicos</h3>
-              <p>
-                Realiza y gestiona relevamientos técnicos en tiempo real, con reportes detallados.
-              </p>
-            </div>
-            <div className="p-6 text-center bg-gray-100 rounded-lg shadow-lg">
-              <h3 className="mb-4 text-2xl font-bold">Soporte Técnico</h3>
-              <p>
-                Solicita y recibe soporte técnico especializado cuando lo necesites.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Sección de Testimonios */}
-      <section className="py-12 bg-gray-100">
-        <div className="container px-4 mx-auto">
-          <h2 className="mb-8 text-3xl font-semibold text-center">Lo que dicen nuestros usuarios</h2>
-          <div className="grid gap-8 md:grid-cols-3">
-            <div className="p-6 text-center bg-white rounded-lg shadow-lg">
-              <p className="mb-4 italic">"Este sistema ha mejorado la gestión de nuestro equipo en un 100%. ¡Altamente recomendado!"</p>
-              <h3 className="text-lg font-bold">Juan Pérez</h3>
-              <p className="text-sm text-gray-500">Administrador de Empresa</p>
-            </div>
-            <div className="p-6 text-center bg-white rounded-lg shadow-lg">
-              <p className="mb-4 italic">"Muy fácil de usar, ha simplificado todas nuestras tareas diarias."</p>
-              <h3 className="text-lg font-bold">María González</h3>
-              <p className="text-sm text-gray-500">Técnica Especialista</p>
-            </div>
-            <div className="p-6 text-center bg-white rounded-lg shadow-lg">
-              <p className="mb-4 italic">"El soporte técnico es excelente y siempre están dispuestos a ayudar."</p>
-              <h3 className="text-lg font-bold">Carlos Ramírez</h3>
-              <p className="text-sm text-gray-500">Usuario</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Solicitud de Usuario Section */}
       <section id="cuenta" className="flex-grow py-12 bg-gray-100">
         <div className="container px-4 mx-auto">
           <h2 className="mb-8 text-3xl font-semibold text-center">Solicita tu cuenta</h2>
+
+          {error && ( // Mostrar error si existe
+            <div className="max-w-lg p-4 mx-auto mb-4 text-center text-white bg-red-500 rounded-lg">
+              <p>{error}</p>
+            </div>
+          )}
 
           <form onSubmit={handleSubmit} className="max-w-lg p-8 mx-auto bg-white rounded-lg shadow-lg">
             <div className="mb-4">
@@ -123,7 +75,7 @@ const Home = () => {
                 type="text"
                 name="name"
                 onChange={handleChange}
-                value={formData.name} // Vincular valor
+                value={formData.name}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Ingresa tu nombre"
               />
@@ -134,7 +86,7 @@ const Home = () => {
                 type="text"
                 name="lastname"
                 onChange={handleChange}
-                value={formData.lastname} // Vincular valor
+                value={formData.lastname}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Ingresa tu apellido"
               />
@@ -145,7 +97,7 @@ const Home = () => {
                 type="number"
                 name="dni"
                 onChange={handleChange}
-                value={formData.dni} // Vincular valor
+                value={formData.dni}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Ingresa tu DNI"
               />
@@ -156,7 +108,7 @@ const Home = () => {
                 type="number"
                 name="phone"
                 onChange={handleChange}
-                value={formData.phone} // Vincular valor
+                value={formData.phone}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Ingresa tu número de teléfono"
               />
@@ -167,7 +119,7 @@ const Home = () => {
                 type="email"
                 name="email"
                 onChange={handleChange}
-                value={formData.email} // Vincular valor
+                value={formData.email}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Ingresa tu correo electrónico"
               />
@@ -178,22 +130,22 @@ const Home = () => {
                 type="password"
                 name="password"
                 onChange={handleChange}
-                value={formData.password} // Vincular valor
+                value={formData.password}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Ingresa tu contraseña"
               />
             </div>
-            <div className="mb-4">
+            {/* <div className="mb-4">
               <label className="block mb-2 text-sm font-bold text-gray-700">Dirección</label>
               <input
                 type="text"
                 name="address"
                 onChange={handleChange}
-                value={formData.address} // Vincular valor
+                value={formData.address}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Ingresa tu dirección"
               />
-            </div>
+            </div> */}
             <button type="submit" className="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded-lg hover:bg-blue-600">
               Crear Cuenta
             </button>
