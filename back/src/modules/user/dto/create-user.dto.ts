@@ -1,16 +1,20 @@
-import { IsString, IsEmail, IsNumber} from 'class-validator';
+import { IsString, IsEmail, IsOptional, IsNumber, IsBoolean } from 'class-validator';
 
 export class CreateUserDto {
   @IsString()
+ 
   name: string;
 
   @IsString()
+ 
   lastName: string;
 
   @IsString()
+ 
   dni: string;
 
   @IsString()
+ 
   phone: string;
 
   @IsEmail()
@@ -20,9 +24,16 @@ export class CreateUserDto {
   password: string;
 
   @IsString()
+ 
   imgUrl: string;
 
   @IsString()
+ 
   address: string;
+
+  @IsBoolean()
+ 
+  is_admin: boolean;
 }
+
 

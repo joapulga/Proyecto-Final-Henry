@@ -1,18 +1,19 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Body } from '@nestjs/common';
+import { Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { CreateAuthDto } from './dto/create-auth.dto';
-import { UpdateAuthDto } from './dto/update-auth.dto';
-import { CreateUserDto } from 'src/user/dto/create-user.dto';
+import { AuthGuard } from '@nestjs/passport';
+import { CreateUserDto } from 'src/modules/user/dto/create-user.dto';
+
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Post('signin')
-  signin(@Body() createAuthDto: CreateAuthDto) {
-    const userIned = this.authService.signin(createAuthDto);
-    console.log(userIned);
-    return userIned;
+  @Get('login')
+  @UseGuards(AuthGuard('google'))
+  async googleLogin(@Req() req) {
+    // El usuario ya ha sido autenticado por Auth0
+    return { message: 'Logged in successfully!', user: req.user };
   }
 
   @Post('signup')

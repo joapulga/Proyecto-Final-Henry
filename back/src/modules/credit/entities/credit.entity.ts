@@ -1,6 +1,6 @@
-import { Share } from "src/share/entities/share.entity";
-import { State } from "src/states/entities/state.entity";
-import { User } from "src/user/entities/user.entity";
+import { Share } from "src/modules/share/entities/share.entity";
+import { State } from "src/modules/states/entities/state.entity";
+import { User } from "src/modules/user/entities/user.entity";
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToOne, JoinColumn, OneToMany } from "typeorm";
 import { v4 as uuid } from "uuid"
 

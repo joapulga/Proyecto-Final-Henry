@@ -10,6 +10,7 @@ import AllCredits from './components/Credits/AllCredits';
 import CreditDetail from './components/Credits/CreditDetail';
 import Login from './components/views/Login';
 import { AuthProvider } from './components/Context/AuthContext';
+import PaymentCredit from './components/views/Payment';
 
 const App = () => {
   return (
@@ -18,6 +19,8 @@ const App = () => {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path='/login' element={<Login />}/>
+              <Route path='/paymentCredit' element={<PaymentCredit />}/>
+              
               {/* Rutas dentro del Dashboard del Admin */}
               <Route path="/admin" element={<SidebarAdmin />}>
                 <Route path="user" element={<UserDetail />} />

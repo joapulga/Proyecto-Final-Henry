@@ -1,5 +1,5 @@
-import { Credit } from "src/credit/entities/credit.entity";
-import { State } from "src/states/entities/state.entity";
+import { Credit } from "src/modules/credit/entities/credit.entity";
+import { State } from "src/modules/states/entities/state.entity";
 import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { v4 as uuid } from "uuid"
 

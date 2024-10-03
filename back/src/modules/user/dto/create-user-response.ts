@@ -24,4 +24,5 @@ export class CreateUserDto {
 
   @IsString()
   address: string;
+  
 }

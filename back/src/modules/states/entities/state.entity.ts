@@ -1,6 +1,6 @@
-import { Credit } from "src/credit/entities/credit.entity";
-import { Share } from "src/share/entities/share.entity";
-import { User } from "src/user/entities/user.entity";
+import { Credit } from "src/modules/credit/entities/credit.entity";
+import { Share } from "src/modules/share/entities/share.entity";
+import { User } from "src/modules/user/entities/user.entity";
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { v4 as uuid } from "uuid"
 

@@ -2,6 +2,8 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { CreditService } from './credit.service';
 import { CreditCreateDto } from './dto/create-credit.dto';
 import { CreditUpdateDto } from './dto/update-credit.dto';
+import { Roles } from 'src/decorators/roles.decorators';
+import { Role } from 'src/auth/roles.enum';
 
 @Controller('credit')
 export class CreditController {
@@ -13,6 +15,7 @@ export class CreditController {
   }
 
   @Get()
+  @Roles(Role.Admin)
   findAll() {
     return this.creditService.findAll();
   }

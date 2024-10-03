@@ -1,11 +1,13 @@
 import { BadRequestException, Injectable } from "@nestjs/common";
 import { CreateAuthDto } from "./dto/create-auth.dto";
-import { CreateUserDto } from "../user/dto/create-user.dto"
+import { CreateUserDto } from "../modules/user/dto/create-user.dto"
 import { InjectRepository } from "@nestjs/typeorm";
-import { User } from "src/user/entities/user.entity";
+import { User } from "src/modules/user/entities/user.entity";
 import { Repository } from "typeorm";
 import { JwtService } from "@nestjs/jwt";
 import  * as bcrypt from "bcrypt"
+
+
 
 @Injectable()
 export class AuthRepository{
@@ -26,7 +28,13 @@ export class AuthRepository{
                     name: user.name
                 }
                 const JWT = this.jwtService.sign(payload)
+                
+               
+              
+
                 return {success: 'User login', token: JWT}
+
+
             }else{
                 throw new BadRequestException('Bad Password or User')
             }
@@ -35,12 +43,13 @@ export class AuthRepository{
         }
     }
 
-    async singUp(createUserDto: CreateUserDto){
-        const salt = await bcrypt.genSalt(10)
-        const hashPassword = await bcrypt.hash(createUserDto.password, salt)
-        const newUser = {...createUserDto, password: hashPassword}
-        await this.userRepository.save(newUser)
-        delete newUser.password
-        return newUser
+    async singUp(createUserDto:CreateUserDto) {
+        const salt = await bcrypt.genSalt(10);
+        const hashPassword = await bcrypt.hash(createUserDto.password, salt);
+        const newUser = {...createUserDto, password: hashPassword};
+        const savedUser = await this.userRepository.save(newUser);
+        delete savedUser.password;
+        console.log("usuario registrado: ", savedUser);
+        return savedUser;
     }
 }
