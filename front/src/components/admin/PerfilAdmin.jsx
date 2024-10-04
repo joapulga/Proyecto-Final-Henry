@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react';
-import { useAuth } from '../Context/AuthContext';
-import { getUserData } from '../service/querisUsers'; 
+import { useState, useEffect } from "react";
+import { useAuth } from "../Context/AuthContext";
+import { createPhoto, getUserData } from "../service/querisUsers";
 import avatarImg from "../../assets/default-avatar.png";
 
 const PerfilAdmin = () => {
-  const { user } = useAuth(); 
+  const { user } = useAuth();
   const [profileImage, setProfileImage] = useState(avatarImg);
   const [selectedFile, setSelectedFile] = useState(null);
   const [userData, setUserData] = useState([]);
@@ -22,24 +22,29 @@ const PerfilAdmin = () => {
   };
 
   useEffect(() => {
-    console.log(user); 
-    if (user && user.id) { 
+    if (user && user.id) {
       getUserData(user.id)
         .then((data) => {
-          console.log(data)
           setUserData(data);
-          console.log(userData)
         })
         .catch((error) => {
-          console.error('Error obteniendo los datos del usuario:', error);
+          console.error("Error obteniendo los datos del usuario:", error);
         });
     }
   }, [user]);
-   
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Imagen subida:', selectedFile);
+    // console.log("Imagen subida:", selectedFile);
+    // const formData = new FormData();
+    // formData.append("selectedFile", selectedFile);
+    try {
+      await createPhoto(selectedFile).then((r) => {
+        console.log(r);
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -56,9 +61,15 @@ const PerfilAdmin = () => {
         </div>
 
         <div className="p-6">
-          <p><strong>DNI:</strong> {userData.dni}</p>
-          <p><strong>Teléfono:</strong> {userData.phone}</p>
-          <p><strong>Email:</strong> {userData.email}</p>
+          <p>
+            <strong>DNI:</strong> {userData.dni}
+          </p>
+          <p>
+            <strong>Teléfono:</strong> {userData.phone}
+          </p>
+          <p>
+            <strong>Email:</strong> {userData.email}
+          </p>
 
           {/* Formulario para subir nueva imagen */}
           <form onSubmit={handleSubmit} className="mt-4">
@@ -90,4 +101,3 @@ const PerfilAdmin = () => {
 };
 
 export default PerfilAdmin;
-
