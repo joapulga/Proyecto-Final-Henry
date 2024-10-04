@@ -12,7 +12,7 @@ const TablesUser = () => {
       <CardsTop></CardsTop>
       <Row className="pt-5">
         <Col>
-          <AllUsers ></AllUsers>
+          <AllUsers></AllUsers>
         </Col>
         <Col>
           <AllCredits ></AllCredits>

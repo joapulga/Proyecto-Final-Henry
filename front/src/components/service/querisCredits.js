@@ -20,3 +20,12 @@ export const findAllCredits = async () => {
     }
 
   }
+  export const findAllCreditsUsers = async (id) => {
+    try {
+      const response = await axios.get(URL + `/credit/user/${id}`);
+      return response.data; 
+    } catch (error) {
+      console.error('Error obteniendo usuarios:', error);
+      throw error; 
+    }
+  };
