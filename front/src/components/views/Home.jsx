@@ -5,6 +5,7 @@ import NavBar from "./common/Navbar";
 import Footer from "./common/Footer";
 import { FaUserPlus } from 'react-icons/fa';
 import heroImage from "../../assets/heroImage.jpg";
+import Register from "./Register";
 
 const Home = () => {
   const { register, error } = useAuth(); // Añadir error del contexto
@@ -56,9 +57,9 @@ const Home = () => {
           </a>
         </div>
       </div>
-
-      {/* Solicitud de Usuario Section */}
-      <section id="cuenta" className="flex-grow py-12 bg-gray-100">
+<Register></Register>
+     
+      {/* <section id="cuenta" className="flex-grow py-12 bg-gray-100">
         <div className="container px-4 mx-auto">
           <h2 className="mb-8 text-3xl font-semibold text-center">Solicita tu cuenta</h2>
 
@@ -135,7 +136,7 @@ const Home = () => {
                 placeholder="Ingresa tu contraseña"
               />
             </div>
-            {/* <div className="mb-4">
+           <div className="mb-4">
               <label className="block mb-2 text-sm font-bold text-gray-700">Dirección</label>
               <input
                 type="text"
@@ -145,13 +146,13 @@ const Home = () => {
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Ingresa tu dirección"
               />
-            </div> */}
+            </div>
             <button type="submit" className="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded-lg hover:bg-blue-600">
               Crear Cuenta
             </button>
           </form>
         </div>
-      </section>
+      </section> */}
 
       <Footer />
     </div>

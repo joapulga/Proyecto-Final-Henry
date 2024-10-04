@@ -14,6 +14,7 @@ import DashboardUser from "./components/Users/DashboardUser";
 import Credits from "./components/admin/Credits";
 import ViewCredits from "./components/Users/ViewCredits";
 import PerfilUsuario from "./components/Users/PerfilUsuario";
+import Register from "./components/views/Register";
 
 const App = () => {
   return (
@@ -34,6 +35,7 @@ const App = () => {
 
             <Route path={`user/:id`} element={<UserDetail />} />
             <Route path="credit/:id" element={<CreditDetail />} />
+            <Route path="register" element={<Register />} />
 
             <Route path="perfil" element={<PerfilAdmin />} />
             <Route path="AllCredits" element={<AllCredits />} />
