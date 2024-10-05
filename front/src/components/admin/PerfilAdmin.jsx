@@ -1,13 +1,20 @@
-import { useState, useEffect } from "react";
-import { useAuth } from "../Context/AuthContext";
-import { createPhoto, getUserData } from "../service/querisUsers";
+import { useState, useEffect } from 'react';
+import { useAuth } from '../Context/AuthContext';
+import { createPhoto, getUserData } from '../service/querisUsers'; 
 import avatarImg from "../../assets/default-avatar.png";
+import { uploadProfileImage } from '../service/querisUsers';
 
-const PerfilAdmin = () => {
-  const { user } = useAuth();
+const UserProfile = () => {
+  const { user } = useAuth(); 
   const [profileImage, setProfileImage] = useState(avatarImg);
   const [selectedFile, setSelectedFile] = useState(null);
-  const [userData, setUserData] = useState([]);
+  const [userData, setUserData] = useState({
+    name: "",
+    email: "",
+    dni: "",
+    telefono: "",
+    direccion: "",
+  });
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -22,17 +29,24 @@ const PerfilAdmin = () => {
   };
 
   useEffect(() => {
-    if (user && user.id) {
+    if (user && user.id) { 
       getUserData(user.id)
         .then((data) => {
-          setUserData(data);
+          setUserData({
+            name: data.name,
+            email: data.email,
+            id: data.id,
+            dni: data.dni,
+            phone: data.phone,
+            direccion: data.direccion,
+          });
         })
         .catch((error) => {
-          console.error("Error obteniendo los datos del usuario:", error);
+          console.error('Error obteniendo los datos del usuario:', error);
         });
     }
   }, [user]);
-
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     // console.log("Imagen subida:", selectedFile);
@@ -48,28 +62,30 @@ const PerfilAdmin = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="w-full max-w-2xl p-8 mx-auto bg-white rounded-lg shadow-lg">
-        <div className="p-6 text-center bg-blue-600 border-b">
+    <div 
+      className="flex items-center justify-center min-h-screen bg-gradient-to-r from-blue-200 to-blue-100"
+    >
+      <div 
+        className="w-full max-w-2xl p-8 mx-auto bg-white rounded-lg shadow-2xl"
+        style={{ borderRadius: '16px' }}
+      >
+        <div 
+          className="p-6 text-center bg-blue-600 border-b rounded-t-lg"
+          style={{ borderRadius: '16px 16px 0 0' }}
+        >
           <img
-            className="w-32 h-32 mx-auto rounded-full"
+            className="w-32 h-32 mx-auto rounded-full shadow-lg"
             src={profileImage}
             alt="Imagen de perfil"
           />
-          <p className="pt-2 text-xl font-bold">{userData.name}</p>
-          <p className="text-sm text-white">{userData.id}</p>
+          <p className="pt-2 text-xl font-bold text-white">{userData.name}</p>
+          <p className="text-sm text-blue-200">{userData.id}</p>
         </div>
 
         <div className="p-6">
-          <p>
-            <strong>DNI:</strong> {userData.dni}
-          </p>
-          <p>
-            <strong>Teléfono:</strong> {userData.phone}
-          </p>
-          <p>
-            <strong>Email:</strong> {userData.email}
-          </p>
+          <p className="mb-2 text-gray-700"><strong>DNI:</strong> {userData.dni}</p>
+          <p className="mb-2 text-gray-700"><strong>Teléfono:</strong> {userData.phone}</p>
+          <p className="mb-2 text-gray-700"><strong>Email:</strong> {userData.email}</p>
 
           {/* Formulario para subir nueva imagen */}
           <form onSubmit={handleSubmit} className="mt-4">
@@ -80,7 +96,7 @@ const PerfilAdmin = () => {
               type="file"
               accept="image/*"
               onChange={handleFileChange}
-              className="w-full p-2 border rounded"
+              className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-300"
             />
             {selectedFile && (
               <p className="mt-2 text-sm text-gray-500">
@@ -89,7 +105,7 @@ const PerfilAdmin = () => {
             )}
             <button
               type="submit"
-              className="w-full p-2 mt-4 text-white bg-blue-500 rounded hover:bg-blue-600"
+              className="w-full p-2 mt-4 text-white bg-blue-500 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
             >
               Guardar imagen
             </button>
@@ -100,4 +116,4 @@ const PerfilAdmin = () => {
   );
 };
 
-export default PerfilAdmin;
+export default UserProfile;
