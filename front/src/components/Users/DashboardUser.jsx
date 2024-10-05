@@ -5,11 +5,15 @@ import { getUserData } from '../service/querisUsers';
 import { getCreditsByUserId } from '../service/querisCredits'; 
 import { FaUser, FaCreditCard } from 'react-icons/fa';
 import { Link } from "react-router-dom";
+import { Bar } from 'react-chartjs-2';  // Importa Bar de react-chartjs-2
+import { Chart, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
+
+// Registrar las escalas necesarias para Chart.js
+Chart.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 const DashboardUser = () => {
   const { user } = useAuth();
-  const  [loading, setLoading] = useState([]);
-
+  const [loading, setLoading] = useState([]);
   const [userData, setUserData] = useState({
     name: "",
     email: "",
@@ -65,6 +69,33 @@ const DashboardUser = () => {
   if (error) {
     return <p className="text-center text-red-500">{error}</p>;
   }
+
+  // Configuración del gráfico de barras
+  const chartData = {
+    labels: credits.map((credit) => new Date(credit.date).toLocaleDateString()), // Fechas como etiquetas
+    datasets: [
+      {
+        label: "Montos de Créditos",
+        data: credits.map((credit) => credit.amount), // Montos de los créditos
+        backgroundColor: 'rgba(75, 192, 192, 0.6)', // Color de las barras
+        borderColor: 'rgba(75, 192, 192, 1)',
+        borderWidth: 1,
+      },
+    ],
+  };
+
+  const chartOptions = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'top',
+      },
+      title: {
+        display: true,
+        text: 'Créditos por Fecha',
+      },
+    },
+  };
 
   return (
     <Container 
@@ -140,40 +171,48 @@ const DashboardUser = () => {
                     <th>ID</th>
                     <th>Fecha</th>
                     <th>Monto</th>
-                    <th>Estatus</th>
                     <th>Acciones</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {credits && credits.length > 0 ? (
-                    credits.map((credit) => (
-                      <tr key={credit.id}>
-                        <td>{credit.id}</td>
-                        <td>{new Date(credit.date).toLocaleDateString()}</td>
-                        <td>${credit.amount}</td>
-                        <td>{credit.status}</td>
-                        <td>
-                          <Button
-                            variant="primary"
-                            size="sm"
-                            className="me-1"
-                            onClick={() => alert(`Pagar crédito ${credit.id}`)}
-                            as={Link} to={"./views/payment"}
-                          >
-                            Pagar
-                          </Button>
-                        </td>
-                      </tr>
-                    ))
-                  ) : (
-                    <tr>
-                      <td colSpan="5" className="text-center">
-                        No se encontraron créditos
-                      </td>
-                    </tr>
-                  )}
+                {credits && credits.length > 0 ? (
+  credits.map((credit) => {
+    console.log(credit); // Verifica si credit.date tiene un valor adecuado
+    return (
+      <tr key={credit.id}>
+        <td>{credit.id}</td>
+        <td>{credit.date ? new Date(credit.date).toLocaleDateString() : 'Fecha no disponible'}</td>
+        <td>${credit.amount}</td>
+        <td>
+          <Button
+            variant="primary"
+            size="sm"
+            className="me-1"
+            onClick={() => alert(`Pagar crédito ${credit.id}`)}
+            as={Link} to={"./views/payment"}
+          >
+            Pagar
+          </Button>
+        </td>
+      </tr>
+    );
+  })
+) : (
+  <tr>
+    <td colSpan="5" className="text-center">
+      No se encontraron créditos
+    </td>
+  </tr>
+)}
+
                 </tbody>
               </Table>
+
+              {/* Gráfico de Créditos */}
+              <div className="mt-5">
+                <h5 className="mb-4 text-center" style={{ color: '#555' }}>Montos de tus créditos a lo largo del tiempo</h5>
+                <Bar data={chartData} options={chartOptions} />
+              </div>
             </Card.Body>
           </Card>
         </Col>
