@@ -6,6 +6,7 @@ import Footer from "./common/Footer";
 import { FaUserPlus } from 'react-icons/fa';
 import heroImage from "../../assets/heroImage.jpg";
 import Register from "./Register";
+import ChatBotComponent from "../ChatBot/ChatBotComponent";
 
 const Home = () => {
   const { register, error } = useAuth(); // Añadir error del contexto
@@ -57,7 +58,7 @@ const Home = () => {
           </a>
         </div>
       </div>
-<Register></Register>
+      <Register></Register>
      
       {/* <section id="cuenta" className="flex-grow py-12 bg-gray-100">
         <div className="container px-4 mx-auto">
@@ -153,6 +154,8 @@ const Home = () => {
           </form>
         </div>
       </section> */}
+
+      <ChatBotComponent />
 
       <Footer />
     </div>
