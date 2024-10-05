@@ -1,7 +1,41 @@
+import { useEffect, useState } from "react";
 import { Table, Button, Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { findAllCredits } from "../service/querisCredits";
 
 const AllCredits = () => {
+  const [credits, setCredits] = useState([]);
+
+  useEffect(() => {
+    findAllCredits().then((res) => {
+      try {
+        setCredits(res);
+      } catch (error) {
+        console.log(error);
+      }
+    });
+  }, []);
+  const onclick=()=>{
+    
+  }
+   const mapeo = () => {
+     return credits.map((c) => {
+       return (
+         <tr key={c.id}>
+           <td>{c.id}</td>
+           <td>{c.name}</td>
+           <td>{c.dni}</td>
+           <td>{c.phone}</td>
+           <td>
+             <Button as={Link} to="/admin/credit" >
+               Ver Más
+             </Button>
+           </td>
+         </tr>
+       );
+     });
+   };
+
   return (
     <Container>
       <h1 className="text-center">Credits</h1>
@@ -15,32 +49,7 @@ const AllCredits = () => {
             <th>Funtions</th>
           </tr>
         </thead>
-        <tbody>
-          <tr>
-            <td>1</td>
-            <td>123</td>
-            <td>12/10/24</td>
-            <td>
-              <Button as={Link} to="/admin/credit">Ver Más</Button>
-            </td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>
-              <Button as={Link} to="/admin/credit">Ver Más</Button>
-            </td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>Larry the Bird</td>
-            <td>12/10/24</td>
-            <td>
-              <Button as={Link} to="/admin/credit">Ver Más</Button>
-            </td>
-          </tr>
-        </tbody>
+        <tbody>{mapeo()}</tbody>
       </Table>
     </Container>
   );

@@ -28,15 +28,19 @@ const PaymentCredit = () => {
       // Guardar el preferenceId y la URL del init_point
       setPreferenceId(preferenceId);
       setInitPoint(init_point);
-      
+    
     } catch (error) {
-      console.log("Error al crear la preferencia:", error);
+      console.log("Error al crear la preferencia:##", error);
     }
   };
 
   // Manejar la compra y redirigir a MercadoPago
   const handleBuy = async () => {
-    await createPreference();
+    try {
+      await createPreference();
+    } catch (error) {
+      console.log("Error al crear la preferencia:", error);
+    }
   };
 
   return (
@@ -57,13 +61,14 @@ const PaymentCredit = () => {
 
           {/* Mostrar el botón Wallet si hay un preferenceId */}
           {preferenceId && (
-            <div>
-              <Wallet
-                initialization={{ preferenceId: preferenceId }}
-                customization={{ texts: { valueProp: 'smart_option' } }}
-              />
-            </div>
-          )}
+  <div>
+        <Wallet
+          initialization={{ preferenceId }}
+          customization={{ texts: { valueProp: 'smart_option' } }}
+        />
+      </div>
+)}
+          
         </div>
       </div>
     </div>

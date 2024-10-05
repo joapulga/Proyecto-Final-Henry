@@ -1,15 +1,16 @@
-import axios from 'axios';
+import axios from "axios";
 
 const apiURL = "http://localhost:3000";
 
 export const registerUser = async (userData) => {
+  console.log(userData)
   try {
     const response = await axios.post(`${apiURL}/auth/signup`, userData, {
       headers: {
         "Content-Type": "application/json",
       },
     });
-    console.log(response)
+    console.log(response);
     return response.data; // Devuelve los datos de respuesta en caso de éxito
   } catch (error) {
     // Manejo de errores
@@ -18,7 +19,7 @@ export const registerUser = async (userData) => {
     } else if (error.request) {
       throw new Error("No se recibió respuesta del servidor");
     } else {
-      throw new Error("Error: " + error.message);
+      throw new Error("Error: " + error);
     }
   }
 };
@@ -30,9 +31,8 @@ export const loginUser = async (loginData) => {
         "Content-Type": "application/json",
       },
     });
-    console.log(response.data)
+    console.log(response.data);
     return response.data; // Devuelve los datos de respuesta en caso de éxito
-    
   } catch (error) {
     // Manejo de errores
     if (error.response) {
