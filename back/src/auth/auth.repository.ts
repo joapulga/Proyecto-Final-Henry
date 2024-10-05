@@ -69,7 +69,8 @@ export class AuthRepository{
             await this.userRepository.save(newUser)
             delete newUser.password
             return newUser
-        } catch (error) {
+        } catch (error) { 
+            console.log(error)
             throw new BadRequestException({message: 'Error al almacenar el usuario', error: error.driverError.detail})
         }
 
