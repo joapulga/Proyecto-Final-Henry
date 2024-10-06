@@ -5,6 +5,11 @@ import NavBar from "./common/Navbar";
 import Footer from "./common/Footer";
 import { FaUserPlus } from 'react-icons/fa';
 import heroImage from "../../assets/heroImage.jpg";
+<<<<<<< HEAD
+=======
+import Register from "./Register";
+import ChatBotComponent from "../ChatBot/ChatBotComponent";
+>>>>>>> 50dfaa63b7374c422011190f3fb9dc26b8989b14
 
 const Home = () => {
   const { register, error } = useAuth(); // Añadir error del contexto
@@ -56,9 +61,15 @@ const Home = () => {
           </a>
         </div>
       </div>
+<<<<<<< HEAD
 
       {/* Solicitud de Usuario Section */}
       <section id="cuenta" className="flex-grow py-12 bg-gray-100">
+=======
+      <Register></Register>
+     
+      {/* <section id="cuenta" className="flex-grow py-12 bg-gray-100">
+>>>>>>> 50dfaa63b7374c422011190f3fb9dc26b8989b14
         <div className="container px-4 mx-auto">
           <h2 className="mb-8 text-3xl font-semibold text-center">Solicita tu cuenta</h2>
 
@@ -152,6 +163,8 @@ const Home = () => {
           </form>
         </div>
       </section>
+
+      <ChatBotComponent />
 
       <Footer />
     </div>
