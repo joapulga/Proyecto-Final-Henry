@@ -51,7 +51,7 @@ const PaymentCredit = () => {
             src="https://imgv2-2-f.scribdassets.com/img/document/436097729/original/f95547631c/1724931333?v=1"
             alt="Product Image"
           />
-          <h3>Credito</h3>
+          <h3>Crédito</h3>
           <p className="price">100 $</p>
           
           {/* Botón para generar preferencia y redirigir a MercadoPago */}
