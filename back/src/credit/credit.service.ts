@@ -79,7 +79,16 @@ export class CreditService {
   }
 
   async findOne(id: string): Promise<Credit> {
-    const credit = await this.creditRepository.findOneBy({ id });
+    const credit = await this.creditRepository.findOne({
+      where: {id: id},
+      select: {state: {name: true}},
+      relations: ['shares', 'state', 'shares.state'],
+      order: {
+        shares: {
+          number_share: 'ASC'
+        }
+      }
+    });
     if (!credit) {
       throw new NotFoundException(`Credit with ID ${id} not found`);
     }
