@@ -1,10 +1,22 @@
+import { useEffect, useState } from "react";
 import { useAuth } from "../../Context/AuthContext"; // Importa el contexto de autenticación
 import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { findUserByID, getUserData } from "../../service/querisUsers";
 
 const Navbar = () => {
   const { user, logout } = useAuth(); // Obtén el usuario y la función de logout del contexto
-
+  const [userNav, setUserNav] = useState([]);
+  console.log(user.id);
+  useEffect(() => {
+    try {
+      findUserByID(JSON.parse(localStorage.getItem("user")).id).then((r) => {
+        setUserNav(r.is_admin);
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
   return (
     <nav className="bg-blue-600 shadow-lg">
       <div className="container px-4 mx-auto">
@@ -18,16 +30,22 @@ const Navbar = () => {
           <ul className="flex items-center justify-center space-x-6">
             {!user?.id ? ( // Si no hay usuario logueado
               <Button>
-                <Link to="/login" className="text-xl text-white no-underline transition duration-300 hover:text-gray-300">
+                <Link
+                  to="/login"
+                  className="text-xl text-white no-underline transition duration-300 hover:text-gray-300"
+                >
                   Login
                 </Link>
               </Button>
             ) : (
               <>
-                {user.is_admin === true ? ( // Si el usuario es administrador
+                {userNav === true ? ( // Si el usuario es administrador
                   <>
                     <Button>
-                      <Link to="/admin/dashboardadmin" className="text-xl text-white no-underline transition duration-300 hover:text-gray-300">
+                      <Link
+                        to="/admin/dashboardadmin"
+                        className="text-xl text-white no-underline transition duration-300 hover:text-gray-300"
+                      >
                         Administrador
                       </Link>
                     </Button>
@@ -36,14 +54,20 @@ const Navbar = () => {
                   // Si el usuario no es administrador
                   <>
                     <Button>
-                      <Link to="/user/dashboarduser" className="text-xl text-white no-underline transition duration-300 hover:text-gray-300">
+                      <Link
+                        to="/user/dashboarduser"
+                        className="text-xl text-white no-underline transition duration-300 hover:text-gray-300"
+                      >
                         Usuario
                       </Link>
                     </Button>
                   </>
                 )}
                 {/* Botón para cerrar sesión */}
-                <Button className="text-xl text-white no-underline transition duration-300 hover:text-gray-300 fs-5" onClick={logout}>
+                <Button
+                  className="text-xl text-white no-underline transition duration-300 hover:text-gray-300 fs-5"
+                  onClick={logout}
+                >
                   Salir
                 </Button>
               </>
