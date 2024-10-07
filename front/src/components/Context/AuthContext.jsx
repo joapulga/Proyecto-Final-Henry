@@ -43,7 +43,7 @@ export const AuthProvider = ({ children }) => {
           showConfirmButton: false,
           timer: 1500,
         });
-       // navigate("/login");
+        navigate("/login");
       }
     } catch (error) {
       setError(error.message); // Guardar el mensaje de error

@@ -27,7 +27,6 @@ export const createPhoto = async (photoData) => {
   }
 };
 
-
 export const findUserByID = async (id) => {
   try {
     const users = await axios.get(URL + `/user/${id}`);

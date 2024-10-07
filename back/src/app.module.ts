@@ -13,13 +13,15 @@ import typeOrmConfig from './config/typeorm'
 import { JwtModule } from '@nestjs/jwt';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
-
+import {PaymentModule } from './payment/payment.module';
+import { CloudinaryService } from './service/cloudinary/cloudinary.service';
 @Module({
   imports: [
     UserModule, 
     CreditModule, 
     ShareModule, 
     StateModule, 
+    PaymentModule,
     BalanceModule,
     MailerModule.forRoot({
       transport: {
@@ -60,6 +62,6 @@ import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handleba
     AuthModule
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService,  CloudinaryService],
 })
 export class AppModule {}
