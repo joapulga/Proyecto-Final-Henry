@@ -60,22 +60,22 @@ export class UserController {
     return this.userService.becomeAdmin(id);
   }
 
-  @Get('protected')
-  async getAuth0Protected(@Req() request: Request) {
-    // Almacenar los datos del usuario en variables
-    const email = request.oidc.user.email;    
-    const name = request.oidc.user.nickname;  
-    const surname = request.oidc.user.family_name;  
+  // @Get('protected')
+  // async getAuth0Protected(@Req() request: Request) {
+  //   // Almacenar los datos del usuario en variables
+  //   const email = request.oidc.user.email;    
+  //   const name = request.oidc.user.nickname;  
+  //   const surname = request.oidc.user.family_name;  
   
 
-    // Imprimir datos en la consola
-    console.log('OIDC Info:', JSON.stringify(request.oidc));
-    console.log('ID Token:', JSON.stringify(request.oidc.idToken));
-    console.log('Usuario:', name, surname, email);
+  //   // Imprimir datos en la consola
+  //   console.log('OIDC Info:', JSON.stringify(request.oidc));
+  //   console.log('ID Token:', JSON.stringify(request.oidc.idToken));
+  //   console.log('Usuario:', name, surname, email);
 
-    // Retornar el usuario como respuesta
-    return JSON.stringify(request.oidc.user);
-  }
+  //   // Retornar el usuario como respuesta
+  //   return JSON.stringify(request.oidc.user);
+  // }
 
 
 
