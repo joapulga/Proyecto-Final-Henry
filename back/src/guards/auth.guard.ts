@@ -11,7 +11,6 @@ async function implementsToken(jwtService: JwtService, context: ExecutionContext
             const payload = jwtService.verify(token, {secret: secret})
             payload.iat = new Date(payload.iat * 1000)
             payload.exp = new Date(payload.exp * 1000)
-            // payload.roles = Role.Admin
             req.user = payload
             return true
         } catch (error) {

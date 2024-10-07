@@ -24,6 +24,11 @@ export class ShareController {
     return this.shareService.findOne(id);
   }
 
+  @Get('paid/:id')
+  paidById(@Param('id') id: string) {
+    return this.shareService.paidById(id);
+  }
+
   @Patch(':id')
   update(@Param('id') id: string, @Body() UploadShareDto: UploadShareDto) {
     return this.shareService.update(id, UploadShareDto);

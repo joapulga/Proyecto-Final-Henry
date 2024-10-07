@@ -20,17 +20,29 @@ export class UserService {
 
   async create(createUserDto: CreateUserDto) {
     createUserDto.state = await this.stateRepository.findOneBy({name: 'Active'})
-    // const newUser = this.userRepository.create(createUserDto);
-    // await this.userRepository.save(newUser);
+    const newUser = this.userRepository.create(createUserDto);
+    await this.userRepository.save(newUser);
     return createUserDto;
   }
 
-  findAll() {
-    return this.userRepository.find();
+  async findAll() {
+    return await this.userRepository.find({
+      select: {
+        id: true,
+        name: true,
+        lastname: true,
+        dni: true,
+        phone: true,
+        email: true,
+        password: false,
+        is_admin: true,
+        img_url: true
+      },
+    });
   }
 
-  findOne(id: string) {
-    return this.userRepository.findOneBy({ id});
+  async findOne(id: string) {
+    return await this.userRepository.findOneBy({ id});
   }
 
   async update(id: string, updateUserDto: UpdateUserDto) {
