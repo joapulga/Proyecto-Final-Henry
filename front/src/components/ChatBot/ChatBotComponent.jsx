@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import ChatBot from 'react-simple-chatbot';
-import { ThemeProvider } from 'styled-components';
+// import ChatBot from "react-simple-chatbot";
+// import { ThemeProvider } from 'styled-components';
 import { FaCommentDots } from 'react-icons/fa';
 
 const ChatBotComponent = () => {
@@ -153,6 +153,7 @@ const ChatBotComponent = () => {
       {isChatOpen && (
         <div className="fixed z-50 bottom-20 right-5">
           <ThemeProvider theme={DiseñoChat}>
+            
             <ChatBot
               headerTitle="Asistencia Virtual"
               steps={steps}
