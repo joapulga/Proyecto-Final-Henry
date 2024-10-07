@@ -20,3 +20,18 @@ export const findAllCredits = async () => {
     }
 
   }
+  export const getCreditsByUserId = async (userId, token) => {
+    try {
+      const response = await axios.get(`${URL}/credit`, {
+        headers: {
+          Authorization: `Bearer ${token}`, 
+        },
+        params: {
+          userId: userId, 
+        },
+      });
+      return response.data; 
+    } catch (error) {
+      console.error("Error obteniendo los créditos:", error);
+    }
+  };
