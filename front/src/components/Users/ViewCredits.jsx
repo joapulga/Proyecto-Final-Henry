@@ -1,69 +1,77 @@
 import { useEffect, useState } from "react";
-import { Table, Button, Container } from "react-bootstrap";
-import { findCreditsById } from "../service/querisCredits";
-import { useAuth } from '../Context/AuthContext'; 
+import { Table, Container } from "react-bootstrap";
+import { useAuth } from "../Context/AuthContext"; 
+import { getCreditsByUserId } from "../service/querisCredits"; 
 
-const VerCreditos = () => {
+const MisCreditos = () => {
   const { user } = useAuth(); 
   const [credits, setCredits] = useState([]);
+  const [loading, setLoading] = useState(true); 
   const [error, setError] = useState(null); 
 
-  
   useEffect(() => {
     const fetchCredits = async () => {
-      if (user && user.id) {
-        try {
-          const data = await findCreditsById(user.id); 
-          setCredits(data);
-        } catch (error) {
-          setError("Error al cargar los créditos."); 
-          console.error("Error fetching credits:", error);
-        }
-      } else {
-        setError("Usuario no autenticado."); 
+      try {
+        const data = await getCreditsByUserId(user.id, user.token);
+        setCredits(data); 
+      } catch (error) {
+        console.error("Error obteniendo los créditos:", error);
+        setError("Hubo un problema al cargar los créditos.");
+      } finally {
+        setLoading(false); 
       }
     };
 
-    fetchCredits();
+    if (user && user.id) {
+      fetchCredits();
+    }
   }, [user]);
 
-  return (
-    <Container>
-      <h1 className="m-4 text-center">Creditos</h1>
-      {error && <p className="text-center text-danger">{error}</p>}
+  if (loading) {
+    return <p className="text-center">Cargando créditos...</p>;
+  }
 
-      <Table striped bordered hover variant="dark">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>ID Client</th>
-            <th>Date</th>
-            <th>Functions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {credits && credits.length > 0 ? (
-            credits.map((credit) => (
+  if (error) {
+    return <p className="text-center text-red-500">{error}</p>;
+  }
+
+  return (
+    <Container
+      className="min-h-screen py-5"
+      style={{ background: "linear-gradient(135deg, #E0F7FA, #E1F5FE)" }}
+    >
+      <h1 className="m-4 font-bold text-center text-blue-700">Mis Créditos</h1>
+
+      <div className="overflow-hidden rounded-lg shadow-lg">
+        <Table
+          striped
+          bordered
+          hover
+          variant="dark"
+          className="w-full overflow-hidden border-collapse rounded-lg shadow-2xl table-auto"
+        >
+          <thead>
+            <tr className="text-white bg-blue-600">
+              <th className="px-4 py-2">Código</th>
+              <th className="px-4 py-2">Monto</th>
+              <th className="px-4 py-2">Meses</th>
+              <th className="px-4 py-2">Intereses</th>
+            </tr>
+          </thead>
+          <tbody>
+            {credits.map((credit) => (
               <tr key={credit.id}>
                 <td>{credit.id}</td>
-                <td>{credit.clientId}</td>
-                <td>{new Date(credit.date).toLocaleDateString()}</td>
-                <td>
-                  <Button variant="primary">View Details</Button>
-                </td>
+                <td>{credit.amount}</td>
+                <td>{credit.months}</td>
+                <td>{credit.interest}</td>
               </tr>
-            ))
-          ) : (
-            <tr>
-              <td colSpan="4" className="text-center">
-                No credits found
-              </td>
-            </tr>
-          )}
-        </tbody>
-      </Table>
+            ))}
+          </tbody>
+        </Table>
+      </div>
     </Container>
   );
 };
 
-export default VerCreditos;
+export default MisCreditos;

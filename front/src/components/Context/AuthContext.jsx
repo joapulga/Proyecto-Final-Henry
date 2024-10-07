@@ -53,16 +53,18 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (loginData) => {
     try {
-      const res = await loginUser(loginData);
-      const data = await getUserDash(res.token);
-      localStorage.setItem("user", JSON.stringify(data));
-      setUser(data);
-      if (data.is_admin !== true) {
-        navigate("/");
-      } else {
-        navigate("/");
-      }
-      return { success: true };
+      loginUser(loginData).then(r => {
+        getUserDash(r.token).then(r => {
+          localStorage.setItem("user", JSON.stringify(r));
+          setUser(r);
+        });
+        if (r.is_admin !== true) {
+          navigate("/");
+        } else {
+          navigate("/");
+        }
+        return { success: true };
+      });
     } catch (error) {
       setError(error.message);
       console.error("Error en el inicio de sesión:", error);

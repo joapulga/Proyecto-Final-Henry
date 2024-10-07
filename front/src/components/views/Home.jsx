@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { useAuth } from "../Context/AuthContext";
 import NavBar from "./common/Navbar";
 import Footer from "./common/Footer";
@@ -60,7 +59,7 @@ const Home = () => {
       </div>
       <Register></Register>
 
-      {/* <ChatBotComponent/> */}
+       <ChatBotComponent/>
 
       <Footer />
     </div>
