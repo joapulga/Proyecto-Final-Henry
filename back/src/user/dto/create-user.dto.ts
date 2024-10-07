@@ -38,7 +38,7 @@ export class CreateUserDto {
 
   /**
    * Email it's necesary for supscritption of a new user
-   * @example javier@email.com
+   * @example jefferson-camacho@hotmail.com
    */
   @IsNotEmpty()
   @IsEmail()

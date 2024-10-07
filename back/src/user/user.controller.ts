@@ -3,12 +3,10 @@ import { UserService } from './user.service';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { JwtService } from '@nestjs/jwt';
-
-// import { AuthGuard } from 'src/guards/auth.guard';
-
 import { CreateUserDto } from './dto/create-user.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Request } from 'express';
+import { AuthGuard } from 'src/guards/auth.guard';
 @ApiTags('User')
 @Controller('user')
 export class UserController {
@@ -22,16 +20,16 @@ export class UserController {
     return this.userService.create(createUserDto);
   }
 
-  //@ApiBearerAuth()
+  @ApiBearerAuth()
   @Get()
-  //@UseGuards(AuthGuard)
+  @UseGuards(AuthGuard)
   findAll() {
     return this.userService.findAll();
   }
 
-  //@ApiBearerAuth()
+  @ApiBearerAuth()
   @Get('dashboard')
-  //@UseGuards(AuthGuard)
+  @UseGuards(AuthGuard)
   async findLoggedUser(@Req() request: Request){
     const request1 = request.headers['authorization']
     const token = request1.split(' ')[1]
