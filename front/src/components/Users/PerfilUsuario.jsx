@@ -65,30 +65,22 @@ const UserProfile = () => {
   };
 
   return (
-    <div 
-      className="flex items-center justify-center min-h-screen bg-gradient-to-r from-blue-200 to-blue-100"
-    >
-      <div 
-        className="w-full max-w-2xl p-8 mx-auto bg-white rounded-lg shadow-2xl"
-        style={{ borderRadius: '16px' }}
-      >
-        <div 
-          className="p-6 text-center bg-blue-600 border-b rounded-t-lg"
-          style={{ borderRadius: '16px 16px 0 0' }}
-        >
+    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+      <div className="w-full max-w-2xl p-8 mx-auto bg-white rounded-lg shadow-lg">
+        <div className="p-6 text-center bg-blue-600 border-b">
           <img
-            className="w-32 h-32 mx-auto rounded-full shadow-lg"
+            className="w-32 h-32 mx-auto rounded-full"
             src={profileImage}
             alt="Imagen de perfil"
           />
-          <p className="pt-2 text-xl font-bold text-white">{userData.name}</p>
-          <p className="text-sm text-blue-200">{userData.id}</p>
+          <p className="pt-2 text-xl font-bold">{userData.name}</p>
+          <p className="text-sm text-white">{userData.id}</p>
         </div>
 
         <div className="p-6">
-          <p className="mb-2 text-gray-700"><strong>DNI:</strong> {userData.dni}</p>
-          <p className="mb-2 text-gray-700"><strong>Teléfono:</strong> {userData.phone}</p>
-          <p className="mb-2 text-gray-700"><strong>Email:</strong> {userData.email}</p>
+          <p><strong>DNI:</strong> {userData.dni}</p>
+          <p><strong>Teléfono:</strong> {userData.phone}</p>
+          <p><strong>Email:</strong> {userData.email}</p>
 
           {/* Formulario para subir nueva imagen */}
           <form onSubmit={handleSubmit} className="mt-4">
@@ -99,7 +91,7 @@ const UserProfile = () => {
               type="file"
               accept="image/*"
               onChange={handleFileChange}
-              className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-300"
+              className="w-full p-2 border rounded"
             />
             {selectedFile && (
               <p className="mt-2 text-sm text-gray-500">
@@ -108,7 +100,7 @@ const UserProfile = () => {
             )}
             <button
               type="submit"
-              className="w-full p-2 mt-4 text-white bg-blue-500 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className="w-full p-2 mt-4 text-white bg-blue-500 rounded hover:bg-blue-600"
             >
               Guardar imagen
             </button>

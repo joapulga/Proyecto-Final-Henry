@@ -2,25 +2,33 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { BadRequestException, ValidationPipe } from '@nestjs/common';
+import { auth } from 'express-openid-connect';
+import { config as auth0Config } from './config/auth0.config';  
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  
+  app.enableCors({
+    origin: 'http://localhost:5173', // URL del frontend
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Métodos permitidos
+    credentials: true, // Si estás usando cookies o autenticación basada en sesión
+  });
+  app.use(auth({...auth0Config}));
 
-  app.enableCors();
-  app.useGlobalPipes(
-    new ValidationPipe({
-      whitelist: true,
-      exceptionFactory: (errors) => {
-        const cleanErrors = errors.map((err) => {
-          return { property: err.property, constraints: err.constraints };
-        });
-        return new BadRequestException({
-          alert: 'Se han detectado los siguientes errores en la petición: ',
-          errors: cleanErrors,
-        });
-      },
-    }),
-  );
+  // app.useGlobalPipes(
+  //   new ValidationPipe({
+  //     whitelist: true,
+  //     exceptionFactory: (errors) => {
+  //       const cleanErrors = errors.map((err) => {
+  //         return { property: err.property, constraints: err.constraints };
+  //       });
+  //       return new BadRequestException({
+  //         alert: 'Se han detectado los siguientes errores en la petición: ',
+  //         errors: cleanErrors,
+  //       });
+  //     },
+  //   }),
+  // );
   const swaggerConfig = new DocumentBuilder()
     .setTitle('App financical')
     .setDescription(

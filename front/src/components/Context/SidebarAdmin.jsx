@@ -16,11 +16,6 @@ const SidebarAdmin = () => {
               </Button>
             </li>
             <li>
-              <Button as={Link} to="register" className="block p-2 transition rounded w-100 hover:bg-red-700 ">
-                Crear un Usuario
-              </Button>
-            </li>
-            <li>
               <Button as={Link} to="AllUsers" className="block p-2 transition rounded w-100 hover:bg-blue-700">
                 Ver Usuarios
               </Button>
@@ -40,7 +35,6 @@ const SidebarAdmin = () => {
                 Perfil de Administrador
               </Button>
             </li>
-           
             <li>
               <Button as={Link} to="/" className="block p-2 transition rounded w-100 hover:bg-red-700 ">
                 Volver al Inicio
