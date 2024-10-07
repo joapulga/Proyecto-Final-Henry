@@ -13,7 +13,7 @@ export class NotificationsServiceService {
         @InjectRepository(Credit) private readonly creditRepository: Repository<Credit>,
         private readonly mailService: MailService
     ){}
-    @Cron(CronExpression.EVERY_30_SECONDS)
+    @Cron(CronExpression.MONDAY_TO_FRIDAY_AT_10AM)
     async handleCron(){
         let emails: string[]
         const credits = await this.creditRepository.find({
