@@ -34,7 +34,10 @@ export const AuthProvider = ({ children }) => {
     setError(null); // Reiniciar el estado de error al intentar de nuevo
     try {
       const res = await registerUser(userData);
-      localStorage.setItem("user", JSON.stringify({ id: res.id, is_admin: res.is_admin }));
+      localStorage.setItem(
+        "user",
+        JSON.stringify({ id: res.id, is_admin: res.is_admin })
+      );
       if (res) {
         Swal.fire({
           icon: "success",
@@ -53,11 +56,12 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (loginData) => {
     try {
-      loginUser(loginData).then(r => {
-        getUserDash(r.token).then(r => {
+      await loginUser(loginData).then((r) => {
+        getUserDash(r.token).then((r) => {
           localStorage.setItem("user", JSON.stringify(r));
           setUser(r);
         });
+       
         if (r.is_admin !== true) {
           navigate("/");
         } else {
@@ -68,7 +72,7 @@ export const AuthProvider = ({ children }) => {
     } catch (error) {
       setError(error.message);
       console.error("Error en el inicio de sesión:", error);
-      return { success: false, message: error.message }; 
+      return { success: false, message: error.message };
     }
   };
 
