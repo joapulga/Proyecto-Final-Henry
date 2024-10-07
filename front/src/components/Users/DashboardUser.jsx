@@ -9,6 +9,7 @@ import { Bar } from 'react-chartjs-2';  // Importa Bar de react-chartjs-2
 import { Chart, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 
 // Registrar las escalas necesarias para Chart.js
+//hola
 Chart.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 const DashboardUser = () => {
