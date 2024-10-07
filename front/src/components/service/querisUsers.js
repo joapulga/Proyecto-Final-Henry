@@ -84,3 +84,4 @@ export const uploadProfileImage = async (userId, selectedFile) => {
     throw error;
   }
 };
+

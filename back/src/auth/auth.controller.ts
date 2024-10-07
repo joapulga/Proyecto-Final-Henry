@@ -3,6 +3,7 @@ import { Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthGuard } from '@nestjs/passport';
 import { CreateUserDto } from 'src/user/dto/create-user.dto';
+import { CreateAuthDto } from './dto/create-auth.dto';
 
 
 @Controller('auth')
@@ -15,6 +16,11 @@ export class AuthController {
     // El usuario ya ha sido autenticado por Auth0
     return { message: 'Logged in successfully!', user: req.user };
   }
+  @Post('signin')
+  async signin(@Body() createAuthDto: CreateAuthDto) {
+    return this.authService.signin(createAuthDto);
+  }
+
 
   @Post('signup')
   signup(@Body() createUserDto: CreateUserDto) {
