@@ -2,8 +2,7 @@ import { BadRequestException, Injectable, NotFoundException } from '@nestjs/comm
 import { CreateCreditDto } from './dto/create-credit.dto';
 import { UploadCreditDto } from './dto/update-credit.dto';
 import { Credit } from './entities/credit.entity';
-import   
- { InjectRepository } from '@nestjs/typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ShareService } from 'src/share/share.service';
 import { StatesService } from 'src/state/states.service';
