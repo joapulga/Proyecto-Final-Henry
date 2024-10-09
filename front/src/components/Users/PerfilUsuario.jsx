@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../Context/AuthContext';
-import { getUserData } from '../service/querisUsers'; 
+import { getImg, getUserData } from '../service/querisUsers'; 
 import avatarImg from "../../assets/default-avatar.png";
 import { uploadProfileImage } from '../service/querisUsers';
 
@@ -14,7 +14,9 @@ const UserProfile = () => {
     dni: "",
     telefono: "",
     direccion: "",
+    img_url:""
   });
+
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -39,6 +41,7 @@ const UserProfile = () => {
             dni: data.dni,
             phone: data.phone,
             direccion: data.direccion,
+            img_url:data.img_url
           });
         })
         .catch((error) => {
@@ -58,10 +61,12 @@ const UserProfile = () => {
     try {
       const data = await uploadProfileImage(user.id, selectedFile);
       console.log('Respuesta del servidor:', data);
+      userData.img_url=await getImg(userData.email)
       alert('Imagen subida correctamente');
     } catch (error) {
       alert('Hubo un error al subir la imagen:', error);
     }
+    
   };
 
   return (

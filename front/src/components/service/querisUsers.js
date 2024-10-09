@@ -69,20 +69,30 @@ export const getUserDash = async (token) => {
   }
 };
 
-export const uploadProfileImage = async (userId, selectedFile) => {
-  const formData = new FormData();
-  formData.append("image", selectedFile);
 
+export const getImg = async (idUsuario)=>{
+  const response = await axios.get(`${URL}/getImg/${imageId}`);
+  setImageUrl(response.data.imgUrl);
+  console.log(response);
+  return response;
+}
+
+ export const uploadProfileImage = async (idUsuario, rutaFoto)=>{
+  const formData = new FormData();
+
+  // agregamos el archivo al FormData
+  formData.append('file', await fetch(rutaFoto).then(res => res.blob()), 'foto.jpg'); 
+
+  // hacemos la petición POST a la API
   try {
-    const response = await axios.post(`${URL}/user/${userId}`, formData, {
+    const response = await axios.post(`${URL}/user/update-photo/${idUsuario}`, formData, {
       headers: {
-        "Content-Type": "multipart/form-data",
-      },
+        'Content-Type': 'multipart/form-data'
+      }
     });
-    return response.data;
+    console.log('Foto enviada correctamente:', response.data);
   } catch (error) {
-    console.error("Error al subir la imagen:", error);
-    throw error;
+    console.error('Error al enviar la foto:', error);
   }
 };
 

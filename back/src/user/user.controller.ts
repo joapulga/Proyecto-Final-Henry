@@ -88,6 +88,12 @@ export class UserController {
   //   return JSON.stringify(request.oidc.user);
   // }
 
+  @Get('getImg/:id')
+  async getImageById(@Param('email') email: string) {
+    const user=this.userService.findOneByEmail(email);
+    return (await user).img_url;
+  }
+
 
 
   @Post('update-photo/:id')
@@ -98,10 +104,10 @@ export class UserController {
     const user = await this.userService.findOne(id);
     user.img_url=url;
 
-    console.log("ESTE ES EL USUARIO ", user)
-    this.userService.saveUser(user);
+    const userSaved= await this.userService.saveUser(user);
 
-    
+    console.log("este es el usuario guardado ", userSaved);
+
     return url;
   }
 
