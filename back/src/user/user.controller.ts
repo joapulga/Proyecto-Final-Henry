@@ -1,4 +1,4 @@
-import { Controller, Get, BadRequestException, Post, Body, Patch, Param, Delete, Headers, Req, UseGuards } from '@nestjs/common';
+import { Controller, Get, BadRequestException, Post, Body, Patch, Param, Delete, Headers, Req, UseGuards, UseInterceptors, UploadedFile } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
@@ -7,12 +7,22 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Request } from 'express';
 import { AuthGuard } from 'src/guards/auth.guard';
+import { CloudinaryService } from 'src/service/cloudinary/cloudinary.service';
+
+
+
+
+
+
 @ApiTags('User')
 @Controller('user')
 export class UserController {
   constructor(
     private readonly userService: UserService,
-    private readonly jwtService: JwtService
+    private readonly jwtService: JwtService,
+    private readonly cloudinaryService:CloudinaryService,
+   
+    
   ) {}
 
   @Post()
@@ -81,18 +91,18 @@ export class UserController {
 
 
   @Post('update-photo/:id')
-  async updatePhoto(@Param('id') id: string, @Body('newImg') newImg: string) {
-    try {
-      const updatedUser = await this.userService.updatePhoto(id, newImg);
-      return updatedUser;
-    } catch (error) {
-      if (error instanceof BadRequestException) {
-        throw error; // Re-throw BadRequestExceptions for specific handling
-      } else {
-        console.error('Error updating photo:', error);
-        throw new BadRequestException('An error occurred while updating the photo');
-      }
-    }
+  @UseInterceptors(FileInterceptor('file'))
+  async updatePhoto(@Param('id') id: string, @UploadedFile()file:Express.Multer.File) {
+    console.log("INFORMACION DE LA FOTO", file);
+    const url = await this.cloudinaryService.uploadFile(file.buffer, file.originalname);
+    const user = await this.userService.findOne(id);
+    user.img_url=url;
+
+    console.log("ESTE ES EL USUARIO ", user)
+    this.userService.saveUser(user);
+
+    
+    return url;
   }
 
 }
