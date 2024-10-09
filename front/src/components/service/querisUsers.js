@@ -2,9 +2,13 @@ import axios from "axios";
 
 const URL = "http://localhost:3000";
 
-export const findAllUsers = async () => {
+export const findAllUsers = async (token) => {
   try {
-    const response = await axios.get(URL + "/user");
+    const response = await axios.get(URL + "/user",{
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return response.data;
   } catch (error) {
     console.error("Error obteniendo usuarios:", error);
