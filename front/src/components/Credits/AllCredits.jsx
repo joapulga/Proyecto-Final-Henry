@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Table, Button, Container } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { findAllCredits } from "../service/querisCredits";
 
@@ -8,50 +8,43 @@ const AllCredits = () => {
 
   useEffect(() => {
     findAllCredits().then((res) => {
-      try {
-        setCredits(res);
-      } catch (error) {
-        console.log(error);
-      }
-    });
+      setCredits(res);
+    }).catch(error => console.error(error));
   }, []);
-  const onclick=()=>{
-    
-  }
-   const mapeo = () => {
-     return credits.map((c) => {
-       return (
-         <tr key={c.id}>
-           <td>{c.id}</td>
-           <td>{c.name}</td>
-           <td>{c.dni}</td>
-           <td>{c.phone}</td>
-           <td>
-             <Button as={Link} to="/admin/credit" >
-               Ver Más
-             </Button>
-           </td>
-         </tr>
-       );
-     });
-   };
+
+  const mapeo = () => {
+    return credits.map((c) => (
+      <tr key={c.id} className="hover:bg-gray-200">
+        <td className="px-4 py-2">{c.id}</td>
+        <td className="px-4 py-2">{c.name}</td>
+        <td className="px-4 py-2">{c.dni}</td>
+        <td className="px-4 py-2">{c.phone}</td>
+        <td className="px-4 py-2">
+          <Button as={Link} to={`/admin/credit/${c.id}`} className="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600">
+            Ver Más
+          </Button>
+        </td>
+      </tr>
+    ));
+  };
 
   return (
-    <Container>
-      <h1 className="text-center">Credits</h1>
-
-      <Table striped bordered hover variant="dark">
+    <div className="p-4 bg-white rounded-lg shadow-lg">
+      <h2 className="mb-4 text-2xl font-bold text-center">Créditos</h2>
+      <table className="min-w-full bg-white border-collapse table-auto">
         <thead>
           <tr>
-            <th>ID</th>
-            <th>ID Client</th>
-            <th>Date</th>
-            <th>Funtions</th>
+            <th className="py-2 border-b">ID</th>
+            <th className="py-2 border-b">ID Cliente</th>
+            <th className="py-2 border-b">Fecha</th>
+            <th className="py-2 border-b">Funciones</th>
           </tr>
         </thead>
         <tbody>{mapeo()}</tbody>
-      </Table>
-    </Container>
+      </table>
+    </div>
   );
 };
+
 export default AllCredits;
+
