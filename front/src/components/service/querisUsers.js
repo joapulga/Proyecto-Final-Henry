@@ -74,7 +74,7 @@ export const uploadProfileImage = async (userId, selectedFile) => {
   formData.append("image", selectedFile);
 
   try {
-    const response = await axios.post(`${URL}/user/${userId}`, formData, {
+    const response = await axios.post(`${URL}/user/update-photo/${userId}`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },

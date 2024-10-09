@@ -1,42 +1,30 @@
-import React from "react";
-import { Card, Col, Row } from "react-bootstrap";
+
 const CardsTop = () => {
   return (
-    <Row className="mt-5 mb-5">
-      <Col>
-        <Card style={{ width: "9rem" , height:"6rem" }} className="bg-dark text-white">
-          <Card.Title className="text-center">Total Prestado</Card.Title>
-          <Card.Text className="text-center">$$$$$$</Card.Text>
-        </Card>
-      </Col>
-      <Col>
-        <Card style={{ width: "9rem", height:"6rem" }}className="bg-dark text-white">
-          <Card.Title className="text-center">Intereses Ganados</Card.Title>
-          <Card.Text className="text-center">10%</Card.Text>
-        </Card>
-      </Col>
-      <Col>
-        <Card style={{ width: "9rem" , height:"6rem" }}className="bg-dark text-white">
-          <Card.Title className="text-center">Cap. Recuperado</Card.Title>
-          <Card.Text className="text-center">20%</Card.Text>
-        </Card>
-      </Col>
-      <Col>
-        <Card style={{ width: "9rem" , height:"6rem" }}className="bg-dark text-white">
-          <Card.Title className="text-center">Creditos otorgados</Card.Title>
-          <Card.Text className="text-center">100</Card.Text>
-        </Card>
-      </Col>
-      <Col>
-        <Card style={{ width: "9rem", height:"6rem"  }}className="bg-dark text-white">
-          <Card.Title className="text-center">Num. Clientes</Card.Title>
-          <Card.Text className="text-center">200</Card.Text>
-        </Card>
-      </Col>
-    
-      
-    </Row>
+    <div className="grid grid-cols-1 gap-4 my-6 md:grid-cols-5">
+      <div className="p-4 text-white bg-blue-600 rounded-lg shadow-lg">
+        <h3 className="font-semibold text-center">Total Prestado</h3>
+        <p className="mt-2 text-2xl text-center">$$$$$$</p>
+      </div>
+      <div className="p-4 text-white bg-green-600 rounded-lg shadow-lg">
+        <h3 className="font-semibold text-center">Intereses Ganados</h3>
+        <p className="mt-2 text-2xl text-center">10%</p>
+      </div>
+      <div className="p-4 text-white bg-yellow-600 rounded-lg shadow-lg">
+        <h3 className="font-semibold text-center">Cap. Recuperado</h3>
+        <p className="mt-2 text-2xl text-center">20%</p>
+      </div>
+      <div className="p-4 text-white bg-red-600 rounded-lg shadow-lg">
+        <h3 className="font-semibold text-center">Créditos otorgados</h3>
+        <p className="mt-2 text-2xl text-center">100</p>
+      </div>
+      <div className="p-4 text-white bg-purple-600 rounded-lg shadow-lg">
+        <h3 className="font-semibold text-center">Num. Clientes</h3>
+        <p className="mt-2 text-2xl text-center">200</p>
+      </div>
+    </div>
   );
 };
 
 export default CardsTop;
+
