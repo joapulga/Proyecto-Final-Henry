@@ -36,12 +36,12 @@ export const findAllCredits = async () => {
     }
   };
 
-  export const getCreditDetails = async (creditId) => {
+  export const getCreditDetailsById = async (creditId) => {
     try {
-      const response = await axios.get(`${URL}/credit/${creditId}`);
-      return response.data;
-    } catch (error) {
+      const response = await axios.get(`${URL}/credit/${creditId}`); // Ajusta la URL según tu API
+      return response.data; // Asegúrate de que esto retorne el objeto correcto
+  } catch (error) {
       console.error("Error obteniendo los detalles del crédito:", error);
-      throw error;
-    }
+      return null; // Devuelve null en caso de error
+  }
   };
