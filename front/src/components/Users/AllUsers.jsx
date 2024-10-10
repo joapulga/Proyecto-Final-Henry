@@ -2,12 +2,17 @@ import {  Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { findAllUsers } from "../service/querisUsers";
 import { useEffect, useState } from "react";
+import { useAuth } from "../Context/AuthContext";
 
 const AllUsers = () => {
+  const { token } = useAuth();
+  console.log(token)
+  const tk = JSON.parse(localStorage.getItem("user"))
+  console.log(tk)
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    findAllUsers().then((res) => {
+    findAllUsers(token).then((res) => {
       setUsers(res);
     }).catch(error => console.error(error));
   }, []);
