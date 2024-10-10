@@ -1,13 +1,19 @@
 import { useEffect, useState } from "react";
-import { Table, Container } from "react-bootstrap";
+import { Table, Container, Button } from "react-bootstrap";
 import { useAuth } from "../Context/AuthContext"; 
 import { getCreditsByUserId } from "../service/querisCredits"; 
+import { useNavigate } from "react-router-dom";
 
 const MisCreditos = () => {
   const { user } = useAuth(); 
   const [credits, setCredits] = useState([]);
   const [loading, setLoading] = useState(true); 
   const [error, setError] = useState(null); 
+  const navigate = useNavigate();
+
+  const handleCredit = (id) => {
+    navigate(`/user/credit/${id}`);
+  };
 
   useEffect(() => {
     const fetchCredits = async () => {
@@ -56,6 +62,7 @@ const MisCreditos = () => {
               <th className="px-4 py-2">Monto</th>
               <th className="px-4 py-2">Meses</th>
               <th className="px-4 py-2">Intereses</th>
+              <th className="px-4 py-2">Acciones</th>
             </tr>
           </thead>
           <tbody>
@@ -65,6 +72,13 @@ const MisCreditos = () => {
                 <td>{credit.amount}</td>
                 <td>{credit.months}</td>
                 <td>{credit.interest}</td>
+                <td>
+                  <Button
+                    onClick={() => handleCredit(credit.id)}
+                  >
+                    Ver más
+                  </Button>
+                </td>
               </tr>
             ))}
           </tbody>
