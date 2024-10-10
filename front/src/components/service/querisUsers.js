@@ -16,10 +16,10 @@ export const findAllUsers = async (token) => {
   }
 };
 
-export const createPhoto = async (photoData) => {
-  
+export const createPhoto = async (userId,photoData) => {
+
   try {
-    const response = await axios.post(URL + "/file-upload", photoData, {
+    const response = await axios.post(`${URL}/user/update-photo/${userId}`, photoData, {
       headers: {
         "Content-Type": "multipart/form-data", // Especifica que se está enviando un archivo
       },
@@ -73,20 +73,4 @@ export const getUserDash = async (token) => {
   }
 };
 
-export const uploadProfileImage = async (userId, selectedFile) => {
-  const formData = new FormData();
-  formData.append("image", selectedFile);
-
-  try {
-    const response = await axios.post(`${URL}/user/update-photo/${userId}`, formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
-    return response.data;
-  } catch (error) {
-    console.error("Error al subir la imagen:", error);
-    throw error;
-  }
-};
 
