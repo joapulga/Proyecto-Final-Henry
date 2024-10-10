@@ -4,7 +4,7 @@ import { useAuth } from '../Context/AuthContext';
 import { getUserData } from '../service/querisUsers'; 
 import { getCreditsByUserId } from '../service/querisCredits'; 
 import { FaUser, FaCreditCard } from 'react-icons/fa';
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Bar } from 'react-chartjs-2';
 import { Chart, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 
@@ -12,6 +12,13 @@ import { Chart, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend }
 Chart.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 const DashboardUser = () => {
+
+  const navigate = useNavigate();  // usa useNavigate en lugar de useHistory
+
+  const handleVerMas = (creditId) => {
+    navigate(`/user/credit/${creditId}`);  // usa navigate para redirigir
+  };
+
   const { user } = useAuth();
   const [loading, setLoading] = useState([]);
   const [userData, setUserData] = useState({
@@ -188,7 +195,7 @@ const DashboardUser = () => {
             variant="primary"
             size="sm"
             className="me-1"
-            as={Link} to={"./views/payment"}
+            onClick={() => handleVerMas(credit.id)}
           >
             Ver mas
           </Button>
