@@ -1,7 +1,6 @@
-// CreditDetail.jsx
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { getCreditDetailsById } from '../service/querisCredits'; // Ajusta la ruta según tu estructura
+import { getCreditDetailsById } from '../service/querisCredits'; 
 
 const CreditDetail = () => {
     const { id } = useParams(); 
@@ -11,7 +10,7 @@ const CreditDetail = () => {
     useEffect(() => {
         const fetchCreditDetails = async () => {
             const creditData = await getCreditDetailsById(id); 
-            console.log("Datos del crédito:", creditData); // Log de los datos del crédito
+            console.log("Datos del crédito:", creditData); 
 
             if (!creditData) {
                 console.error("No se encontraron datos del crédito.");
@@ -20,19 +19,19 @@ const CreditDetail = () => {
 
             setCreditInfo(creditData); 
 
-            // Ahora usamos createdAt en lugar de creditDate
+            
             const { createdAt, amount, months, interest } = creditData;
 
-            // Verificar que createdAt sea un valor válido
+            
             if (!createdAt) {
                 console.error("createdAt no es válido:", createdAt);
-                return; // Salir si createdAt no es válido
+                return; 
             }
 
             const calculatedInstallments = [];
-            const monthlyInterestRate = parseFloat(interest); // Convertimos el interés a número
-            const totalAmount = amount * (1 + monthlyInterestRate); // Cálculo del monto total con interés
-            const monthlyPayment = totalAmount / months; // Cálculo de la cuota mensual
+            const monthlyInterestRate = parseFloat(interest);
+            const totalAmount = amount * (1 + monthlyInterestRate);
+            const monthlyPayment = totalAmount / months;
 
             for (let month = 1; month <= months; month++) {
                 const installmentDate = new Date(createdAt); 
@@ -43,8 +42,8 @@ const CreditDetail = () => {
 
                 installmentDate.setMonth(installmentDate.getMonth() + month);
                 calculatedInstallments.push({
-                    date: installmentDate.toISOString().split('T')[0], // Convertir fecha a formato YYYY-MM-DD
-                    amount: monthlyPayment.toFixed(2), // Redondear a dos decimales
+                    date: installmentDate.toISOString().split('T')[0],
+                    amount: monthlyPayment.toFixed(2),
                     month: month,
                 });
             }
