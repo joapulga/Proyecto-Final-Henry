@@ -10,6 +10,15 @@ export const findAllCredits = async () => {
       console.log(error);
     }
   };
+  export const createCredit = async (id,creditData) => {
+      try {
+      const response = await axios.post(URL + `/credit/${id}`, creditData);
+      return response.data;
+    } catch (error) {
+      console.error("Error al crear el crédito:", error);
+      throw error;
+    }
+  };
 
   export const findCreditsById = async (userdId) => {
     try {

@@ -8,8 +8,9 @@ const AllUsers = () => {
   const { token } = useAuth();
   const [users, setUsers] = useState([]);
   useEffect(() => {
+ 
     findAllUsers(token)
-      .then((res) => {
+    .then((res) => {
         setUsers(res);
       })
       .catch((error) => console.error(error));

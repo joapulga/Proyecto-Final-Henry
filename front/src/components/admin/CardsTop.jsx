@@ -6,18 +6,22 @@ import { useAuth } from "../Context/AuthContext";
 const CardsTop = () => {
   const [info, setInfo] = useState([]);
   const { token } = useAuth();
+
   useEffect(() => {
     findAllCredits()
       .then((res) => {
         findAllUsers(token).then((r) => {
-          const Datos = res.reduce((total, credits) => {
-            return {
-              tt: total + credits.amount,
-              interest: Number(total + credits.interest),
-              credOtorgados: res.length,
-              TClientes: r.length,
-            };
-          }, 0);
+          const Datos = res.reduce(
+            (total, credits) => {
+              return {
+                tt: total.tt + credits.amount,
+                interest: total.interest + Number(credits.interest),
+                credOtorgados: res.length,
+                TClientes: r.length,
+              };
+            },
+            { tt: 0, interest: 0, credOtorgados: 0, TClientes: 0 }
+          );
           setInfo(Datos);
         });
       })
