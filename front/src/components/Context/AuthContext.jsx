@@ -13,11 +13,12 @@ export const useAuth = () => {
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState([]);
   const [error, setError] = useState(null); // Estado para errores
-  const [token, setToken] = useState();
+  const token = JSON.parse(localStorage.getItem("token"));
   const navigate = useNavigate();
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user"); // Obtén el valor sin parsear primero
+
     if (storedUser) {
       // Solo intenta parsear si existe
       try {
@@ -58,7 +59,7 @@ export const AuthProvider = ({ children }) => {
   const login = async (loginData) => {
     try {
       await loginUser(loginData).then((r) => {
-        localStorage.setItem("token",JSON.stringify(r.token))
+        localStorage.setItem("token", JSON.stringify(r.token));
         getUserDash(r.token).then((r) => {
           localStorage.setItem("user", JSON.stringify(r));
           setUser(r);
