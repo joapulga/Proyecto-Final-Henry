@@ -54,9 +54,7 @@ export class UserService {
   async findOne(id: string) {
     return await this.userRepository.findOneBy({ id});
   }
-  async findOneByEmail(email: string) {
-    return await this.userRepository.findOneBy({ email});
-  }
+
   async update(id: string, updateUserDto: UpdateUserDto) {
     const user = await this.userRepository.findOneBy({id });
     if (!user) {
@@ -96,9 +94,7 @@ export class UserService {
   }
 
   async saveUser(user){
-    const newUser = this.userRepository.create(user);
-    return await this.userRepository.save(newUser);
-  
+    await this.userRepository.save(user);
   }
  
 }

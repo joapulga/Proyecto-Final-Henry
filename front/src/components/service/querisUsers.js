@@ -2,9 +2,13 @@ import axios from "axios";
 
 const URL = "http://localhost:3000";
 
-export const findAllUsers = async () => {
+export const findAllUsers = async (token) => {
   try {
-    const response = await axios.get(URL + "/user");
+    const response = await axios.get(URL + "/user",{
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return response.data;
   } catch (error) {
     console.error("Error obteniendo usuarios:", error);
@@ -12,10 +16,10 @@ export const findAllUsers = async () => {
   }
 };
 
-export const createPhoto = async (photoData) => {
-  
+export const createPhoto = async (userId,photoData) => {
+
   try {
-    const response = await axios.post(URL + "/file-upload", photoData, {
+    const response = await axios.post(`${URL}/user/update-photo/${userId}`, photoData, {
       headers: {
         "Content-Type": "multipart/form-data", // Especifica que se está enviando un archivo
       },
@@ -69,30 +73,4 @@ export const getUserDash = async (token) => {
   }
 };
 
-
-export const getImg = async (idUsuario)=>{
-  const response = await axios.get(`${URL}/getImg/${imageId}`);
-  setImageUrl(response.data.imgUrl);
-  console.log(response);
-  return response;
-}
-
- export const uploadProfileImage = async (idUsuario, rutaFoto)=>{
-  const formData = new FormData();
-
-  // agregamos el archivo al FormData
-  formData.append('file', await fetch(rutaFoto).then(res => res.blob()), 'foto.jpg'); 
-
-  // hacemos la petición POST a la API
-  try {
-    const response = await axios.post(`${URL}/user/update-photo/${idUsuario}`, formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
-    });
-    console.log('Foto enviada correctamente:', response.data);
-  } catch (error) {
-    console.error('Error al enviar la foto:', error);
-  }
-};
 

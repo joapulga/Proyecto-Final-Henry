@@ -5,12 +5,12 @@ import { Link } from "react-router-dom";
 import { findUserByID, getUserData } from "../../service/querisUsers";
 
 const Navbar = () => {
-  const { user, logout } = useAuth(); // Obtén el usuario y la función de logout del contexto
+  const { logout, token } = useAuth(); // Obtén el usuario y la función de logout del contexto
   const [userNav, setUserNav] = useState([]);
-  console.log(user.id);
   useEffect(() => {
     try {
-      findUserByID(JSON.parse(localStorage.getItem("user")).id).then((r) => {
+      const id = JSON.parse(localStorage.getItem("user"));
+      findUserByID(id.id).then((r) => {
         setUserNav(r.is_admin);
       });
     } catch (error) {
@@ -28,7 +28,7 @@ const Navbar = () => {
 
           {/* Menú de navegación */}
           <ul className="flex items-center justify-center space-x-6">
-            {!user?.id ? ( // Si no hay usuario logueado
+            {userNav.length == 0 ? ( // Si no hay usuario logueado
               <Button>
                 <Link
                   to="/login"

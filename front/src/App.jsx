@@ -14,7 +14,11 @@ import DashboardUser from "./components/Users/DashboardUser"
 import Credits from "./components/admin/Credits"
 import ViewCredits from './components/Users/ViewCredits';
 import PerfilUsuario from './components/Users/PerfilUsuario';
+
 import AssignCredit from './components/admin/assignCredit';
+
+
+import CreditDetails from './components/Users/CreditDetail';
 
 // import PaymentCredit from './components/views/Payment';
 
@@ -51,6 +55,7 @@ const App = () => {
                 <Route path="dashboarduser" element={<DashboardUser />} />
                 <Route path="allcredits" element={<ViewCredits />} />
                 <Route path="perfiluser" element={<PerfilUsuario />} />
+                <Route path="credit/:id" element={<CreditDetails />} />
               </Route>
             </Routes>
         </AuthProvider>
