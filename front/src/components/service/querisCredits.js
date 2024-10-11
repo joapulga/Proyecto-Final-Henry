@@ -22,13 +22,11 @@ export const findAllCredits = async () => {
   }
   export const getCreditsByUserId = async (userId, token) => {
     try {
-      const response = await axios.get(`${URL}/credit`, {
+      const response = await axios.get(`${URL}/credit/user/${userId}`, {
         headers: {
           Authorization: `Bearer ${token}`, 
         },
-        params: {
-          userId: userId, 
-        },
+        
       });
       return response.data; 
     } catch (error) {

@@ -1,4 +1,4 @@
-import {  Button } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { findAllUsers } from "../service/querisUsers";
 import { useEffect, useState } from "react";
@@ -6,15 +6,13 @@ import { useAuth } from "../Context/AuthContext";
 
 const AllUsers = () => {
   const { token } = useAuth();
-  console.log(token)
-  const tk = JSON.parse(localStorage.getItem("user"))
-  console.log(tk)
   const [users, setUsers] = useState([]);
-
   useEffect(() => {
-    findAllUsers(token).then((res) => {
-      setUsers(res);
-    }).catch(error => console.error(error));
+    findAllUsers(token)
+      .then((res) => {
+        setUsers(res);
+      })
+      .catch((error) => console.error(error));
   }, []);
 
   const mapeo = () => {
@@ -25,7 +23,11 @@ const AllUsers = () => {
         <td className="px-4 py-2">{u.dni}</td>
         <td className="px-4 py-2">{u.phone}</td>
         <td className="px-4 py-2">
-          <Button as={Link} to={`/admin/user/${u.id}`} className="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600">
+          <Button
+            as={Link}
+            to={`/admin/user/${u.id}`}
+            className="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600"
+          >
             Ver Más
           </Button>
         </td>
@@ -34,9 +36,9 @@ const AllUsers = () => {
   };
 
   return (
-    <div className="p-4 bg-white rounded-lg shadow-lg">
+    <div className="p-4 bg-white rounded-lg shadow-lg table-responsive">
       <h2 className="mb-4 text-2xl font-bold text-center">Clientes</h2>
-      <table className="min-w-full bg-white border-collapse table-auto">
+      <table className="min-w-full bg-white border-collapse table-auto table">
         <thead>
           <tr>
             <th className="py-2 border-b">ID</th>
@@ -53,4 +55,3 @@ const AllUsers = () => {
 };
 
 export default AllUsers;
-
