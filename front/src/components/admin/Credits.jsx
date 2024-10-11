@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { createCredit } from "../service/CreditApi";
+
 import Swal from "sweetalert2";
+import { createCredit } from "../service/querisCredits";
 
 const Credits = () => {
   const [creditData, setCreditData] = useState([]);
@@ -10,7 +11,8 @@ const Credits = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await createCredit(user.id, {
+      console.log(e.target.id.value)
+      await createCredit(e.target.id.value, {
         amount: Number(e.target.amount.value),
         months: Number(e.target.months.value),
         interest: e.target.interest.value,
@@ -46,10 +48,8 @@ const Credits = () => {
             <label className="block mb-2">Usuario</label>
             <input
               type="string"
-              disabled
               className="w-full p-2 border border-gray-300 rounded"
               name="id"
-              value={user.id}
             />
           </div>
           {/* <div className="mb-4">
