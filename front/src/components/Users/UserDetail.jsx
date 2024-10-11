@@ -2,9 +2,12 @@ import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Table, Button } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
 import { findUserByID } from "../service/querisUsers";
+import { getCreditsByUserId } from "../service/querisCredits";
+import { useAuth } from "../Context/AuthContext";
 
 const UserDetail = () => {
   const { id } = useParams();
+  const { token } = useAuth();
   const [user, setUser] = useState({});
   const [usersCredits, setCredits] = useState([]);
   console.log(user);
@@ -16,8 +19,12 @@ const UserDetail = () => {
         console.log(error);
       }
     });
+ 
+    getCreditsByUserId(id,token).then((r) => {
+      setCredits(r)
+    });
   }, []);
-
+  console.log(token)
   const mapeo = () => {
     return usersCredits.map((u) => {
       return (

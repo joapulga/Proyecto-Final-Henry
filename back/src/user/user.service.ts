@@ -82,22 +82,19 @@ export class UserService {
     return user;
   }
 
-  async uploadFile(file, id: string) {
-    const url = await this.fileUploadService.uploadFile({
-      filedname: file.filedname,
-      buffer: file.buffer,
-      originalname: file.originalname,
-      mimetype: file.mimetype,
-      size: file.size,
-    });
-
+  async uploadFile(file:Express.Multer.File, id: string) {
+  
     const user = await this.userRepository.findOneBy({ id });
     if (!user) {
       throw new Error(`User with id ${id} not found`);
     }
-    user.img_url = url;
+    user.img_url = file.path;
     await this.userRepository.save(user);
-    return { imgUrl: url };
+    return user;
+  }
+
+  async saveUser(user){
+    await this.userRepository.save(user);
   }
  
 }

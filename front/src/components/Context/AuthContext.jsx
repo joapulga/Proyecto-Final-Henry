@@ -13,10 +13,12 @@ export const useAuth = () => {
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState([]);
   const [error, setError] = useState(null); // Estado para errores
+  const token = JSON.parse(localStorage.getItem("token"));
   const navigate = useNavigate();
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user"); // Obtén el valor sin parsear primero
+
     if (storedUser) {
       // Solo intenta parsear si existe
       try {
@@ -57,17 +59,17 @@ export const AuthProvider = ({ children }) => {
   const login = async (loginData) => {
     try {
       await loginUser(loginData).then((r) => {
+        localStorage.setItem("token", JSON.stringify(r.token));
         getUserDash(r.token).then((r) => {
           localStorage.setItem("user", JSON.stringify(r));
           setUser(r);
+          if (r.is_admin !== true) {
+            navigate("/");
+          } else {
+            navigate("/admin/dashboardadmin");
+          }
+          return { success: true };
         });
-       
-        if (r.is_admin !== true) {
-          navigate("/");
-        } else {
-          navigate("/");
-        }
-        return { success: true };
       });
     } catch (error) {
       setError(error.message);
@@ -75,19 +77,25 @@ export const AuthProvider = ({ children }) => {
       return { success: false, message: error.message };
     }
   };
-
   const logout = () => {
-    setUser(null);
-    localStorage.removeItem("user");
-    navigate("/login");
+    try {
+      setUser(null);
+      localStorage.removeItem("user");
+      localStorage.removeItem("token");
+      navigate("/login");
+    } catch (error) {
+      console.error("Error al cerrar sesión:", error);
+    }
   };
 
   const value = {
     user,
+    token,
     register,
     login,
     logout,
-    error, // Proporcionar el estado de error
+    error,
+    // Proporcionar el estado de error
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

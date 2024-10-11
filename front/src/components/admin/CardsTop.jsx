@@ -1,41 +1,56 @@
-import React from "react";
-import { Card, Col, Row } from "react-bootstrap";
+import { useEffect, useState } from "react";
+import { findAllCredits } from "../service/querisCredits";
+import { findAllUsers } from "../service/querisUsers";
+import { useAuth } from "../Context/AuthContext";
+
 const CardsTop = () => {
+  const [info, setInfo] = useState([]);
+  const { token } = useAuth();
+
+  useEffect(() => {
+    findAllCredits()
+      .then((res) => {
+        findAllUsers(token).then((r) => {
+          const Datos = res.reduce(
+            (total, credits) => {
+              return {
+                tt: total.tt + credits.amount,
+                interest: total.interest + Number(credits.interest),
+                credOtorgados: res.length,
+                TClientes: r.length,
+              };
+            },
+            { tt: 0, interest: 0, credOtorgados: 0, TClientes: 0 }
+          );
+          setInfo(Datos);
+        });
+      })
+      .catch((error) => console.error(error));
+  }, []);
+
   return (
-    <Row className="mt-5 mb-5">
-      <Col>
-        <Card style={{ width: "9rem" , height:"6rem" }} className="bg-dark text-white">
-          <Card.Title className="text-center">Total Prestado</Card.Title>
-          <Card.Text className="text-center">$$$$$$</Card.Text>
-        </Card>
-      </Col>
-      <Col>
-        <Card style={{ width: "9rem", height:"6rem" }}className="bg-dark text-white">
-          <Card.Title className="text-center">Intereses Ganados</Card.Title>
-          <Card.Text className="text-center">10%</Card.Text>
-        </Card>
-      </Col>
-      <Col>
-        <Card style={{ width: "9rem" , height:"6rem" }}className="bg-dark text-white">
-          <Card.Title className="text-center">Cap. Recuperado</Card.Title>
-          <Card.Text className="text-center">20%</Card.Text>
-        </Card>
-      </Col>
-      <Col>
-        <Card style={{ width: "9rem" , height:"6rem" }}className="bg-dark text-white">
-          <Card.Title className="text-center">Creditos otorgados</Card.Title>
-          <Card.Text className="text-center">100</Card.Text>
-        </Card>
-      </Col>
-      <Col>
-        <Card style={{ width: "9rem", height:"6rem"  }}className="bg-dark text-white">
-          <Card.Title className="text-center">Num. Clientes</Card.Title>
-          <Card.Text className="text-center">200</Card.Text>
-        </Card>
-      </Col>
-    
-      
-    </Row>
+    <div className="grid grid-cols-1 gap-4 my-6 md:grid-cols-5">
+      <div className="p-4 text-white bg-blue-600 rounded-lg shadow-lg">
+        <h3 className="font-semibold text-center">Total Prestado</h3>
+        <p className="mt-2 text-2xl text-center">{info.tt}</p>
+      </div>
+      <div className="p-4 text-white bg-green-600 rounded-lg shadow-lg">
+        <h3 className="font-semibold text-center">Intereses Ganados</h3>
+        <p className="mt-2 text-2xl text-center">{info.interest}%</p>
+      </div>
+      <div className="p-4 text-white bg-yellow-600 rounded-lg shadow-lg">
+        <h3 className="font-semibold text-center">Cap. Recuperado</h3>
+        <p className="mt-2 text-2xl text-center">20%</p>
+      </div>
+      <div className="p-4 text-white bg-red-600 rounded-lg shadow-lg">
+        <h3 className="font-semibold text-center">Créditos otorgados</h3>
+        <p className="mt-2 text-2xl text-center">{info.credOtorgados}</p>
+      </div>
+      <div className="p-4 text-white bg-purple-600 rounded-lg shadow-lg">
+        <h3 className="font-semibold text-center">Num. Clientes</h3>
+        <p className="mt-2 text-2xl text-center">{info.TClientes}</p>
+      </div>
+    </div>
   );
 };
 
