@@ -1,11 +1,16 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { getCreditDetailsById } from '../service/querisCredits';
 
 const CreditDetail = () => {
   const { id } = useParams();
   const [installments, setInstallments] = useState([]);
   const [creditInfo, setCreditInfo] = useState(null);
+  const navigate = useNavigate()
+
+  const handlePayment = () => {
+    navigate("/paymentCredit")
+  }
 
   useEffect(() => {
     const fetchCreditDetails = async () => {
@@ -95,7 +100,9 @@ const CreditDetail = () => {
                     {installment.month}
                   </td>
                   <td className="px-5 py-5 text-sm text-center border-b border-gray-200">
-                    <button className="px-4 py-2 text-white bg-green-500 rounded hover:bg-green-600">
+                    <button className="px-4 py-2 text-white bg-green-500 rounded hover:bg-green-600"
+                    onClick={() => handlePayment()}
+                    >
                       Pagar
                     </button>
                   </td>

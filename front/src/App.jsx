@@ -15,8 +15,7 @@ import Credits from "./components/admin/Credits";
 import ViewCredits from "./components/Users/ViewCredits";
 import PerfilUsuario from "./components/Users/PerfilUsuario";
 import CreditDetails from "./components/Users/CreditDetail";
-
-// import PaymentCredit from './components/views/Payment';
+import PaymentCredit from './components/views/Payment';
 
 const App = () => {
   return (
@@ -26,7 +25,7 @@ const App = () => {
           {/* Página de inicio */}
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
-          {/* <Route path='/paymentCredit' element={<PaymentCredit />}/> */}
+          <Route path='/paymentCredit' element={<PaymentCredit />}/>
 
           {/* Rutas del Dashboard del Admin */}
           <Route path="/admin" element={<SidebarAdmin />}>
