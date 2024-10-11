@@ -9,7 +9,7 @@ const PaymentCredit = () => {
 
   // Inicializar MercadoPago solo una vez cuando el componente se monta
   useEffect(() => {
-    initMercadoPago('APP_USR-26b6f05e-ab52-41ff-af40-dc23a6504bc6', { //cambiar la public key
+    initMercadoPago('APP_USR-74b760ad-679c-4f71-af05-89351b8afb4c', { //cambiar la public key
       locale: "es-AR",
     });
   }, []);
