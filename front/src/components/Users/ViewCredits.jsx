@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { Table, Container, Button } from "react-bootstrap";
 import { useAuth } from "../Context/AuthContext"; 
 import { getCreditsByUserId } from "../service/querisCredits"; 
 import { useNavigate } from "react-router-dom";
@@ -42,50 +41,41 @@ const MisCreditos = () => {
   }
 
   return (
-    <Container
-      className="min-h-screen py-8"
-      style={{ background: "linear-gradient(135deg, #E0F7FA, #E1F5FE)" }}
-    >
+    <div className="flex flex-col items-center min-h-screen px-4 py-8 bg-gray-100 lg:px-8">
       <h1 className="mb-8 text-3xl font-bold text-center text-blue-700">Mis Créditos</h1>
-
-      <div className="overflow-hidden bg-white rounded-lg shadow-lg">
-        <Table
-          striped
-          bordered
-          hover
-          variant="dark"
-          className="min-w-full overflow-hidden border-collapse rounded-lg table-auto"
-        >
+      
+      <div className="w-full max-w-6xl overflow-x-auto bg-white rounded-lg shadow-lg">
+        <table className="min-w-full bg-white table-auto">
           <thead>
-            <tr className="text-white bg-blue-600">
-              <th className="px-6 py-3 text-left">Código</th>
-              <th className="px-6 py-3 text-left">Monto</th>
-              <th className="px-6 py-3 text-left">Meses</th>
-              <th className="px-6 py-3 text-left">Intereses</th>
-              <th className="px-6 py-3 text-left">Acciones</th>
+            <tr className="text-lg text-white bg-blue-600 lg:text-xl">
+              <th className="px-6 py-4">Código</th>
+              <th className="px-6 py-4">Monto</th>
+              <th className="px-6 py-4">Meses</th>
+              <th className="px-6 py-4">Intereses</th>
+              <th className="px-6 py-4">Acciones</th>
             </tr>
           </thead>
           <tbody>
             {credits.map((credit) => (
-              <tr key={credit.id} className="border-b odd:bg-gray-50 even:bg-white">
-                <td className="px-6 py-4">{credit.id}</td>
-                <td className="px-6 py-4">{credit.amount}</td>
-                <td className="px-6 py-4">{credit.months}</td>
-                <td className="px-6 py-4">{credit.interest}</td>
-                <td className="px-6 py-4">
-                  <Button
-                    className="px-4 py-2 text-sm font-semibold text-white bg-green-500 rounded hover:bg-green-600"
+              <tr key={credit.id} className="text-lg text-gray-700 border-b lg:text-xl">
+                <td className="px-6 py-4 text-center">{credit.id}</td>
+                <td className="px-6 py-4 text-center">{credit.amount}</td>
+                <td className="px-6 py-4 text-center">{credit.months}</td>
+                <td className="px-6 py-4 text-center">{credit.interest}</td>
+                <td className="px-6 py-4 text-center">
+                  <button
+                    className="px-4 py-2 text-lg text-white transition duration-200 bg-green-500 rounded lg:text-xl hover:bg-green-600"
                     onClick={() => handleCredit(credit.id)}
                   >
                     Ver más
-                  </Button>
+                  </button>
                 </td>
               </tr>
             ))}
           </tbody>
-        </Table>
+        </table>
       </div>
-    </Container>
+    </div>
   );
 };
 
