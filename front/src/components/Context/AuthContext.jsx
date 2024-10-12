@@ -63,6 +63,15 @@ export const AuthProvider = ({ children }) => {
         getUserDash(r.token).then((r) => {
           localStorage.setItem("user", JSON.stringify(r));
           setUser(r);
+          if (r) {
+            Swal.fire({
+              icon: "success",
+              title: "¡BIENVENIDO!",
+              text: "Bienvenido, has iniciado sesión correctamente.",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          }
           if (r.is_admin !== true) {
             navigate("/");
           } else {
@@ -95,6 +104,7 @@ export const AuthProvider = ({ children }) => {
     login,
     logout,
     error,
+    navigate,
     // Proporcionar el estado de error
   };
 

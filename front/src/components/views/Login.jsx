@@ -5,7 +5,7 @@ import Footer from "./common/Footer";
 import Navbar from "./common/Navbar";
 
 const Login = () => {
-  const { login, error } = useAuth(); // Importa la función de login y el error del contexto
+  const { login, error, navigate } = useAuth(); // Importa la función de login y el error del contexto
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -23,18 +23,7 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await login({ email, password }); // Llama a la función login del contexto
-
-      if (response) {
-        // Si el login es exitoso, muestra la alerta de éxito
-        Swal.fire({
-          icon: "success",
-          title: "¡Login exitoso!",
-          text: "Bienvenido, has iniciado sesión correctamente.",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-      }
+      await login({ email, password });
     } catch (err) {
       // No necesitas capturar el error aquí, ya que el AuthContext lo maneja
       console.error("Error en el login:", err);
