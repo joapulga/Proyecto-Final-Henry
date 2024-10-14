@@ -7,10 +7,11 @@ import { useAuth } from "../Context/AuthContext";
 const AllUsers = () => {
   const { token } = useAuth();
   const [users, setUsers] = useState([]);
-  useEffect(() => { 
-    console.log(token)
+
+  useEffect(() => {
+    console.log(token);
     findAllUsers(token)
-    .then((res) => {
+      .then((res) => {
         setUsers(res);
       })
       .catch((error) => console.error(error));

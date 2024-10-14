@@ -1,8 +1,33 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { Button, Col, Container, Modal, Row, Table } from "react-bootstrap";
+import { useParams } from "react-router-dom";
+import { findCreditsById } from "../service/querisCredits";
 
 const CreditDetail = () => {
+  const { id } = useParams();
+  const [shares, setShares] = useState([]);
+  const [credit, setCredit] = useState([]);
+
+  useEffect(() => {
+    findCreditsById(id).then((r) => {
+      setShares(r.shares);
+      setCredit(r);
+    });
+  }, []);
+
+  const mapeo = () => {
+    return shares.map((c) => (
+      <tr key={c.id}>
+      <td>{c.id}</td>
+      <td>{c.expirate_date}</td>
+      <td>{c.number_share}</td>
+      <td>{c.amount}</td>
+      <td>{c.interes}</td>
+      <td>{c.state}</td>
+    </tr>
+    ));
+  };
   return (
     <Container>
       <div className="mb-5">
@@ -12,18 +37,32 @@ const CreditDetail = () => {
             <h2>ID Credit</h2>
           </Col>
           <Col>
-            <h4>123</h4>
+            <h4>{credit.id}</h4>
           </Col>
-          <Col></Col>
         </Row>
         <Row className="mt-4">
           <Col>
-            <h2>Client</h2>
+            <h2>Monto Total</h2>
           </Col>
           <Col>
-            <h4>pedro perez</h4>
+            <h4>{credit.amount}</h4>
           </Col>
-          <Col></Col>
+        </Row>
+        <Row className="mt-4">
+          <Col>
+            <h2>Interes</h2>
+          </Col>
+          <Col>
+            <h4>{credit.interest}%</h4>
+          </Col>
+        </Row>
+        <Row className="mt-4">
+          <Col>
+            <h2>Meses</h2>
+          </Col>
+          <Col>
+            <h4>{credit.months}</h4>
+          </Col>
         </Row>
       </div>
       <Row className="pt-5">
@@ -33,22 +72,14 @@ const CreditDetail = () => {
             <tr>
               <th>ID</th>
               <th>DATE</th>
+              <th>Month</th>
               <th>Amount</th>
-              <th>Months</th>
               <th>Interest</th>
               <th>State</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>1</td>
-              <td>12/01/20</td>
-              <td>1000</td>
-              <td>1</td>
-              <td>10</td>
-              <td>Activo</td>
-            </tr>
-           
+           {mapeo()}
           </tbody>
         </Table>
       </Row>

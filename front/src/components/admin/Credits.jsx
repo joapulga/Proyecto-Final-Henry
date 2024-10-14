@@ -86,16 +86,6 @@ const Credits = () => {
             </select>
            
           </div>
-          {/* <div className="mb-4">
-            <label className="block mb-2">Fecha</label>
-            <input
-              type="date"
-              className="w-full p-2 border border-gray-300 rounded"
-              name="creditDate"
-              value={creditData.creditDate}
-              onChange={handleChange}
-            />
-          </div> */}
           <div className="mb-4">
             <label className="block mb-2">Monto</label>
             <input

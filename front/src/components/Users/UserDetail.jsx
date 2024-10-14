@@ -10,7 +10,7 @@ const UserDetail = () => {
   const { token } = useAuth();
   const [user, setUser] = useState({});
   const [usersCredits, setCredits] = useState([]);
-  console.log(user);
+
   useEffect(() => {
     findUserByID(id).then((r) => {
       try {
