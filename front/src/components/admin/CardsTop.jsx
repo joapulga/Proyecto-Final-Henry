@@ -29,24 +29,24 @@ const CardsTop = () => {
   }, []);
 
   return (
-    <div className="grid grid-cols-1 gap-4 my-6 md:grid-cols-5">
-      <div className="p-4 text-white bg-blue-600 rounded-lg shadow-lg">
+    <div className="flex flex-wrap items-center justify-center gap-4 my-6 md:grid-cols-5">
+      <div className="p-4 text-white bg-blue-600 rounded-lg shadow-lg w-[200px] h-[150px]">
         <h3 className="font-semibold text-center">Total Prestado</h3>
         <p className="mt-2 text-2xl text-center">{info.tt}</p>
       </div>
-      <div className="p-4 text-white bg-green-600 rounded-lg shadow-lg">
+      <div className="p-4 text-white bg-green-600 rounded-lg shadow-lg w-[200px] h-[150px]">
         <h3 className="font-semibold text-center">Intereses Ganados</h3>
         <p className="mt-2 text-2xl text-center">{info.interest}%</p>
       </div>
-      <div className="p-4 text-white bg-yellow-600 rounded-lg shadow-lg">
+      <div className="p-4 text-white bg-yellow-600 rounded-lg shadow-lg w-[200px] h-[150px]">
         <h3 className="font-semibold text-center">Cap. Recuperado</h3>
         <p className="mt-2 text-2xl text-center">20%</p>
       </div>
-      <div className="p-4 text-white bg-red-600 rounded-lg shadow-lg">
+      <div className="p-4 text-white bg-red-600 rounded-lg shadow-lg w-[200px] h-[150px]">
         <h3 className="font-semibold text-center">Créditos otorgados</h3>
         <p className="mt-2 text-2xl text-center">{info.credOtorgados}</p>
       </div>
-      <div className="p-4 text-white bg-purple-600 rounded-lg shadow-lg">
+      <div className="p-4 text-white bg-purple-600 rounded-lg shadow-lg w-[200px] h-[150px]">
         <h3 className="font-semibold text-center">Num. Clientes</h3>
         <p className="mt-2 text-2xl text-center">{info.TClientes}</p>
       </div>
