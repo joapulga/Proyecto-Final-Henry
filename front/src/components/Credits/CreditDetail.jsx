@@ -9,6 +9,7 @@ const CreditDetail = () => {
 
   useEffect(() => {
     findCreditsById(id).then((r) => {
+      console.log(r)
       setShares(r.shares);
       setCredit(r);
     });
@@ -22,7 +23,7 @@ const CreditDetail = () => {
         <td className="px-5 py-5 text-sm border-b border-gray-200">{c.number_share}</td>
         <td className="px-5 py-5 text-sm border-b border-gray-200">${c.amount}</td>
         <td className="px-5 py-5 text-sm border-b border-gray-200">{c.interes}%</td>
-        <td className="px-5 py-5 text-sm border-b border-gray-200">{c.state}</td>
+        <td className="px-5 py-5 text-sm border-b border-gray-200">{c.state.name}</td>
       </tr>
     ));
   };

@@ -13,6 +13,7 @@ const CreditDetail = () => {
 
   useEffect(() => {
     findCreditsById(id).then((r) => {
+      console.log(r.shares);
       setCreditInfo(r.shares);
     });
   }, []);
@@ -31,12 +32,26 @@ const CreditDetail = () => {
             {c.number_share}
           </td>
           <td className="px-5 py-5 text-sm text-center border-b border-gray-200">
-            <button
-              className="px-4 py-2 text-white bg-green-500 rounded hover:bg-green-600"
-              onClick={() => handlePayment()}
-            >
-              Pagar
-            </button>
+       
+            {c.state.name === "Active" ? (
+              <>
+                <button
+                  className="px-4 py-2 text-white bg-green-500 rounded hover:bg-green-600"
+                  onClick={() => handlePayment()}
+                >
+                  Pagar
+                </button>
+              </>
+            ) : (
+              <>
+                <button
+                  className="px-4 py-2 text-white bg-red-500 rounded hover:bg-red-600"
+                  disabled
+                >
+                  Pagada
+                </button>
+              </>
+            )}
           </td>
         </tr>
       );
