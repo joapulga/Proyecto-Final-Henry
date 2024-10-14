@@ -9,26 +9,23 @@ const AllUsers = () => {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    console.log(token);
     findAllUsers(token)
-      .then((res) => {
-        setUsers(res);
-      })
+      .then((res) => setUsers(res))
       .catch((error) => console.error(error));
-  }, []);
+  }, [token]);
 
   const mapeo = () => {
     return users.map((u) => (
-      <tr key={u.id} className="hover:bg-gray-200">
-        <td className="px-4 py-2">{u.id}</td>
-        <td className="px-4 py-2">{u.name}</td>
-        <td className="px-4 py-2">{u.dni}</td>
-        <td className="px-4 py-2">{u.phone}</td>
-        <td className="px-4 py-2">
+      <tr key={u.id} className="hover:bg-gray-100">
+        <td className="px-2 py-3 text-sm">{u.id}</td>
+        <td className="px-2 py-3 text-sm">{u.name}</td>
+        <td className="px-2 py-3 text-sm">{u.dni}</td>
+        <td className="px-2 py-3 text-sm">{u.phone}</td>
+        <td className="px-2 py-3 text-sm">
           <Button
             as={Link}
             to={`/admin/user/${u.id}`}
-            className="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600"
+            className="w-[100px] h-[35px] px-3 py-1 text-xs text-white bg-blue-500 rounded hover:bg-blue-600"
           >
             Ver Más
           </Button>
@@ -38,20 +35,22 @@ const AllUsers = () => {
   };
 
   return (
-    <div className="p-4 bg-white rounded-lg shadow-lg table-responsive">
+    <div className="p-4 bg-white rounded-lg shadow-lg">
       <h2 className="mb-4 text-2xl font-bold text-center">Clientes</h2>
-      <table className="min-w-full bg-white border-collapse table-auto table">
-        <thead>
-          <tr>
-            <th className="py-2 border-b">ID</th>
-            <th className="py-2 border-b">Nombre</th>
-            <th className="py-2 border-b">DNI</th>
-            <th className="py-2 border-b">Teléfono</th>
-            <th className="py-2 border-b">Funciones</th>
-          </tr>
-        </thead>
-        <tbody>{mapeo()}</tbody>
-      </table>
+      <div className="overflow-x-auto">
+        <table className="min-w-full bg-white table-auto">
+          <thead>
+            <tr className="bg-gray-100">
+              <th className="px-4 py-2 text-sm font-semibold text-left">ID</th>
+              <th className="px-4 py-2 text-sm font-semibold text-left">Nombre</th>
+              <th className="px-4 py-2 text-sm font-semibold text-left">DNI</th>
+              <th className="px-4 py-2 text-sm font-semibold text-left">Teléfono</th>
+              <th className="px-4 py-2 text-sm font-semibold text-left">Funciones</th>
+            </tr>
+          </thead>
+          <tbody>{mapeo()}</tbody>
+        </table>
+      </div>
     </div>
   );
 };
