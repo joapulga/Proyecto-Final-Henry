@@ -4,6 +4,7 @@ import { Button, Col, Container, Modal, Row, Table } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import { findCreditsById } from "../service/querisCredits";
 
+
 const CreditDetail = () => {
   const { id } = useParams();
   const [shares, setShares] = useState([]);
@@ -29,12 +30,14 @@ const CreditDetail = () => {
     ));
   };
   return (
-    <Container>
+    <Container className="p-5 bg-white rounded shadow-lg">
       <div className="mb-5">
-        <h1 className="text-dark text-center">Credit Detail</h1>
-        <Row className="mt-4">
-          <Col>
-            <h2>ID Credit</h2>
+        <h1 className="mb-4 text-center text-dark display-4">Credit Detail</h1>
+
+        {/* ID Credit Row */}
+        <Row className="mt-4 align-items-center">
+          <Col xs={12} md={6}>
+            <h2 className="text-primary font-weight-bold">ID Credit</h2>
           </Col>
           <Col>
             <h4>{credit.id}</h4>
@@ -65,17 +68,19 @@ const CreditDetail = () => {
           </Col>
         </Row>
       </div>
+
+      {/* Table Section */}
       <Row className="pt-5">
-        <h3 className="text-center">Detalle Cuotas</h3>
-        <Table striped bordered hover variant="dark">
-          <thead>
+        <h3 className="mb-4 text-center text-secondary">Credits Details</h3>
+        <Table responsive bordered hover className="table-modern">
+          <thead className="text-white bg-primary">
             <tr>
               <th>ID</th>
               <th>DATE</th>
               <th>Month</th>
               <th>Amount</th>
               <th>Interest</th>
-              <th>State</th>
+              <th>Status</th>
             </tr>
           </thead>
           <tbody>
