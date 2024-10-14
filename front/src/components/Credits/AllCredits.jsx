@@ -25,7 +25,7 @@ const AllCredits = () => {
     return credits.map((c) => (
       <tr key={c.id} className="hover:bg-gray-200">
         <td className="px-4 py-2">{c.id}</td>
-        <td className="px-4 py-2">{c.createdAt}</td>
+        <td className="px-4 py-2">{c.createdAt.split('T')[0]}</td>
         <td className="px-4 py-2">{c.amount}</td>
         <td className="px-4 py-2">{c.months}</td>
         <td className="px-4 py-2">{c.interest}</td>
