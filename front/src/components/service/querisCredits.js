@@ -53,9 +53,6 @@ export const getCreditDetailsById = async (creditId) => {
 };
 
 export const paidMp = async (datePaid) => {
-  const response = await axios.post(
-    "http://localhost:3000/payment/create",
-    datePaid
-  );
-  return response.data
+  const response = await axios.post(URL + "/payment/create", datePaid);
+  return response.data;
 };
