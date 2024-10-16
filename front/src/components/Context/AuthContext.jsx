@@ -73,7 +73,7 @@ export const AuthProvider = ({ children }) => {
             });
           }
           if (r.is_admin !== true) {
-            navigate("/");
+            navigate("/user/dashboarduser");
           } else {
             navigate("/admin/dashboardadmin");
           }
