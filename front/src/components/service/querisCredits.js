@@ -56,3 +56,11 @@ export const paidMp = async (datePaid) => {
   const response = await axios.post(URL + "/payment/create", datePaid);
   return response.data;
 };
+export const paidShare = async (idCred) => {
+  try {
+    const response = await axios.get(URL + `/share/paid/${idCred}`);
+    return response.data;
+  } catch (e) {
+    return e;
+  }
+};
