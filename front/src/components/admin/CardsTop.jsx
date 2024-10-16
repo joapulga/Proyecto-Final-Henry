@@ -4,7 +4,7 @@ import { findAllUsers } from "../service/querisUsers";
 import { useAuth } from "../Context/AuthContext";
 
 const CardsTop = () => {
-  const [info, setInfo] = useState([]);
+  const [info, setInfo] = useState({ tt: 0, interest: 0, credOtorgados: 0, TClientes: 0 });
   const { token } = useAuth();
 
   useEffect(() => {
@@ -32,15 +32,11 @@ const CardsTop = () => {
     <div className="flex flex-wrap items-center justify-center gap-4 my-6 md:grid-cols-5">
       <div className="p-4 text-white bg-blue-600 rounded-lg shadow-lg w-[200px] h-[150px]">
         <h3 className="font-semibold text-center">Total Prestado</h3>
-        <p className="mt-2 text-2xl text-center">{info.tt}</p>
+        <p className="mt-2 text-2xl text-center">{info.tt.toLocaleString('es-ES')}</p>
       </div>
       <div className="p-4 text-white bg-green-600 rounded-lg shadow-lg w-[200px] h-[150px]">
         <h3 className="font-semibold text-center">Intereses Ganados</h3>
         <p className="mt-2 text-2xl text-center">{info.interest}%</p>
-      </div>
-      <div className="p-4 text-white bg-yellow-600 rounded-lg shadow-lg w-[200px] h-[150px]">
-        <h3 className="font-semibold text-center">Cap. Recuperado</h3>
-        <p className="mt-2 text-2xl text-center">20%</p>
       </div>
       <div className="p-4 text-white bg-red-600 rounded-lg shadow-lg w-[200px] h-[150px]">
         <h3 className="font-semibold text-center">Créditos otorgados</h3>
