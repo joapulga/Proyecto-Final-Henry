@@ -25,8 +25,8 @@ export class PaymentService {
           },
         ],
         back_urls: {
-          success: 'https://tu-url-de-exito.com',
-          failure: 'https://tu-url-de-fallo.com',
+          success: 'http://localhost:5173/user/allcredits',
+          failure: 'http://localhost:5173/user/allcredits',
           pending: 'https://tu-url-de-pendiente.com',
         },
         auto_return: 'approved',
