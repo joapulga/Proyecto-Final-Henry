@@ -2,13 +2,14 @@ import { useState, useEffect } from "react";
 import { useAuth } from "../Context/AuthContext";
 import { createPhoto, getUserData } from "../service/querisUsers";
 import avatarImg from "../../assets/default-avatar.png";
+import Loading from "../views/common/Loading";
 
 const PerfilAdmin = () => {
   const { user } = useAuth();
   const [profileImage, setProfileImage] = useState(avatarImg);
   const [selectedFile, setSelectedFile] = useState(null);
   const [userData, setUserData] = useState([]);
-
+  const [mostrarLoading, setMostrarLoading] = useState(false);
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -35,13 +36,21 @@ const PerfilAdmin = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-     const formData = new FormData();
-     formData.append("file", selectedFile);
+    const formData = new FormData();
+    formData.append("file", selectedFile);
     // console.log("formdata: ", selectedFile);
     try {
-      await createPhoto(userData.id,formData).then((r) => {
-        console.log(r);
+      setMostrarLoading(true);
+      await createPhoto(userData.id, formData).then((r) => {
+        Swal.fire({
+          icon: "success",
+          title: "Imagen Cargada",
+          text: "Se cargo el perfil correctamente",
+          showConfirmButton: false,
+          timer: 1500,
+        });
       });
+      setMostrarLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -87,12 +96,18 @@ const PerfilAdmin = () => {
                 Archivo seleccionado: {selectedFile.name}
               </p>
             )}
-            <button
-              type="submit"
-              className="w-full p-2 mt-4 text-white bg-blue-500 rounded hover:bg-blue-600"
-            >
-              Guardar imagen
-            </button>
+            {mostrarLoading === true ? (
+              <div className="flex justify-center ">
+                <Loading></Loading>
+              </div>
+            ) : (
+              <button
+                type="submit"
+                className="w-full p-2 mt-4 text-white bg-blue-500 rounded hover:bg-blue-600"
+              >
+                Guardar imagen
+              </button>
+            )}
           </form>
         </div>
       </div>
