@@ -3,6 +3,7 @@ import { CreateAuthDto } from './dto/create-auth.dto';
 import { UpdateAuthDto } from './dto/update-auth.dto';
 import { AuthRepository } from './auth.repository';
 import { CreateUserDto } from 'src/user/dto/create-user.dto';
+import { CreateAuth0Dto } from './dto/auth0-auth.dto';
 
 @Injectable()
 export class AuthService {
@@ -14,8 +15,11 @@ export class AuthService {
   }
 
   async singup(createUserDto: CreateUserDto){
-    console.log("USER CREATED!!!")
     return await this.authRepository.singUp(createUserDto)
+  }
+
+  async auth0Login(createAuth0Dto: CreateAuth0Dto){
+    return await this.authRepository.auth0Login(createAuth0Dto)
   }
   
 }
