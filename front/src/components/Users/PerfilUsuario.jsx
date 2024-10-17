@@ -1,20 +1,15 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../Context/AuthContext';
-import { getUserData } from '../service/querisUsers'; 
+import { createPhoto, getUserData } from '../service/querisUsers'; 
 import avatarImg from "../../assets/default-avatar.png";
-import { uploadProfileImage } from '../service/querisUsers';
+
+import Swal from 'sweetalert2';
 
 const UserProfile = () => {
-  const { user } = useAuth(); 
+  const { user } = useAuth();
   const [profileImage, setProfileImage] = useState(avatarImg);
   const [selectedFile, setSelectedFile] = useState(null);
-  const [userData, setUserData] = useState({
-    name: "",
-    email: "",
-    dni: "",
-    telefono: "",
-    direccion: "",
-  });
+  const [userData, setUserData] = useState([]);
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -29,41 +24,41 @@ const UserProfile = () => {
   };
 
   useEffect(() => {
-    if (user && user.id) { 
+    if (user && user.id) {
       getUserData(user.id)
         .then((data) => {
-          setUserData({
-            name: data.name,
-            email: data.email,
-            id: data.id,
-            dni: data.dni,
-            phone: data.phone,
-            direccion: data.direccion,
-          });
+          setUserData(data);
+          setProfileImage(data.img_url)
         })
         .catch((error) => {
-          console.error('Error obteniendo los datos del usuario:', error);
+          console.error("Error obteniendo los datos del usuario:", error);
         });
     }
   }, [user]);
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (!selectedFile) {
-      alert("Por favor selecciona una imagen antes de subirla.");
-      return;
-    }
-
+     const formData = new FormData();
+     formData.append("file", selectedFile);
+    // console.log("formdata: ", selectedFile);
     try {
-      const data = await uploadProfileImage(user.id, selectedFile);
-      console.log('Respuesta del servidor:', data);
-      alert('Imagen subida correctamente');
+      await createPhoto(userData.id,formData).then((r) => {
+        try {
+          Swal.fire({
+            icon: "success",
+            title: "¡Imagen Cargada!",       
+            showConfirmButton: false,
+            timer: 1000,
+          });
+          
+        } catch (error) {
+          console.log(error)
+        }
+      });
     } catch (error) {
-      alert('Hubo un error al subir la imagen:', error);
+      console.log(error);
     }
   };
-
   return (
     <div 
       className="flex items-center justify-center min-h-screen bg-gradient-to-r from-blue-200 to-blue-100"

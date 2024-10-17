@@ -13,13 +13,19 @@ import typeOrmConfig from './config/typeorm'
 import { JwtModule } from '@nestjs/jwt';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
-
+import {PaymentModule } from './payment/payment.module';
+import { CloudinaryService } from './service/cloudinary/cloudinary.service';
+import { NotificationsServiceService } from './service/notifications-service/notifications-service.service';
+import { ScheduleModule } from '@nestjs/schedule';
+import { NotificationsModule } from './service/notifications-service/notifications.module';
 @Module({
   imports: [
+    NotificationsModule,
     UserModule, 
     CreditModule, 
     ShareModule, 
     StateModule, 
+    PaymentModule,
     BalanceModule,
     MailerModule.forRoot({
       transport: {
@@ -50,6 +56,7 @@ import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handleba
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => configService.get('typeorm')
     }),
+    ScheduleModule.forRoot(),
     JwtModule.register({
       secret: process.env.JWT_SECRET,
       global: true,
@@ -60,6 +67,6 @@ import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handleba
     AuthModule
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService,  CloudinaryService],
 })
 export class AppModule {}

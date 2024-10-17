@@ -1,0 +1,39 @@
+import { Injectable } from '@nestjs/common';
+import MercadoPagoConfig, { Preference} from 'mercadopago';
+import { MercadoPagoConfigProvider } from '../config/mercado-pago';
+import { CreatePaymentDto } from './dto/createPreference_dto';
+import { CreatePreferenceDto } from './dto/createPreferenceDto';
+
+@Injectable()
+export class PaymentService {
+  constructor(private readonly mercadoPagoConfig: MercadoPagoConfigProvider) {}
+
+  async createPreference(createPaymentDto:CreatePaymentDto) {
+    
+    const client = new MercadoPagoConfig({ accessToken: "APP_USR-164994297377580-101118-f4a63c6852bbbe76ecffe4a74745d037-2015493111" });
+    const preference = new Preference(client);
+
+    // Crear un objeto que cumpla con la interfaz PreferenceCreateData
+    const preferenceData: any = {
+      body: {
+        items: [
+          {
+            title: createPaymentDto.title,
+            quantity: createPaymentDto.quantity,
+            unit_price: createPaymentDto.price,
+            currency_id: 'ARS',
+          },
+        ],
+        back_urls: {
+          success: 'http://localhost:5173/user/allcredits',
+          failure: 'http://localhost:5173/user/allcredits',
+          pending: 'https://tu-url-de-pendiente.com',
+        },
+        auto_return: 'approved',
+      },
+    };
+
+    const result = await preference.create(preferenceData);
+    return result;
+  }
+}

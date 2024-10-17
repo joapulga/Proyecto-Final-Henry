@@ -1,24 +1,22 @@
-import { useEffect, useState } from "react";
-import { Col, Container, Row } from "react-bootstrap";
+
 import CardsTop from "./CardsTop";
 import AllUsers from "../Users/AllUsers";
 import AllCredits from "../Credits/AllCredits";
 
 
 const TablesUser = () => {
-
   return (
-    <Container>
-      <CardsTop></CardsTop>
-      <Row className="pt-5">
-        <Col>
-          <AllUsers></AllUsers>
-        </Col>
-        <Col>
-          <AllCredits ></AllCredits>
-        </Col>
-      </Row>
-    </Container>
+    <div className="container mx-auto">
+      <CardsTop />
+      <div className="grid grid-cols-1 gap-8 pt-8 md:grid-cols-2">
+        <div>
+          <AllUsers />
+        </div>
+        <div>
+          <AllCredits />
+        </div>
+      </div>
+    </div>
   );
 };
 

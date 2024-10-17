@@ -21,7 +21,7 @@ export class BalanceService {
     return await this.balanceRepository.find();
   }
 
-  async findOne(id: string ): Promise<Balance | null> {
+  async findOne(id: string): Promise<Balance | null> {
     return await this.balanceRepository.findOneBy({ id });
   }
 
@@ -29,7 +29,7 @@ export class BalanceService {
     const balance = await this.balanceRepository.findOneBy({ id });
     if (!balance) {
       return null;
-  }
+    }
 
     // Actualización parcial utilizando TypeORM
     await this.balanceRepository.update(id, updateBalanceDto);

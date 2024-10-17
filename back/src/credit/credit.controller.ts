@@ -25,7 +25,8 @@ export class CreditController {
   }
 
   @Get('user/:id')
-  findUsersAll(@Param('id') id: string) { 
+  findUsersAll(@Param('id') id: string) {
+    console.log(id)
     return this.creditService.findUsersAll(id);
   }
 

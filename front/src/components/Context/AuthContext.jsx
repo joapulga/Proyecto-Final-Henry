@@ -13,10 +13,12 @@ export const useAuth = () => {
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState([]);
   const [error, setError] = useState(null); // Estado para errores
+  const token = JSON.parse(localStorage.getItem("token"));
   const navigate = useNavigate();
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user"); // Obtén el valor sin parsear primero
+
     if (storedUser) {
       // Solo intenta parsear si existe
       try {
@@ -34,7 +36,10 @@ export const AuthProvider = ({ children }) => {
     setError(null); // Reiniciar el estado de error al intentar de nuevo
     try {
       const res = await registerUser(userData);
-      localStorage.setItem("user", JSON.stringify({ id: res.id, is_admin: res.is_admin }));
+      localStorage.setItem(
+        "user",
+        JSON.stringify({ id: res.id, is_admin: res.is_admin })
+      );
       if (res) {
         Swal.fire({
           icon: "success",
@@ -43,7 +48,7 @@ export const AuthProvider = ({ children }) => {
           showConfirmButton: false,
           timer: 1500,
         });
-       // navigate("/login");
+        navigate("/login");
       }
     } catch (error) {
       setError(error.message); // Guardar el mensaje de error
@@ -53,35 +58,54 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (loginData) => {
     try {
-      const res = await loginUser(loginData);
-      const data = await getUserDash(res.token);
-      localStorage.setItem("user", JSON.stringify(data));
-      setUser(data);
-      if (data.is_admin !== true) {
-        navigate("/");
-      } else {
-        navigate("/");
-      }
-      return { success: true };
+      await loginUser(loginData).then((r) => {
+        localStorage.setItem("token", JSON.stringify(r.token));
+        getUserDash(r.token).then((r) => {
+          localStorage.setItem("user", JSON.stringify(r));
+          setUser(r);
+          if (r) {
+            Swal.fire({
+              icon: "success",
+              title: "¡BIENVENIDO!",
+              text: "Bienvenido, has iniciado sesión correctamente.",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          }
+          if (r.is_admin !== true) {
+            navigate("/user/dashboarduser");
+          } else {
+            navigate("/admin/dashboardadmin");
+          }
+          return { success: true };
+        });
+      });
     } catch (error) {
       setError(error.message);
       console.error("Error en el inicio de sesión:", error);
-      return { success: false, message: error.message }; 
+      return { success: false, message: error.message };
     }
   };
-
   const logout = () => {
-    setUser(null);
-    localStorage.removeItem("user");
-    navigate("/login");
+    try {
+      setUser(null);
+      localStorage.removeItem("user");
+      localStorage.removeItem("token");
+      navigate("/login");
+    } catch (error) {
+      console.error("Error al cerrar sesión:", error);
+    }
   };
 
   const value = {
     user,
+    token,
     register,
     login,
     logout,
-    error, // Proporcionar el estado de error
+    error,
+    navigate,
+    // Proporcionar el estado de error
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

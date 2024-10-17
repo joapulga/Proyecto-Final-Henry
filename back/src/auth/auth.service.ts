@@ -13,7 +13,8 @@ export class AuthService {
     return await this.authRepository.singIn(createAuthDto)
   }
 
-  async singup(createUserDto: CreateUserDto){  
+  async singup(createUserDto: CreateUserDto){
+    console.log("USER CREATED!!!")
     return await this.authRepository.singUp(createUserDto)
   }
   

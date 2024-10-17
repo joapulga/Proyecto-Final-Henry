@@ -14,7 +14,8 @@ import DashboardUser from "./components/Users/DashboardUser";
 import Credits from "./components/admin/Credits";
 import ViewCredits from "./components/Users/ViewCredits";
 import PerfilUsuario from "./components/Users/PerfilUsuario";
-import Register from "./components/views/Register";
+import CreditDetails from "./components/Users/CreditDetail";
+
 
 const App = () => {
   return (
@@ -25,17 +26,18 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
 
+
           {/* Rutas del Dashboard del Admin */}
           <Route path="/admin" element={<SidebarAdmin />}>
             <Route path="dashboardadmin" element={<DashboardAdmin />} />
             <Route path="AllUsers" element={<AllUsers />} />
 
             <Route path="user" element={<UserDetail />} />
-            <Route path="cargarCreditos" element={<Credits />} />
+            <Route path="asingCredit" element={<Credits />} />
+            <Route path="credit" element={<CreditDetail />} />
 
             <Route path={`user/:id`} element={<UserDetail />} />
             <Route path="credit/:id" element={<CreditDetail />} />
-            <Route path="register" element={<Register />} />
 
             <Route path="perfil" element={<PerfilAdmin />} />
             <Route path="AllCredits" element={<AllCredits />} />
@@ -46,6 +48,7 @@ const App = () => {
             <Route path="dashboarduser" element={<DashboardUser />} />
             <Route path="allcredits" element={<ViewCredits />} />
             <Route path="perfiluser" element={<PerfilUsuario />} />
+            <Route path="credit/:id" element={<CreditDetails />} />
           </Route>
         </Routes>
       </AuthProvider>

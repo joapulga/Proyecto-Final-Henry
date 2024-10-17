@@ -6,10 +6,8 @@ import { User } from "src/user/entities/user.entity";
 import { Repository } from "typeorm";
 import { JwtService } from "@nestjs/jwt";
 import  * as bcrypt from "bcrypt"
-
-import { ExceptionsHandler } from "@nestjs/core/exceptions/exceptions-handler";
 import { State } from "src/state/entities/state.entity";
-import { MailerService } from "@nestjs-modules/mailer";
+import { MailService } from "src/service/mail/mail.service";
 
 
 @Injectable()
@@ -19,7 +17,7 @@ export class AuthRepository{
         @InjectRepository(User) private userRepository: Repository<User>,
         @InjectRepository(State) private stateRepository: Repository<State>,
         private readonly jwtService: JwtService,
-        private emailService: MailerService
+        private emailService: MailService
     ){}
 
     async singIn(createAuthDto: CreateAuthDto): Promise<Object>{
@@ -27,19 +25,11 @@ export class AuthRepository{
         if(user){
             const isValid = await bcrypt.compare(createAuthDto.password, user.password)
             if(isValid){
-                await this.emailService.sendMail(
-                    {
-                        to: user.email,
-                        from: 'henry@softdesarrolladores.com', 
-                        subject: 'Access to Financial System',
-                        text:  `You have accessed to your account at ${new Date()}`,
-                        html: "<b>If you haven't accessed to your account changue your password and call us</b>"
-                    })
-                    .then( (success) => {
-                        console.log(success)
-                    }).catch((error) => {
-                        console.log(error)
-                    })
+                await this.emailService.buildEmail(
+                    user.email, 
+                    'Access to Financial System', 
+                    "<b>If you haven't accessed to your account changue your password and call us</b>"
+                )
                 const payload = {
                     id: user.id,
                     email: user.email,
@@ -52,10 +42,10 @@ export class AuthRepository{
 
 
             }else{
-                throw new BadRequestException('Bad Password or User')
+                throw new BadRequestException('Bad Password or User 1')
             }
         }else{
-            throw new BadRequestException('Bad Password or User')
+            throw new BadRequestException('Bad Password or User 2')
         }
     }
 
