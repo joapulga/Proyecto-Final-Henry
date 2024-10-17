@@ -1,0 +1,33 @@
+select {
+    position: relative;
+    overflow: visible;
+  }
+  
+  select::-ms-expand {
+    display: none; /* Para ocultar el ícono desplegable en IE y Edge */
+  }
+  
+  select {
+    appearance: none; /* Quita el estilo predeterminado */
+  }
+  
+  select-container {
+    position: relative;
+  }
+  
+  select {
+    z-index: 1;
+  }
+  
+  select-container::after {
+    content: "";
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid #000;
+  }
+  

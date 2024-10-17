@@ -3,13 +3,14 @@ import { useAuth } from "../Context/AuthContext"; // Asegúrate de importar el c
 import Swal from "sweetalert2"; // Importa SweetAlert2
 import Footer from "./common/Footer";
 import Navbar from "./common/Navbar";
+import Loading from "./common/Loading";
 
 const Login = () => {
   const { login, error } = useAuth(); // Importa la función de login y el error del contexto
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [mostrarLoading, setMostrarLoading] = useState(false);
 
-  // Mostrar alertas cuando ocurra un error
   useEffect(() => {
     if (error) {
       Swal.fire({
@@ -23,18 +24,9 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await login({ email, password }); // Llama a la función login del contexto
-
-      if (response) {
-        // Si el login es exitoso, muestra la alerta de éxito
-        Swal.fire({
-          icon: "success",
-          title: "¡Login exitoso!",
-          text: "Bienvenido, has iniciado sesión correctamente.",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-      }
+      setMostrarLoading(true);
+      await login({ email, password });
+      setMostrarLoading(false);
     } catch (err) {
       // No necesitas capturar el error aquí, ya que el AuthContext lo maneja
       console.error("Error en el login:", err);
@@ -85,16 +77,27 @@ const Login = () => {
                 />
               </div>
             </div>
-
-            <div>
-              <button
-                type="submit"
-                className="relative flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg group hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-              >
-                Iniciar Sesión
-              </button>
-            </div>
+            {mostrarLoading === true ? (
+              <div className="flex justify-center ">
+                <Loading></Loading>
+              </div>
+            ) : (
+              <div>
+                <button
+                  type="submit"
+                  className="relative flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg group hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                >
+                  Iniciar Sesión
+                </button>
+              </div>
+            )}
           </form>
+          <a
+            href="#"
+            className="relative flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg group hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+          >
+            Google
+          </a>
 
           <div className="text-sm text-center">
             <a

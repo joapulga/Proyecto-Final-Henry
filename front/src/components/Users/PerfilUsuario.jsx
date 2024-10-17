@@ -1,20 +1,15 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../Context/AuthContext';
-import { getUserData } from '../service/querisUsers'; 
+import { createPhoto, getUserData } from '../service/querisUsers'; 
 import avatarImg from "../../assets/default-avatar.png";
-import { uploadProfileImage } from '../service/querisUsers';
+
+import Swal from 'sweetalert2';
 
 const UserProfile = () => {
-  const { user } = useAuth(); 
+  const { user } = useAuth();
   const [profileImage, setProfileImage] = useState(avatarImg);
   const [selectedFile, setSelectedFile] = useState(null);
-  const [userData, setUserData] = useState({
-    name: "",
-    email: "",
-    dni: "",
-    telefono: "",
-    direccion: "",
-  });
+  const [userData, setUserData] = useState([]);
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -29,58 +24,66 @@ const UserProfile = () => {
   };
 
   useEffect(() => {
-    if (user && user.id) { 
+    if (user && user.id) {
       getUserData(user.id)
         .then((data) => {
-          setUserData({
-            name: data.name,
-            email: data.email,
-            id: data.id,
-            dni: data.dni,
-            phone: data.phone,
-            direccion: data.direccion,
-          });
+          setUserData(data);
+          setProfileImage(data.img_url)
         })
         .catch((error) => {
-          console.error('Error obteniendo los datos del usuario:', error);
+          console.error("Error obteniendo los datos del usuario:", error);
         });
     }
   }, [user]);
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (!selectedFile) {
-      alert("Por favor selecciona una imagen antes de subirla.");
-      return;
-    }
-
+     const formData = new FormData();
+     formData.append("file", selectedFile);
+    // console.log("formdata: ", selectedFile);
     try {
-      const data = await uploadProfileImage(user.id, selectedFile);
-      console.log('Respuesta del servidor:', data);
-      alert('Imagen subida correctamente');
+      await createPhoto(userData.id,formData).then((r) => {
+        try {
+          Swal.fire({
+            icon: "success",
+            title: "¡Imagen Cargada!",       
+            showConfirmButton: false,
+            timer: 1000,
+          });
+          
+        } catch (error) {
+          console.log(error)
+        }
+      });
     } catch (error) {
-      alert('Hubo un error al subir la imagen:', error);
+      console.log(error);
     }
   };
-
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="w-full max-w-2xl p-8 mx-auto bg-white rounded-lg shadow-lg">
-        <div className="p-6 text-center bg-blue-600 border-b">
+    <div 
+      className="flex items-center justify-center min-h-screen bg-gradient-to-r from-blue-200 to-blue-100"
+    >
+      <div 
+        className="w-full max-w-2xl p-8 mx-auto bg-white rounded-lg shadow-2xl"
+        style={{ borderRadius: '16px' }}
+      >
+        <div 
+          className="p-6 text-center bg-blue-600 border-b rounded-t-lg"
+          style={{ borderRadius: '16px 16px 0 0' }}
+        >
           <img
-            className="w-32 h-32 mx-auto rounded-full"
+            className="w-32 h-32 mx-auto rounded-full shadow-lg"
             src={profileImage}
             alt="Imagen de perfil"
           />
-          <p className="pt-2 text-xl font-bold">{userData.name}</p>
-          <p className="text-sm text-white">{userData.id}</p>
+          <p className="pt-2 text-xl font-bold text-white">{userData.name}</p>
+          <p className="text-sm text-blue-200">{userData.id}</p>
         </div>
 
         <div className="p-6">
-          <p><strong>DNI:</strong> {userData.dni}</p>
-          <p><strong>Teléfono:</strong> {userData.phone}</p>
-          <p><strong>Email:</strong> {userData.email}</p>
+          <p className="mb-2 text-gray-700"><strong>DNI:</strong> {userData.dni}</p>
+          <p className="mb-2 text-gray-700"><strong>Teléfono:</strong> {userData.phone}</p>
+          <p className="mb-2 text-gray-700"><strong>Email:</strong> {userData.email}</p>
 
           {/* Formulario para subir nueva imagen */}
           <form onSubmit={handleSubmit} className="mt-4">
@@ -91,7 +94,7 @@ const UserProfile = () => {
               type="file"
               accept="image/*"
               onChange={handleFileChange}
-              className="w-full p-2 border rounded"
+              className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-300"
             />
             {selectedFile && (
               <p className="mt-2 text-sm text-gray-500">
@@ -100,7 +103,7 @@ const UserProfile = () => {
             )}
             <button
               type="submit"
-              className="w-full p-2 mt-4 text-white bg-blue-500 rounded hover:bg-blue-600"
+              className="w-full p-2 mt-4 text-white bg-blue-500 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
             >
               Guardar imagen
             </button>

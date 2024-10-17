@@ -35,11 +35,11 @@ const PerfilAdmin = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // console.log("Imagen subida:", selectedFile);
-    // const formData = new FormData();
-    // formData.append("selectedFile", selectedFile);
+     const formData = new FormData();
+     formData.append("file", selectedFile);
+    // console.log("formdata: ", selectedFile);
     try {
-      await createPhoto(selectedFile).then((r) => {
+      await createPhoto(userData.id,formData).then((r) => {
         console.log(r);
       });
     } catch (error) {
@@ -53,7 +53,7 @@ const PerfilAdmin = () => {
         <div className="p-6 text-center bg-blue-600 border-b">
           <img
             className="w-32 h-32 mx-auto rounded-full"
-            src={profileImage}
+            src={userData.img_url}
             alt="Imagen de perfil"
           />
           <p className="pt-2 text-xl font-bold">{userData.name}</p>

@@ -5,7 +5,7 @@ import { MercadoPagoConfig } from 'mercadopago';
 export class MercadoPagoConfigProvider {
     constructor() {
         return new MercadoPagoConfig({
-            accessToken: 'APP_USR-164994297377580-100214-3a9671296feea9596c0c761a3fe69e83-2015493111', // Replace with your access token
+            accessToken: 'APP_USR-164994297377580-101118-f4a63c6852bbbe76ecffe4a74745d037-2015493111', // Replace with your access token
         });
     }
 }
