@@ -3,6 +3,7 @@ import { useAuth } from "../Context/AuthContext";
 import { createPhoto, getUserData } from "../service/querisUsers";
 import avatarImg from "../../assets/default-avatar.png";
 import Loading from "../views/common/Loading";
+import Swal from "sweetalert2";
 
 const PerfilAdmin = () => {
   const { user } = useAuth();
@@ -33,7 +34,7 @@ const PerfilAdmin = () => {
         });
     }
   }, [user]);
-
+console.log(userData.img_url)
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
@@ -62,7 +63,7 @@ const PerfilAdmin = () => {
         <div className="p-6 text-center bg-blue-600 border-b">
           <img
             className="w-32 h-32 mx-auto rounded-full"
-            src={userData.img_url}
+            src={profileImage}
             alt="Imagen de perfil"
           />
           <p className="pt-2 text-xl font-bold">{userData.name}</p>

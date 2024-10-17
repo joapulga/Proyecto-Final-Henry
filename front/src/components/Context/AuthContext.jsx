@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { registerUser, loginUser } from "../service/authService";
 import { getUserDash } from "../service/querisUsers";
 import Swal from "sweetalert2";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const AuthContext = createContext();
 
@@ -15,6 +16,7 @@ export const AuthProvider = ({ children }) => {
   const [error, setError] = useState(null); // Estado para errores
   const token = JSON.parse(localStorage.getItem("token"));
   const navigate = useNavigate();
+
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user"); // Obtén el valor sin parsear primero
@@ -105,6 +107,7 @@ export const AuthProvider = ({ children }) => {
     logout,
     error,
     navigate,
+    
     // Proporcionar el estado de error
   };
 
