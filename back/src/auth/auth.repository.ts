@@ -8,6 +8,7 @@ import { JwtService } from "@nestjs/jwt";
 import  * as bcrypt from "bcrypt"
 import { State } from "src/state/entities/state.entity";
 import { MailService } from "src/service/mail/mail.service";
+import { CreateAuth0Dto } from "./dto/auth0-auth.dto";
 
 
 @Injectable()
@@ -60,9 +61,39 @@ export class AuthRepository{
             delete newUser.password
             return newUser
         } catch (error) { 
-            console.log(error)
             throw new BadRequestException({message: 'Error al almacenar el usuario', error: error.driverError.detail})
         }
 
+    }
+
+    async auth0Login(createAuth0Dto: CreateAuth0Dto){
+        const user = await this.userRepository.findOneBy({email: createAuth0Dto.email})
+        if(user){
+            await this.emailService.buildEmail(
+                user.email, 
+                'Access to Financial System', 
+                "<b>If you haven't accessed to your account changue your password and call us</b>"
+            )
+            
+            const payload = {
+                id: user.id,
+                email: user.email,
+                name: user.name,
+                is_admin: user.is_admin
+            }
+            const JWT = this.jwtService.sign(payload)
+
+            return {success: 'User login', token: JWT, is_admin: user.is_admin}
+
+        }else{
+            try {
+                const newState = await this.stateRepository.findOneBy({name: 'Active'})
+                const newUser = {...createAuth0Dto, state: newState}
+                await this.userRepository.save(newUser)
+                return newUser
+            } catch (error) { 
+                throw new BadRequestException({message: 'Error al almacenar el usuario', error: error.driverError.detail})
+            }
+        }
     }
 }

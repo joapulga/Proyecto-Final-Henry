@@ -28,14 +28,16 @@ export class User {
     @Column({
         type: "varchar",
         length: 10,
-        unique: true
+        unique: true,
+        nullable: true
     })
     dni: string
 
     
     @Column({
         type: "varchar",
-        length: 20
+        length: 20,
+        nullable: true
     })
     phone: string
 
@@ -49,6 +51,7 @@ export class User {
     @Column({
         type: "varchar",
         length: 200,
+        nullable: true
     })
     password: string
 
