@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { findCreditsById, paidMp } from "../service/querisCredits";
+import { findCreditsById, paidMp, paidShare } from "../service/querisCredits";
 import { initMercadoPago } from "@mercadopago/sdk-react";
 import Loading from "../views/common/Loading";
 
@@ -16,14 +16,15 @@ const CreditDetail = () => {
       quantity: 1,
       price: Number(c.amount),
     });
+    await paidShare(c.id);
     setMostrarLoading(null);
   };
-
 
   const createPreference = async (date) => {
     try {
       const response = await paidMp(date);
-      const { init_point } = response;
+      const { preferenceId, init_point } = response;
+      console.log(response);
       window.location.href = init_point;
     } catch (error) {
       console.log("Error al crear la preferencia:##", error);

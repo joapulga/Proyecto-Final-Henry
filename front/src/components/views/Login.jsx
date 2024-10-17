@@ -4,12 +4,17 @@ import Swal from "sweetalert2"; // Importa SweetAlert2
 import Footer from "./common/Footer";
 import Navbar from "./common/Navbar";
 import Loading from "./common/Loading";
+import React from "react";
+import { useAuth0 } from "@auth0/auth0-react";
+import { loguinAuth } from "../service/authService";
 
 const Login = () => {
   const { login, error } = useAuth(); // Importa la función de login y el error del contexto
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [mostrarLoading, setMostrarLoading] = useState(false);
+  const { loginWithRedirect, user } = useAuth0();
+  console.log(user);
 
   useEffect(() => {
     if (error) {
@@ -18,6 +23,14 @@ const Login = () => {
         title: "Error en el inicio de sesión",
         text: error, // Mostrar el mensaje de error del contexto
       });
+    }
+    if (user != undefined) {
+      setMostrarLoading(true);
+      const usauth=JSON.parse(localStorage.getItem("auth0"))
+      loguinAuth(usauth).then((r) => {
+        console.log(r);
+      });
+      setMostrarLoading(false);
     }
   }, [error]); // Se ejecuta cuando cambia el valor de error
 
@@ -30,6 +43,16 @@ const Login = () => {
     } catch (err) {
       // No necesitas capturar el error aquí, ya que el AuthContext lo maneja
       console.error("Error en el login:", err);
+    }
+  };
+  const redireccion = async () => {
+    try {
+      setMostrarLoading(true);
+      await loginWithRedirect();
+      localStorage.setItem("auth0", JSON.stringify(user));
+      setMostrarLoading(false);
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -92,12 +115,19 @@ const Login = () => {
               </div>
             )}
           </form>
-          <a
-            href="#"
-            className="relative flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg group hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-          >
-            Google
-          </a>
+          {mostrarLoading === true ? (
+            <div className="flex justify-center">
+              <Loading></Loading>
+            </div>
+          ) : (
+            <button
+              type="button"
+              onClick={redireccion}
+              className="relative flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg group hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+            >
+              Google
+            </button>
+          )}
 
           <div className="text-sm text-center">
             <a

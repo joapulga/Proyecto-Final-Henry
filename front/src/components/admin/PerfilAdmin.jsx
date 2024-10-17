@@ -2,15 +2,17 @@ import { useState, useEffect } from "react";
 import { useAuth } from "../Context/AuthContext";
 import { createPhoto, getUserData } from "../service/querisUsers"; 
 import avatarImg from "../../assets/default-avatar.png";
+
+import Loading from "../views/common/Loading";
 import Swal from "sweetalert2";
-import Loading from "../views/common/Loading"; // Importa el componente Loading
 
 const PerfilAdmin = () => {
   const { user } = useAuth();
   const [profileImage, setProfileImage] = useState(avatarImg);
   const [selectedFile, setSelectedFile] = useState(null);
   const [userData, setUserData] = useState([]);
-  const [mostrarLoading, setMostrarLoading] = useState(false); // Estado para manejar el loading
+
+  const [mostrarLoading, setMostrarLoading] = useState(false);
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -40,9 +42,10 @@ const PerfilAdmin = () => {
         });
     }
   }, [user]);
-
+console.log(userData.img_url)
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (!selectedFile) return;
 
     const formData = new FormData();
@@ -65,6 +68,7 @@ const PerfilAdmin = () => {
         .finally(() => {
           setMostrarLoading(false);
         });
+
     } catch (error) {
       console.error("Error al subir la imagen:", error);
       setMostrarLoading(false);
@@ -72,6 +76,7 @@ const PerfilAdmin = () => {
   };
 
   return (
+
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-blue-200 to-blue-100">
       {mostrarLoading ? (
         <Loading />
@@ -87,10 +92,12 @@ const PerfilAdmin = () => {
             <p className="text-sm text-blue-200">{userData.id}</p>
           </div>
 
+
           <div className="p-6">
             <p className="mb-2 text-gray-700"><strong>DNI:</strong> {userData.dni}</p>
             <p className="mb-2 text-gray-700"><strong>Teléfono:</strong> {userData.phone}</p>
             <p className="mb-2 text-gray-700"><strong>Email:</strong> {userData.email}</p>
+
 
             {/* Formulario para subir nueva imagen */}
             <form onSubmit={handleSubmit} className="mt-4">
@@ -116,6 +123,7 @@ const PerfilAdmin = () => {
               </button>
             </form>
           </div>
+
         </div>
       )}
     </div>
