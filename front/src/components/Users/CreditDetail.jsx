@@ -64,7 +64,7 @@ const CreditDetail = () => {
     });
 
     if (idCred) {
-      paidShare(idCred);
+      paidShare(idCred,token);
     }
   }, [id]);
 

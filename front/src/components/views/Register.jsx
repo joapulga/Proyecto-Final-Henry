@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useAuth } from "../Context/AuthContext";
 
 const Register = () => {
-  const { register, error,token } = useAuth();
+  const { register, error } = useAuth();
 
   const [formData, setFormData] = useState({
     name: "",

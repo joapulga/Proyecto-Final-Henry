@@ -25,7 +25,7 @@ const DashboardUser = () => {
     navigate(`/user/credit/${creditId}`);
   };
 
-  const { user,token } = useAuth();
+  const { user, token } = useAuth();
   const [loading, setLoading] = useState([]);
   const [userData, setUserData] = useState({
     name: "",
@@ -39,7 +39,7 @@ const DashboardUser = () => {
 
   useEffect(() => {
     if (user && user.id) {
-      getUserData(user.id,token)
+      getUserData(user.id, token)
         .then((data) => {
           setUserData({
             name: data.name,
@@ -211,7 +211,6 @@ const DashboardUser = () => {
                 <tbody>
                   {credits && credits.length > 0 ? (
                     credits.map((credit) => {
-                     
                       return (
                         <tr key={credit.id}>
                           <td>{credit.id}</td>
