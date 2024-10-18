@@ -1,7 +1,12 @@
-import { Controller, Get, Post, UploadedFile } from '@nestjs/common';
+import { Controller, Get, Post, UploadedFile, UseGuards } from '@nestjs/common';
 import { FileUploadService } from './file-upload.service';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { AuthGuard } from 'src/guards/auth.guard';
 
+@ApiBearerAuth()
+@UseGuards(AuthGuard)
 @Controller('file-upload')
+@ApiTags('File Upload')
 export class FileUploadController {
   constructor(private readonly fileUploadService: FileUploadService) {}
 

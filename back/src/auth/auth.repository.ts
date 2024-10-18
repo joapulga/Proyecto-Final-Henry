@@ -22,31 +22,33 @@ export class AuthRepository{
     ){}
 
     async singIn(createAuthDto: CreateAuthDto): Promise<Object>{
-        const user = await this.userRepository.findOneBy({email: createAuthDto.email})
-        if(user){
-            const isValid = await bcrypt.compare(createAuthDto.password, user.password)
-            if(isValid){
-                await this.emailService.buildEmail(
-                    user.email, 
-                    'Access to Financial System', 
-                    "<b>If you haven't accessed to your account changue your password and call us</b>"
-                )
-                const payload = {
-                    id: user.id,
-                    email: user.email,
-                    name: user.name,
-                    is_admin: user.is_admin
+        try {
+            const user = await this.userRepository.findOneBy({email: createAuthDto.email})
+            if(user){
+                const isValid = await bcrypt.compare(createAuthDto.password, user.password)
+                if(isValid){
+                    await this.emailService.buildEmail(
+                        user.email, 
+                        'Access to Financial System', 
+                        "<b>If you haven't accessed to your account changue your password and call us</b>"
+                    )
+                    const payload = {
+                        id: user.id,
+                        email: user.email,
+                        name: user.name,
+                        is_admin: user.is_admin
+                    }
+                    const JWT = this.jwtService.sign(payload)
+
+                    return {success: 'User login', token: JWT, is_admin: user.is_admin}
+                }else{
+                    throw new BadRequestException('Contraseña o password incorrecto 1')
                 }
-                const JWT = this.jwtService.sign(payload)
-
-                return {success: 'User login', token: JWT, is_admin: user.is_admin}
-
-
             }else{
-                throw new BadRequestException('Bad Password or User 1')
+                throw new BadRequestException('Contraseña o password incorrecto')
             }
-        }else{
-            throw new BadRequestException('Bad Password or User 2')
+        } catch (error) {
+            throw new BadRequestException('Contraseña o password incorrecto')
         }
     }
 
