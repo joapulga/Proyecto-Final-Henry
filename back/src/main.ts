@@ -9,7 +9,8 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   
   app.enableCors({
-    origin: 'http://localhost:5173', // URL del frontend
+    origin: "https://finacierahenry.netlify.app/",
+    // 'http://localhost:5173' // URL del frontend
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Métodos permitidos
     credentials: true, // Si estás usando cookies o autenticación basada en sesión
   });

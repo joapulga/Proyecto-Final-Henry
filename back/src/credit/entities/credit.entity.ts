@@ -1,7 +1,7 @@
 import { timestamp } from "rxjs";
-import { Share } from "src/share/entities/share.entity";
-import { State } from "src/state/entities/state.entity";
-import { User } from "src/user/entities/user.entity";
+import { Share } from "../../share/entities/share.entity";
+import { State } from "../../state/entities/state.entity";
+import { User } from "../../user/entities/user.entity";
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToOne, JoinColumn, OneToMany, CreateDateColumn } from "typeorm";
 import { v4 as uuid } from "uuid"
 
