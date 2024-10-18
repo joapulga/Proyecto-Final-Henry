@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useAuth } from "../Context/AuthContext";
 
 const Register = () => {
-  const { register, error: authError } = useAuth(); // Añadir error del contexto
+  const { register, error: authError } = useAuth();
 
   const [formData, setFormData] = useState({
     name: "",
@@ -14,9 +14,8 @@ const Register = () => {
     address: "",
   });
 
-  const [errors, setErrors] = useState({}); // Estado para los errores de validación
+  const [errors, setErrors] = useState({});
 
-  // Función de validación de cada campo
   const validateField = (name, value) => {
     let error = "";
   
@@ -51,10 +50,10 @@ const Register = () => {
         else if (value.length < 8) {
           error = "La contraseña debe tener al menos 8 caracteres";
         } else if (
-          !/[a-z]/.test(value) || // minúscula
-          !/[A-Z]/.test(value) || // mayúscula
-          !/\d/.test(value) ||    // número
-          !/[!@#$%^&*(),.?":{}|<>]/.test(value) // símbolo
+          !/[a-z]/.test(value) ||
+          !/[A-Z]/.test(value) ||
+          !/\d/.test(value) ||   
+          !/[!@#$%^&*(),.?":{}|<>]/.test(value)
         ) {
           error =
             "La contraseña debe incluir minúsculas, mayúsculas, números y símbolos";
@@ -70,13 +69,11 @@ const Register = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    // Actualizar los datos del formulario
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
 
-    // Validar el campo en tiempo real
     setErrors((prevErrors) => ({
       ...prevErrors,
       [name]: validateField(name, value),
@@ -86,7 +83,6 @@ const Register = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Validar todos los campos antes de enviar el formulario
     const newErrors = {};
     Object.keys(formData).forEach((field) => {
       const error = validateField(field, formData[field]);
@@ -95,7 +91,6 @@ const Register = () => {
 
     setErrors(newErrors);
 
-    // Si no hay errores, proceder con el registro
     if (Object.keys(newErrors).length === 0) {
       register(formData);
     }
