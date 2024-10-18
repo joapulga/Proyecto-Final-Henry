@@ -90,7 +90,26 @@ export class AuthRepository{
                 const newState = await this.stateRepository.findOneBy({name: 'Active'})
                 const newUser = {...createAuth0Dto, state: newState}
                 await this.userRepository.save(newUser)
-                return newUser
+                const user = await this.userRepository.findOneBy({email: createAuth0Dto.email})
+                if(user){
+                    await this.emailService.buildEmail(
+                        user.email, 
+                        'Access to Financial System', 
+                        "<b>If you haven't accessed to your account changue your password and call us</b>"
+                    )
+                    
+                    const payload = {
+                        id: user.id,
+                        email: user.email,
+                        name: user.name,
+                        is_admin: user.is_admin
+                    }
+                    const JWT = this.jwtService.sign(payload)
+        
+                    return {success: 'User login', token: JWT, is_admin: user.is_admin}
+                }else{
+                    throw new BadRequestException({message: 'Error al almacenar el usuario'})
+                }
             } catch (error) { 
                 throw new BadRequestException({message: 'Error al almacenar el usuario', error: error.driverError.detail})
             }
