@@ -25,9 +25,9 @@ export class PaymentService {
         },
       ],
       back_urls: {
-        success: `http://localhost:5173/user/allcredits`,
-        failure: `http://localhost:5173/user/credit/`,
-        pending: `http://localhost:5173/user/credit/`,
+        success: `https://finacierahenry.netlify.app/user/allcredits`,
+        failure: `https://finacierahenry.netlify.app/user/allcredits`,
+        pending: `https://finacierahenry.netlify.app/user/allcredits`,
       },
       auto_return: 'approved',
       external_reference: id,
