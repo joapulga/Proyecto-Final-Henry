@@ -37,11 +37,11 @@ export const AuthProvider = ({ children }) => {
     try {
       const res = await registerUser(userData);
 
+      localStorage.setItem(
+        "user",
+        JSON.stringify({ id: res.id, is_admin: res.is_admin })
+      );
       if (res) {
-        localStorage.setItem(
-          "user",
-          JSON.stringify({ id: res.id, is_admin: res.is_admin })
-        );
         Swal.fire({
           icon: "success",
           title: "¡Registro exitoso!",
