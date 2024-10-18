@@ -33,7 +33,7 @@ export class CreateUserDto {
    * @example 0000000000
    */
   @IsString()
-  @Length(2, 20)
+  @Length(8, 20)
   phone: string;
 
   /**
