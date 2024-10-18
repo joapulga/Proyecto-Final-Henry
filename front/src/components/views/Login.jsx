@@ -1,43 +1,49 @@
 import { useState, useEffect } from "react";
-import { useAuth } from "../Context/AuthContext"; // Asegúrate de importar el contexto
-import Swal from "sweetalert2"; // Importa SweetAlert2
+import { useAuth } from "../Context/AuthContext"; 
+import Swal from "sweetalert2"; 
 import Footer from "./common/Footer";
 import Navbar from "./common/Navbar";
 import Loading from "./common/Loading";
 import React from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { loguinAuth } from "../service/authService";
+import GoogleButton from "react-google-button";
 
 const Login = () => {
-  const { login, error } = useAuth(); // Importa la función de login y el error del contexto
+  const { login, error, loguinAuth0 } = useAuth(); 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [mostrarLoading, setMostrarLoading] = useState(false);
   const { loginWithRedirect, user } = useAuth0();
-  console.log(user);
 
   useEffect(() => {
     if (error) {
       Swal.fire({
         icon: "error",
         title: "Error en el inicio de sesión",
-        text: error, // Mostrar el mensaje de error del contexto
+        text: error,
       });
     }
 
-    setMostrarLoading(true);
     const usauth = JSON.parse(localStorage.getItem("auth0"));
+    if (usauth) {
+      response({
+        name: usauth.given_name,
+        lastname: usauth.family_name,
+        email: usauth.email,
+      });
+    }
+  }, [error]);
 
-    loguinAuth({
-      name: usauth.given_name,
-      lastName: usauth.family_name,
-      email: usauth.email,
-    }).then((r) => {
-      console.log(r);
-    });
-    setMostrarLoading(false);
-  }, [error]); // Se ejecuta cuando cambia el valor de error
-
+  const response = async (data) => {
+    try {
+      setMostrarLoading(1);
+      await loguinAuth0(data);
+      setMostrarLoading(0);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
@@ -51,10 +57,8 @@ const Login = () => {
   };
   const redireccion = async () => {
     try {
-      setMostrarLoading(true);
       await loginWithRedirect();
       localStorage.setItem("auth0", JSON.stringify(user));
-      setMostrarLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -119,18 +123,19 @@ const Login = () => {
               </div>
             )}
           </form>
-          {mostrarLoading === true ? (
+          {mostrarLoading === 1 ? (
             <div className="flex justify-center">
               <Loading></Loading>
             </div>
           ) : (
-            <button
-              type="button"
-              onClick={redireccion}
-              className="relative flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg group hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-            >
-              Google
-            </button>
+            <div className="flex justify-center">
+              <GoogleButton
+                type="light"
+                label="Iniciar sesion con Google"
+                onClick={redireccion}
+                className="relative  w-full px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg group hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+              />
+            </div>
           )}
 
           <div className="text-sm text-center">
