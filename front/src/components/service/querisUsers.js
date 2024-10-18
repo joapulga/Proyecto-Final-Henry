@@ -4,7 +4,7 @@ const URL = "http://localhost:3000";
 
 export const findAllUsers = async (token) => {
   try {
-    const response = await axios.get(URL + "/user",{
+    const response = await axios.get(URL + "/user", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -16,14 +16,17 @@ export const findAllUsers = async (token) => {
   }
 };
 
-export const createPhoto = async (userId,photoData) => {
-
+export const createPhoto = async (userId, photoData) => {
   try {
-    const response = await axios.post(`${URL}/user/update-photo/${userId}`, photoData, {
-      headers: {
-        "Content-Type": "multipart/form-data", // Especifica que se está enviando un archivo
-      },
-    });
+    const response = await axios.post(
+      `${URL}/user/update-photo/${userId}`,
+      photoData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
     return response.data;
   } catch (error) {
     console.error("Error obteniendo usuarios:", error);
@@ -32,7 +35,6 @@ export const createPhoto = async (userId,photoData) => {
 };
 
 export const findUserByID = async (id) => {
-  
   try {
     const users = await axios.get(URL + `/user/${id}`);
     return users.data;
@@ -53,10 +55,10 @@ export const createAdmin = async (id) => {
 export const getUserData = async (userId) => {
   try {
     const response = await axios.get(`${URL}/user/${userId}`);
-    return response.data; // Retorna los datos del usuario
+    return response.data;
   } catch (error) {
     console.error("Error obteniendo los datos del usuario:", error);
-    throw error; // Lanza el error para que pueda ser manejado en el componente
+    throw error;
   }
 };
 export const getUserDash = async (token) => {
@@ -66,11 +68,9 @@ export const getUserDash = async (token) => {
         Authorization: `Bearer ${token}`,
       },
     });
-    return response.data; // Retorna los datos del usuario
+    return response.data;
   } catch (error) {
     console.error("Error obteniendo los datos del usuario:", error);
-    throw error; // Lanza el error para que pueda ser manejado en el componente
+    throw error;
   }
 };
-
-

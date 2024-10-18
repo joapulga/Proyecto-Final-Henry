@@ -11,9 +11,8 @@ export const registerUser = async (userData) => {
       },
     });
     console.log(response);
-    return response.data; // Devuelve los datos de respuesta en caso de éxito
+    return response.data;
   } catch (error) {
-    // Manejo de errores
     if (error.response) {
       throw new Error(
         error.response.data.message || "Error al crear el usuario"
@@ -33,9 +32,8 @@ export const loginUser = async (loginData) => {
         "Content-Type": "application/json",
       },
     });
-    return response.data; // Devuelve los datos de respuesta en caso de éxito
+    return response.data;
   } catch (error) {
-    // Manejo de errores
     if (error.response) {
       throw new Error(error.response.data.message || "Error al iniciar sesión");
     } else if (error.request) {
@@ -46,16 +44,15 @@ export const loginUser = async (loginData) => {
   }
 };
 
-export const loguinAuth=async(loguinAuth0)=>{
+export const loguinAuth = async (loguinAuth0) => {
   try {
     const response = await axios.post(`${apiURL}/auth/login`, loguinAuth0, {
       headers: {
         "Content-Type": "application/json",
       },
     });
-    return response.data; // Devuelve los datos de respuesta en caso de éxito
+    return response.data;
   } catch (error) {
-    // Manejo de errores
     if (error.response) {
       throw new Error(error.response.data.message || "Error al iniciar sesión");
     } else if (error.request) {
@@ -64,5 +61,4 @@ export const loguinAuth=async(loguinAuth0)=>{
       throw new Error("Error: " + error.message);
     }
   }
-}
-
+};

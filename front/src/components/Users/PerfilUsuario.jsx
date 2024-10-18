@@ -1,16 +1,16 @@
-import { useState, useEffect } from 'react';
-import { useAuth } from '../Context/AuthContext';
-import { createPhoto, getUserData } from '../service/querisUsers'; 
+import { useState, useEffect } from "react";
+import { useAuth } from "../Context/AuthContext";
+import { createPhoto, getUserData } from "../service/querisUsers";
 import avatarImg from "../../assets/default-avatar.png";
-import Swal from 'sweetalert2';
-import Loading from '../views/common/Loading'; // Importa el componente Loading
+import Swal from "sweetalert2";
+import Loading from "../views/common/Loading";
 
 const UserProfile = () => {
   const { user } = useAuth();
   const [profileImage, setProfileImage] = useState(avatarImg);
   const [selectedFile, setSelectedFile] = useState(null);
   const [userData, setUserData] = useState([]);
-  const [mostrarLoading, setMostrarLoading] = useState(false); // Estado para manejar el loading
+  const [mostrarLoading, setMostrarLoading] = useState(false);
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -74,8 +74,14 @@ const UserProfile = () => {
       {mostrarLoading ? (
         <Loading />
       ) : (
-        <div className="w-full max-w-2xl p-8 mx-auto bg-white rounded-lg shadow-2xl" style={{ borderRadius: '16px' }}>
-          <div className="p-6 text-center bg-blue-600 border-b rounded-t-lg" style={{ borderRadius: '16px 16px 0 0' }}>
+        <div
+          className="w-full max-w-2xl p-8 mx-auto bg-white rounded-lg shadow-2xl"
+          style={{ borderRadius: "16px" }}
+        >
+          <div
+            className="p-6 text-center bg-blue-600 border-b rounded-t-lg"
+            style={{ borderRadius: "16px 16px 0 0" }}
+          >
             <img
               className="w-32 h-32 mx-auto rounded-full shadow-lg"
               src={profileImage}
@@ -86,11 +92,16 @@ const UserProfile = () => {
           </div>
 
           <div className="p-6">
-            <p className="mb-2 text-gray-700"><strong>DNI:</strong> {userData.dni}</p>
-            <p className="mb-2 text-gray-700"><strong>Teléfono:</strong> {userData.phone}</p>
-            <p className="mb-2 text-gray-700"><strong>Email:</strong> {userData.email}</p>
+            <p className="mb-2 text-gray-700">
+              <strong>DNI:</strong> {userData.dni}
+            </p>
+            <p className="mb-2 text-gray-700">
+              <strong>Teléfono:</strong> {userData.phone}
+            </p>
+            <p className="mb-2 text-gray-700">
+              <strong>Email:</strong> {userData.email}
+            </p>
 
-            {/* Formulario para subir nueva imagen */}
             <form onSubmit={handleSubmit} className="mt-4">
               <label className="block mb-2 text-sm font-bold text-gray-700">
                 Subir nueva imagen de perfil:
