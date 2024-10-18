@@ -1,5 +1,3 @@
-import { useState } from "react";
-import { useAuth } from "../Context/AuthContext";
 import NavBar from "./common/Navbar";
 import Footer from "./common/Footer";
 import { FaUserPlus } from "react-icons/fa";
@@ -8,36 +6,10 @@ import Register from "./Register";
 import ChatBotComponent from "../ChatBot/ChatBotComponent";
 
 const Home = () => {
-  const { register, error } = useAuth(); // Añadir error del contexto
-
-  const [formData, setFormData] = useState({
-    name: "",
-    lastname: "",
-    dni: "",
-    phone: "",
-    email: "",
-    password: "",
-    address: "",
-  });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    register(formData);
-  };
-
   return (
     <div className="flex flex-col min-h-screen">
       <NavBar />
 
-      {/* Hero Section */}
       <div
         className="flex items-center justify-center text-white bg-center bg-cover h-96"
         style={{ backgroundImage: `url(${heroImage})` }}
@@ -59,7 +31,7 @@ const Home = () => {
       </div>
       <Register></Register>
 
-       <ChatBotComponent/>
+      <ChatBotComponent />
 
       <Footer />
     </div>

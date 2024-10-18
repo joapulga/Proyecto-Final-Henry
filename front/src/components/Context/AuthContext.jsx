@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { registerUser, loginUser, loguinAuth } from "../service/authService";
 import { getUserDash } from "../service/querisUsers";
 import Swal from "sweetalert2";
-import { useAuth0 } from "@auth0/auth0-react";
 
 const AuthContext = createContext();
 
@@ -49,8 +48,8 @@ export const AuthProvider = ({ children }) => {
           showConfirmButton: false,
           timer: 1500,
         });
-        navigate("/login");
       }
+      navigate("/login");
     } catch (error) {
       setError(error.message); // Guardar el mensaje de error
       console.error("Error en el registro:", error);
@@ -132,7 +131,7 @@ export const AuthProvider = ({ children }) => {
     logout,
     error,
     navigate,
-    loguinAuth0
+    loguinAuth0,
 
     // Proporcionar el estado de error
   };

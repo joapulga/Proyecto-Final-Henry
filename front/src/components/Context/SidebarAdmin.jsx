@@ -12,14 +12,15 @@ const SidebarAdmin = () => {
 
   return (
     <div className="flex min-h-screen">
-      {/* Sidebar */}
       <aside
         className={`${
           isCollapsed ? "w-20" : "w-64"
         } flex-shrink-0 text-white bg-blue-600 transition-all duration-300 ease-in-out`}
       >
         <div className="flex items-center justify-between p-4 text-xl font-bold">
-          <span className={`${isCollapsed ? "hidden" : "block"}`}>Admin Panel</span>
+          <span className={`${isCollapsed ? "hidden" : "block"}`}>
+            Admin Panel
+          </span>
           <Button
             onClick={toggleSidebar}
             className="text-white bg-transparent border-0 focus:outline-none focus:ring-0"
@@ -35,7 +36,9 @@ const SidebarAdmin = () => {
                 to="dashboardadmin"
                 className="block p-2 transition rounded hover:bg-blue-700 w-100"
               >
-                <span className={`${isCollapsed ? "hidden" : "inline"}`}>Dashboard</span>
+                <span className={`${isCollapsed ? "hidden" : "inline"}`}>
+                  Dashboard
+                </span>
               </Button>
             </li>
             <li>
@@ -44,7 +47,9 @@ const SidebarAdmin = () => {
                 to="AllUsers"
                 className="block p-2 transition rounded hover:bg-blue-700 w-100"
               >
-                <span className={`${isCollapsed ? "hidden" : "inline"}`}>Ver Usuarios</span>
+                <span className={`${isCollapsed ? "hidden" : "inline"}`}>
+                  Ver Usuarios
+                </span>
               </Button>
             </li>
             <li>
@@ -53,7 +58,9 @@ const SidebarAdmin = () => {
                 to="asingCredit"
                 className="block p-2 transition rounded hover:bg-blue-700 w-100"
               >
-                <span className={`${isCollapsed ? "hidden" : "inline"}`}>Cargar Créditos</span>
+                <span className={`${isCollapsed ? "hidden" : "inline"}`}>
+                  Cargar Créditos
+                </span>
               </Button>
             </li>
             <li>
@@ -62,7 +69,9 @@ const SidebarAdmin = () => {
                 to="AllCredits"
                 className="block p-2 transition rounded hover:bg-blue-700 w-100"
               >
-                <span className={`${isCollapsed ? "hidden" : "inline"}`}>Ver Créditos</span>
+                <span className={`${isCollapsed ? "hidden" : "inline"}`}>
+                  Ver Créditos
+                </span>
               </Button>
             </li>
             <li>
@@ -71,7 +80,9 @@ const SidebarAdmin = () => {
                 to="perfil"
                 className="block p-2 transition rounded hover:bg-blue-700 w-100"
               >
-                <span className={`${isCollapsed ? "hidden" : "inline"}`}>Perfil de Administrador</span>
+                <span className={`${isCollapsed ? "hidden" : "inline"}`}>
+                  Perfil de Administrador
+                </span>
               </Button>
             </li>
             <li>
@@ -80,14 +91,15 @@ const SidebarAdmin = () => {
                 to="/"
                 className="block p-2 transition rounded hover:bg-red-700 w-100"
               >
-                <span className={`${isCollapsed ? "hidden" : "inline"}`}>Volver al Inicio</span>
+                <span className={`${isCollapsed ? "hidden" : "inline"}`}>
+                  Volver al Inicio
+                </span>
               </Button>
             </li>
           </ul>
         </nav>
       </aside>
 
-      {/* Main Content */}
       <main className="flex-grow p-8 bg-gray-100">
         <Outlet />
       </main>

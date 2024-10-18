@@ -2,12 +2,14 @@ import { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { findAllCredits } from "../service/querisCredits";
+import { useAuth } from "../Context/AuthContext";
 
 const AllCredits = () => {
   const [credits, setCredits] = useState([]);
+  const {token}=useAuth()
 
   useEffect(() => {
-    findAllCredits()
+    findAllCredits(token)
       .then((res) => setCredits(res))
       .catch((error) => console.error(error));
   }, []);

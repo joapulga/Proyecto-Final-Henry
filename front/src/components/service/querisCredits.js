@@ -1,18 +1,26 @@
 import axios from "axios";
 
-const URL = "http://localhost:3000";
+const URL = import.meta.env.VITE_APP_URL;
 
-export const findAllCredits = async () => {
+export const findAllCredits = async (token) => {
   try {
-    const users = await axios.get(URL + "/credit");
+    const users = await axios.get(URL + "/credit",{
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return users.data;
   } catch (error) {
     console.log(error);
   }
 };
-export const createCredit = async (id, creditData) => {
+export const createCredit = async (id, creditData,token) => {
   try {
-    const response = await axios.post(URL + `/credit/${id}`, creditData);
+    const response = await axios.post(URL + `/credit/${id}`, creditData,{
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return response.data;
   } catch (error) {
     console.error("Error al crear el crédito:", error);
@@ -20,9 +28,13 @@ export const createCredit = async (id, creditData) => {
   }
 };
 
-export const findCreditsById = async (userdId) => {
+export const findCreditsById = async (userdId,token) => {
   try {
-    const users = await axios.get(`${URL}/credit/${userdId}`);
+    const users = await axios.get(`${URL}/credit/${userdId}`,{
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
     return users.data;
   } catch (error) {
@@ -42,9 +54,13 @@ export const getCreditsByUserId = async (userId, token) => {
   }
 };
 
-export const getCreditDetailsById = async (creditId) => {
+export const getCreditDetailsById = async (creditId,token) => {
   try {
-    const response = await axios.get(`${URL}/credit/${creditId}`);
+    const response = await axios.get(`${URL}/credit/${creditId}`,{
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return response.data;
   } catch (error) {
     console.error("Error obteniendo los detalles del crédito:", error);
@@ -56,9 +72,13 @@ export const paidMp = async (datePaid) => {
   const response = await axios.post(URL + "/payment/create", datePaid);
   return response.data;
 };
-export const paidShare = async (idCred) => {
+export const paidShare = async (idCred,token) => {
   try {
-    const response = await axios.get(URL + `/share/paid/${idCred}`);
+    const response = await axios.get(URL + `/share/paid/${idCred}`,{
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return response.data;
   } catch (e) {
     return e;

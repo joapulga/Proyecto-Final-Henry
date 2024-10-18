@@ -2,7 +2,9 @@ import { useState } from "react";
 import { useAuth } from "../Context/AuthContext";
 
 const Register = () => {
+
   const { register, error: authError } = useAuth();
+
 
   const [formData, setFormData] = useState({
     name: "",
@@ -99,17 +101,25 @@ const Register = () => {
   return (
     <section id="cuenta" className="flex-grow py-12 bg-gray-100">
       <div className="container px-4 mx-auto">
-        <h2 className="mb-8 text-3xl font-semibold text-center">Solicita tu cuenta</h2>
+        <h2 className="mb-8 text-3xl font-semibold text-center">
+          Solicita tu cuenta
+        </h2>
 
         {authError && (
+
           <div className="max-w-lg p-4 mx-auto mb-4 text-center text-white bg-red-500 rounded-lg">
             <p>{authError}</p>
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="max-w-lg p-8 mx-auto bg-white rounded-lg shadow-lg">
+        <form
+          onSubmit={handleSubmit}
+          className="max-w-lg p-8 mx-auto bg-white rounded-lg shadow-lg"
+        >
           <div className="mb-4">
-            <label className="block mb-2 text-sm font-bold text-gray-700">Nombre</label>
+            <label className="block mb-2 text-sm font-bold text-gray-700">
+              Nombre
+            </label>
             <input
               type="text"
               name="name"
@@ -124,7 +134,9 @@ const Register = () => {
           </div>
 
           <div className="mb-4">
-            <label className="block mb-2 text-sm font-bold text-gray-700">Apellido</label>
+            <label className="block mb-2 text-sm font-bold text-gray-700">
+              Apellido
+            </label>
             <input
               type="text"
               name="lastname"
@@ -139,7 +151,9 @@ const Register = () => {
           </div>
 
           <div className="mb-4">
-            <label className="block mb-2 text-sm font-bold text-gray-700">DNI</label>
+            <label className="block mb-2 text-sm font-bold text-gray-700">
+              DNI
+            </label>
             <input
               type="text"
               name="dni"
@@ -154,7 +168,9 @@ const Register = () => {
           </div>
 
           <div className="mb-4">
-            <label className="block mb-2 text-sm font-bold text-gray-700">Número de Teléfono</label>
+            <label className="block mb-2 text-sm font-bold text-gray-700">
+              Número de Teléfono
+            </label>
             <input
               type="text"
               name="phone"
@@ -169,7 +185,9 @@ const Register = () => {
           </div>
 
           <div className="mb-4">
-            <label className="block mb-2 text-sm font-bold text-gray-700">Correo Electrónico</label>
+            <label className="block mb-2 text-sm font-bold text-gray-700">
+              Correo Electrónico
+            </label>
             <input
               type="email"
               name="email"
@@ -184,7 +202,9 @@ const Register = () => {
           </div>
 
           <div className="mb-4">
-            <label className="block mb-2 text-sm font-bold text-gray-700">Contraseña</label>
+            <label className="block mb-2 text-sm font-bold text-gray-700">
+              Contraseña
+            </label>
             <input
               type="password"
               name="password"

@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { findCreditsById } from "../service/querisCredits";
+import { useAuth } from "../Context/AuthContext";
 
 const CreditDetail = () => {
+  
   const { id } = useParams();
+  const { token } = useAuth();
   const [shares, setShares] = useState([]);
   const [credit, setCredit] = useState([]);
 
   useEffect(() => {
-    findCreditsById(id).then((r) => {
-      console.log(r);
+    findCreditsById(id,token).then((r) => {
       setShares(r.shares);
       setCredit(r);
     });

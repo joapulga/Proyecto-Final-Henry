@@ -44,9 +44,9 @@ export class UserController {
     return this.userService.findAll();
   }
 
-  //@ApiBearerAuth()
+  @ApiBearerAuth()
   @Get('dashboard')
-  //@UseGuards(AuthGuard)
+  @UseGuards(AuthGuard)
   async findLoggedUser(@Req() request: Request) {
     const request1 = request.headers['authorization'];
     const token = request1.split(' ')[1];

@@ -5,16 +5,11 @@ import "./components/css/index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Auth0Provider } from "@auth0/auth0-react";
 
+const domain = import.meta.env.VITE_APP_AUTH0_DOMAIN;
+const clientId = import.meta.env.VITE_APP_AUTH0_CLIENT_ID;
+const redirectUri = import.meta.env.VITE_APP_AUTH0_REDIRECT_URL;
 ReactDOM.createRoot(document.getElementById("root")).render(
-  // <React.StrictMode>
-
-  <Auth0Provider
-    domain="dev-uabdwbdjkx2823bh.us.auth0.com"
-    clientId="hz38f36qWlldnAfdE5zJxkGxxBhyszbe"
-    redirectUri="http://localhost:5173/login"
-  >
+  <Auth0Provider domain={domain} clientId={clientId} redirectUri={redirectUri}>
     <App />
   </Auth0Provider>
-
-  // </React.StrictMode>
 );

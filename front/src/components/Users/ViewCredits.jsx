@@ -4,7 +4,7 @@ import { getCreditsByUserId } from "../service/querisCredits";
 import { useNavigate } from "react-router-dom";
 
 const MisCreditos = () => {
-  const { user } = useAuth();
+  const { user,token } = useAuth();
   const [credits, setCredits] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -17,7 +17,8 @@ const MisCreditos = () => {
   useEffect(() => {
     const fetchCredits = async () => {
       try {
-        const data = await getCreditsByUserId(user.id, user.token);
+        const data = await getCreditsByUserId(user.id, token);
+        //user.token
         setCredits(data);
       } catch (error) {
         console.error("Error obteniendo los créditos:", error);

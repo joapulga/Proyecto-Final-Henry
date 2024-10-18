@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { useAuth } from "../Context/AuthContext"; 
-import Swal from "sweetalert2"; 
+import { useAuth } from "../Context/AuthContext";
+import Swal from "sweetalert2";
 import Footer from "./common/Footer";
 import Navbar from "./common/Navbar";
 import Loading from "./common/Loading";
@@ -8,7 +8,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import GoogleButton from "react-google-button";
 
 const Login = () => {
-  const { login, error, loguinAuth0 } = useAuth(); 
+  const { login, error, loguinAuth0 } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [mostrarLoading, setMostrarLoading] = useState(false);
