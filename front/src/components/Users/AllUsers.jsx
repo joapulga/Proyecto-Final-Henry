@@ -42,10 +42,16 @@ const AllUsers = () => {
           <thead>
             <tr className="bg-gray-100">
               <th className="px-4 py-2 text-sm font-semibold text-left">ID</th>
-              <th className="px-4 py-2 text-sm font-semibold text-left">Nombre</th>
+              <th className="px-4 py-2 text-sm font-semibold text-left">
+                Nombre
+              </th>
               <th className="px-4 py-2 text-sm font-semibold text-left">DNI</th>
-              <th className="px-4 py-2 text-sm font-semibold text-left">Teléfono</th>
-              <th className="px-4 py-2 text-sm font-semibold text-left">Funciones</th>
+              <th className="px-4 py-2 text-sm font-semibold text-left">
+                Teléfono
+              </th>
+              <th className="px-4 py-2 text-sm font-semibold text-left">
+                Funciones
+              </th>
             </tr>
           </thead>
           <tbody>{mapeo()}</tbody>

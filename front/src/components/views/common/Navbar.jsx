@@ -5,12 +5,12 @@ import { Link } from "react-router-dom";
 import { findUserByID, getUserData } from "../../service/querisUsers";
 
 const Navbar = () => {
-  const { logout, token } = useAuth(); // Obtén el usuario y la función de logout del contexto
+  const { logout, token } = useAuth(); 
   const [userNav, setUserNav] = useState([]);
   useEffect(() => {
     try {
       const id = JSON.parse(localStorage.getItem("user"));
-      findUserByID(id.id).then((r) => {
+      findUserByID(id.id,token).then((r) => {
         setUserNav(r.is_admin);
       });
     } catch (error) {
@@ -21,14 +21,13 @@ const Navbar = () => {
     <nav className="bg-blue-600 shadow-lg">
       <div className="container px-4 mx-auto">
         <div className="flex items-center justify-between py-4">
-          {/* Logo del sistema */}
+    
           <Link className="text-3xl font-bold text-white no-underline" to="/">
             MiSistema
           </Link>
 
-          {/* Menú de navegación */}
           <ul className="flex items-center justify-center space-x-6">
-            {userNav.length == 0 ? ( // Si no hay usuario logueado
+            {userNav.length == 0 ? ( 
               <Button>
                 <Link
                   to="/login"
@@ -39,7 +38,7 @@ const Navbar = () => {
               </Button>
             ) : (
               <>
-                {userNav === true ? ( // Si el usuario es administrador
+                {userNav === true ? ( 
                   <>
                     <Button>
                       <Link
@@ -51,7 +50,7 @@ const Navbar = () => {
                     </Button>
                   </>
                 ) : (
-                  // Si el usuario no es administrador
+                 
                   <>
                     <Button>
                       <Link

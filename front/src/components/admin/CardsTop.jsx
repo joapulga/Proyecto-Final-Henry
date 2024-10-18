@@ -8,7 +8,7 @@ const CardsTop = () => {
   const { token } = useAuth();
 
   useEffect(() => {
-    findAllCredits()
+    findAllCredits(token)
       .then((res) => {
         findAllUsers(token).then((r) => {
           const Datos = res.reduce(

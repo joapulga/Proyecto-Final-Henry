@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useAuth } from "../Context/AuthContext";
 
 const Register = () => {
-  const { register, error } = useAuth(); // Añadir error del contexto
+  const { register, error,token } = useAuth();
 
   const [formData, setFormData] = useState({
     name: "",
@@ -30,17 +30,24 @@ const Register = () => {
   return (
     <section id="cuenta" className="flex-grow py-12 bg-gray-100">
       <div className="container px-4 mx-auto">
-        <h2 className="mb-8 text-3xl font-semibold text-center">Solicita tu cuenta</h2>
+        <h2 className="mb-8 text-3xl font-semibold text-center">
+          Solicita tu cuenta
+        </h2>
 
-        {error && ( // Mostrar error si existe
+        {error && (
           <div className="max-w-lg p-4 mx-auto mb-4 text-center text-white bg-red-500 rounded-lg">
             <p>{error}</p>
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="max-w-lg p-8 mx-auto bg-white rounded-lg shadow-lg">
+        <form
+          onSubmit={handleSubmit}
+          className="max-w-lg p-8 mx-auto bg-white rounded-lg shadow-lg"
+        >
           <div className="mb-4">
-            <label className="block mb-2 text-sm font-bold text-gray-700">Nombre</label>
+            <label className="block mb-2 text-sm font-bold text-gray-700">
+              Nombre
+            </label>
             <input
               type="text"
               name="name"
@@ -51,7 +58,9 @@ const Register = () => {
             />
           </div>
           <div className="mb-4">
-            <label className="block mb-2 text-sm font-bold text-gray-700">Apellido</label>
+            <label className="block mb-2 text-sm font-bold text-gray-700">
+              Apellido
+            </label>
             <input
               type="text"
               name="lastname"
@@ -62,7 +71,9 @@ const Register = () => {
             />
           </div>
           <div className="mb-4">
-            <label className="block mb-2 text-sm font-bold text-gray-700">DNI</label>
+            <label className="block mb-2 text-sm font-bold text-gray-700">
+              DNI
+            </label>
             <input
               type="number"
               name="dni"
@@ -73,7 +84,9 @@ const Register = () => {
             />
           </div>
           <div className="mb-4">
-            <label className="block mb-2 text-sm font-bold text-gray-700">Número de Teléfono</label>
+            <label className="block mb-2 text-sm font-bold text-gray-700">
+              Número de Teléfono
+            </label>
             <input
               type="number"
               name="phone"
@@ -84,7 +97,9 @@ const Register = () => {
             />
           </div>
           <div className="mb-4">
-            <label className="block mb-2 text-sm font-bold text-gray-700">Correo Electrónico</label>
+            <label className="block mb-2 text-sm font-bold text-gray-700">
+              Correo Electrónico
+            </label>
             <input
               type="email"
               name="email"
@@ -95,7 +110,9 @@ const Register = () => {
             />
           </div>
           <div className="mb-4">
-            <label className="block mb-2 text-sm font-bold text-gray-700">Contraseña</label>
+            <label className="block mb-2 text-sm font-bold text-gray-700">
+              Contraseña
+            </label>
             <input
               type="password"
               name="password"
@@ -105,18 +122,10 @@ const Register = () => {
               placeholder="Ingresa tu contraseña"
             />
           </div>
-          {/* <div className="mb-4">
-              <label className="block mb-2 text-sm font-bold text-gray-700">Dirección</label>
-              <input
-                type="text"
-                name="address"
-                onChange={handleChange}
-                value={formData.address}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Ingresa tu dirección"
-              />
-            </div> */}
-          <button type="submit" className="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded-lg hover:bg-blue-600">
+          <button
+            type="submit"
+            className="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded-lg hover:bg-blue-600"
+          >
             Crear Cuenta
           </button>
         </form>

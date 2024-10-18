@@ -12,7 +12,7 @@ const UserDetail = () => {
   const [usersCredits, setCredits] = useState([]);
 
   useEffect(() => {
-    findUserByID(id).then((r) => setUser(r));
+    findUserByID(id,token).then((r) => setUser(r));
     getCreditsByUserId(id, token).then((r) => setCredits(r));
   }, [id, token]);
 

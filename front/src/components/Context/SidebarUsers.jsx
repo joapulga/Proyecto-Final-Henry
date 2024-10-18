@@ -12,7 +12,7 @@ const SidebarUsers = () => {
 
   return (
     <div className="flex min-h-screen">
-      {/* Sidebar */}
+
       <aside
         className={`${
           isCollapsed ? "w-20" : "w-64"
@@ -68,8 +68,6 @@ const SidebarUsers = () => {
           </ul>
         </nav>
       </aside>
-
-      {/* Main Content */}
       <main className="flex-grow p-8 bg-gray-100">
         <Outlet />
       </main>

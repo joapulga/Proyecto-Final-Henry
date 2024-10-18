@@ -7,7 +7,7 @@ import Loading from "../views/common/Loading";
 import Swal from "sweetalert2";
 
 const PerfilAdmin = () => {
-  const { user } = useAuth();
+  const { user, token } = useAuth();
   const [profileImage, setProfileImage] = useState(avatarImg);
   const [selectedFile, setSelectedFile] = useState(null);
   const [userData, setUserData] = useState([]);
@@ -29,7 +29,7 @@ const PerfilAdmin = () => {
   useEffect(() => {
     if (user && user.id) {
       setMostrarLoading(true);
-      getUserData(user.id)
+      getUserData(user.id, token)
         .then((data) => {
           setUserData(data);
           setProfileImage(data.img_url || avatarImg);
@@ -42,7 +42,7 @@ const PerfilAdmin = () => {
         });
     }
   }, [user]);
-  console.log(userData.img_url);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -53,7 +53,7 @@ const PerfilAdmin = () => {
 
     try {
       setMostrarLoading(true);
-      await createPhoto(userData.id, formData)
+      await createPhoto(userData.id, formData, token)
         .then(() => {
           Swal.fire({
             icon: "success",
@@ -104,7 +104,6 @@ const PerfilAdmin = () => {
             <strong>Email:</strong> {userData.email}
           </p>
 
-          {/* Formulario para subir nueva imagen */}
           <form onSubmit={handleSubmit} className="mt-4">
             <label className="block mb-2 text-sm font-bold text-gray-700">
               Subir nueva imagen de perfil:

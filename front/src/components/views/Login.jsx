@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { useAuth } from "../Context/AuthContext"; 
-import Swal from "sweetalert2"; 
+import { useAuth } from "../Context/AuthContext";
+import Swal from "sweetalert2";
 import Footer from "./common/Footer";
 import Navbar from "./common/Navbar";
 import Loading from "./common/Loading";
@@ -10,7 +10,7 @@ import { loguinAuth } from "../service/authService";
 import GoogleButton from "react-google-button";
 
 const Login = () => {
-  const { login, error, loguinAuth0 } = useAuth(); 
+  const { login, error, loguinAuth0 } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [mostrarLoading, setMostrarLoading] = useState(false);
@@ -51,7 +51,6 @@ const Login = () => {
       await login({ email, password });
       setMostrarLoading(false);
     } catch (err) {
-      // No necesitas capturar el error aquí, ya que el AuthContext lo maneja
       console.error("Error en el login:", err);
     }
   };

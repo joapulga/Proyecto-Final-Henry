@@ -4,9 +4,11 @@ import { findCreditsById, paidMp, paidShare } from "../service/querisCredits";
 import { initMercadoPago } from "@mercadopago/sdk-react";
 import Loading from "../views/common/Loading";
 import Swal from "sweetalert2";
+import { useAuth } from "../Context/AuthContext";
 
 const CreditDetail = () => {
   const { id } = useParams();
+  const { token}=useAuth()
   const [creditInfo, setCreditInfo] = useState([]);
   const [mostrarLoading, setMostrarLoading] = useState(null);
 
@@ -45,7 +47,7 @@ const CreditDetail = () => {
         showConfirmButton: false,
         timer: 1500,
       }).then(() => {
-        fetchCreditInfo();
+        fetchCreditInfo(token);
       });
     } else {
       Swal.fire({
@@ -54,7 +56,7 @@ const CreditDetail = () => {
         showConfirmButton: false,
         timer: 1500,
       }).then(() => {
-        fetchCreditInfo();
+        fetchCreditInfo(token);
       });
     }
     initMercadoPago("APP_USR-cf1aec24-42b0-490b-92bd-63f3626784ad", {
@@ -66,9 +68,9 @@ const CreditDetail = () => {
     }
   }, [id]);
 
-  const fetchCreditInfo = async () => {
+  const fetchCreditInfo = async (token) => {
     try {
-      const r = await findCreditsById(id);
+      const r = await findCreditsById(id,token);
       setCreditInfo(r.shares);
     } catch (error) {
       console.log("Error al obtener información del crédito:", error);

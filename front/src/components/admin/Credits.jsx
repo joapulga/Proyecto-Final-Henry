@@ -10,7 +10,7 @@ const Credits = () => {
 
   const [selectedOption, setSelectedOption] = useState("");
   const [users, setUsers] = useState([]);
-  const [mostrarLoading, setMostrarLoading] = useState(false); 
+  const [mostrarLoading, setMostrarLoading] = useState(false);
 
   useEffect(() => {
     setMostrarLoading(true);
@@ -39,11 +39,15 @@ const Credits = () => {
     setMostrarLoading(true);
 
     try {
-      await createCredit(selectedOption, {
-        amount: Number(e.target.amount.value),
-        months: Number(e.target.months.value),
-        interest: e.target.interest.value,
-      }).then((r) => {
+      await createCredit(
+        selectedOption,
+        {
+          amount: Number(e.target.amount.value),
+          months: Number(e.target.months.value),
+          interest: e.target.interest.value,
+        },
+        token
+      ).then((r) => {
         if (r) {
           Swal.fire({
             icon: "success",
