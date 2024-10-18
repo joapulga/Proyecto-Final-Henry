@@ -42,17 +42,17 @@ export class UserController {
   }
 
 
-  @Put('updateUser/:id')
-  async updateUser(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    // Buscar el usuario
-    const user = await this.userService.findOne(id);
-    if (!user) {
-      throw new NotFoundException(`Usuario con ID ${id} no encontrado`);
-    }
+  // @Put('updateUser/:id')
+  // async updateUser(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+  //   // Buscar el usuario
+  //   const user = await this.userService.findOne(id);
+  //   if (!user) {
+  //     throw new NotFoundException(`Usuario con ID ${id} no encontrado`);
+  //   }
 
-    // Actualizar el usuario con los nuevos datos
-    return await this.userService.update(id, updateUserDto);
-  }
+  //   // Actualizar el usuario con los nuevos datos
+  //   return await this.userService.update(id, updateUserDto);
+  // }
 
   //@ApiBearerAuth()
   @Get()

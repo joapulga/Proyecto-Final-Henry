@@ -13,7 +13,7 @@ export class NotificationsServiceService {
         @InjectRepository(Credit) private readonly creditRepository: Repository<Credit>,
         private readonly mailService: MailService
     ){}
-    @Cron(CronExpression.MONDAY_TO_FRIDAY_AT_10AM)
+    @Cron(CronExpression.MONDAY_TO_FRIDAY_AT_2PM)
     async handleCron(){
         let emails: string[]
         const credits = await this.creditRepository.find({
@@ -32,10 +32,32 @@ export class NotificationsServiceService {
         emails = credits.map( credit => {
             return credit.user.email
         })
-        console.log(emails);
         for(let email of emails){
-            await this.mailService.buildEmail(email, 'TEST MASIVO', 'Este es un test masivo')
+            await this.mailService.buildEmail(email, `Notificación de vencimiento`, `Le recordamos que su cuota esta próxima a vencer, realice el pago`)
         }
-        console.log('CRON EJECTED');
+    }
+
+    @Cron(CronExpression.EVERY_DAY_AT_6PM)
+    async handleCron1(){
+        let emails: string[]
+        const credits = await this.creditRepository.find({
+            where: {state: {
+                name: 'Active'
+            }},
+            select: {
+                user: {
+                    email: true
+                }
+            },
+            relations: {
+                user: true
+            }
+        })
+        emails = credits.map( credit => {
+            return credit.user.email
+        })
+        for(let email of emails){
+            await this.mailService.buildEmail(email, `Notificación de vencimiento`, `Le recordamos que su cuota esta próxima a vencer, realice el pago`)
+        }
     }
 }
