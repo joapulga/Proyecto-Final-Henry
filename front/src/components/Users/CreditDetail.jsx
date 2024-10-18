@@ -24,12 +24,13 @@ const CreditDetail = () => {
     try {
       const response = await paidMp(date);
       const { preferenceId, init_point } = response;
-      console.log(response);
-      window.location.href = init_point;
+      console.log(init_point);
+      //window.location.href = init_point;
     } catch (error) {
       console.log("Error al crear la preferencia:##", error);
     }
   };
+//<Wallet initialization={{ preferenceId: '<PREFERENCE_ID>' }} customization={{ texts:{ valueProp: 'smart_option'}}} />
 
   useEffect(() => {
     findCreditsById(id).then((r) => {

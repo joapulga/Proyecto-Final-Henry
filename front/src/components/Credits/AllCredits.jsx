@@ -12,13 +12,11 @@ const AllCredits = () => {
       .catch((error) => console.error(error));
   }, []);
 
-  const suma = credits.reduce((total, credit) => total + credit.amount, 0);
-
   const mapeo = () => {
     return credits.map((c) => (
       <tr key={c.id} className="hover:bg-gray-100">
         <td className="px-1 py-3 text-sm">{c.id}</td>
-        <td className="px-1 py-3 text-sm">{c.createdAt.split('T')[0]}</td>
+        <td className="px-1 py-3 text-sm">{c.createdAt.split("T")[0]}</td>
         <td className="px-1 py-3 text-sm">{c.amount}</td>
         <td className="px-1 py-3 text-sm">{c.months}</td>
         <td className="px-1 py-3 text-sm">{c.interest}</td>
@@ -43,17 +41,26 @@ const AllCredits = () => {
           <thead>
             <tr className="bg-gray-100">
               <th className="px-4 py-2 text-sm font-semibold text-left">ID</th>
-              <th className="px-4 py-2 text-sm font-semibold text-left">Fecha</th>
-              <th className="px-4 py-2 text-sm font-semibold text-left">Monto</th>
-              <th className="px-4 py-2 text-sm font-semibold text-left">Meses</th>
-              <th className="px-4 py-2 text-sm font-semibold text-left">Intereses</th>
-              <th className="px-4 py-2 text-sm font-semibold text-left">Funciones</th>
+              <th className="px-4 py-2 text-sm font-semibold text-left">
+                Fecha
+              </th>
+              <th className="px-4 py-2 text-sm font-semibold text-left">
+                Monto
+              </th>
+              <th className="px-4 py-2 text-sm font-semibold text-left">
+                Meses
+              </th>
+              <th className="px-4 py-2 text-sm font-semibold text-left">
+                Intereses
+              </th>
+              <th className="px-4 py-2 text-sm font-semibold text-left">
+                Funciones
+              </th>
             </tr>
           </thead>
           <tbody>{mapeo()}</tbody>
         </table>
       </div>
-      <p className="mt-4 font-bold text-center">Suma total de créditos: {suma}</p>
     </div>
   );
 };

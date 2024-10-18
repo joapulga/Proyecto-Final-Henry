@@ -24,14 +24,18 @@ const Login = () => {
         text: error, // Mostrar el mensaje de error del contexto
       });
     }
-    if (user != undefined) {
-      setMostrarLoading(true);
-      const usauth=JSON.parse(localStorage.getItem("auth0"))
-      loguinAuth(usauth).then((r) => {
-        console.log(r);
-      });
-      setMostrarLoading(false);
-    }
+
+    setMostrarLoading(true);
+    const usauth = JSON.parse(localStorage.getItem("auth0"));
+
+    loguinAuth({
+      name: usauth.given_name,
+      lastName: usauth.family_name,
+      email: usauth.email,
+    }).then((r) => {
+      console.log(r);
+    });
+    setMostrarLoading(false);
   }, [error]); // Se ejecuta cuando cambia el valor de error
 
   const handleLogin = async (e) => {
