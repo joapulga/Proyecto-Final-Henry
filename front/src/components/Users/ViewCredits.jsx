@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { useAuth } from "../Context/AuthContext"; 
-import { getCreditsByUserId } from "../service/querisCredits"; 
+import { useAuth } from "../Context/AuthContext";
+import { getCreditsByUserId } from "../service/querisCredits";
 import { useNavigate } from "react-router-dom";
 
 const MisCreditos = () => {
-  const { user } = useAuth();
+  const { user,token } = useAuth();
   const [credits, setCredits] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -17,7 +17,8 @@ const MisCreditos = () => {
   useEffect(() => {
     const fetchCredits = async () => {
       try {
-        const data = await getCreditsByUserId(user.id, user.token);
+        const data = await getCreditsByUserId(user.id, token);
+        //user.token
         setCredits(data);
       } catch (error) {
         console.error("Error obteniendo los créditos:", error);
@@ -30,10 +31,22 @@ const MisCreditos = () => {
     if (user && user.id) {
       fetchCredits();
     }
-  }, [user]);
+
+    const params = new URLSearchParams(window.location.search);
+    const externalReference = params.get("external_reference");
+
+    if (externalReference) {
+      navigate(`/user/credit/${externalReference}`);
+      
+    }
+  }, [user,navigate]);
 
   if (loading) {
-    return <p className="text-xl font-semibold text-center text-blue-700">Cargando créditos...</p>;
+    return (
+      <p className="text-xl font-semibold text-center text-blue-700">
+        Cargando créditos...
+      </p>
+    );
   }
 
   if (error) {
@@ -42,8 +55,10 @@ const MisCreditos = () => {
 
   return (
     <div className="flex flex-col items-center min-h-screen px-4 py-8 bg-gray-100 lg:px-8">
-      <h1 className="mb-8 text-3xl font-bold text-center text-blue-700">Mis Créditos</h1>
-      
+      <h1 className="mb-8 text-3xl font-bold text-center text-blue-700">
+        Mis Créditos
+      </h1>
+
       <div className="w-full max-w-6xl overflow-x-auto bg-white rounded-lg shadow-lg">
         <table className="min-w-full bg-white table-auto">
           <thead>
@@ -57,7 +72,10 @@ const MisCreditos = () => {
           </thead>
           <tbody>
             {credits.map((credit) => (
-              <tr key={credit.id} className="text-lg text-gray-700 border-b lg:text-xl">
+              <tr
+                key={credit.id}
+                className="text-lg text-gray-700 border-b lg:text-xl"
+              >
                 <td className="px-6 py-4 text-center">{credit.id}</td>
                 <td className="px-6 py-4 text-center">{credit.amount}</td>
                 <td className="px-6 py-4 text-center">{credit.months}</td>

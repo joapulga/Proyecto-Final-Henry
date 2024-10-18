@@ -1,10 +1,10 @@
 import axios from "axios";
 
-const URL = "http://localhost:3000";
+const URL = import.meta.env.VITE_APP_URL;
 
 export const findAllUsers = async (token) => {
   try {
-    const response = await axios.get(URL + "/user",{
+    const response = await axios.get(URL + "/user", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -16,14 +16,18 @@ export const findAllUsers = async (token) => {
   }
 };
 
-export const createPhoto = async (userId,photoData) => {
-
+export const createPhoto = async (userId, photoData,token) => {
   try {
-    const response = await axios.post(`${URL}/user/update-photo/${userId}`, photoData, {
-      headers: {
-        "Content-Type": "multipart/form-data", // Especifica que se está enviando un archivo
-      },
-    });
+    const response = await axios.post(
+      `${URL}/user/update-photo/${userId}`,
+      photoData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     return response.data;
   } catch (error) {
     console.error("Error obteniendo usuarios:", error);
@@ -31,32 +35,43 @@ export const createPhoto = async (userId,photoData) => {
   }
 };
 
-export const findUserByID = async (id) => {
-  
+export const findUserByID = async (id, token) => {
   try {
-    const users = await axios.get(URL + `/user/${id}`);
+    const users = await axios.get(URL + `/user/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return users.data;
   } catch (error) {
     console.log(error);
   }
 };
 
-export const createAdmin = async (id) => {
+export const createAdmin = async (id, token) => {
   try {
-    const userAdmin = await axios.post(URL + `/user/${id}/becomeAdmin`);
+    const userAdmin = await axios.post(URL + `/user/${id}/becomeAdmin`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return userAdmin;
   } catch (error) {
     console.log(error);
   }
 };
 
-export const getUserData = async (userId) => {
+export const getUserData = async (userId, token) => {
   try {
-    const response = await axios.get(`${URL}/user/${userId}`);
-    return response.data; // Retorna los datos del usuario
+    const response = await axios.get(`${URL}/user/${userId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
   } catch (error) {
     console.error("Error obteniendo los datos del usuario:", error);
-    throw error; // Lanza el error para que pueda ser manejado en el componente
+    throw error;
   }
 };
 export const getUserDash = async (token) => {
@@ -66,11 +81,9 @@ export const getUserDash = async (token) => {
         Authorization: `Bearer ${token}`,
       },
     });
-    return response.data; // Retorna los datos del usuario
+    return response.data;
   } catch (error) {
     console.error("Error obteniendo los datos del usuario:", error);
-    throw error; // Lanza el error para que pueda ser manejado en el componente
+    throw error;
   }
 };
-
-

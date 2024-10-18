@@ -1,5 +1,6 @@
 export class CreatePaymentDto {
-  price:number;
+  id: string;
+  price: number;
   title: string;
   quantity: number;
 }

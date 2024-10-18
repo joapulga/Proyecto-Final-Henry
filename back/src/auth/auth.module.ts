@@ -13,8 +13,8 @@ import { requiresAuth } from 'express-openid-connect';
   controllers: [AuthController],
   providers: [AuthService, AuthRepository, MailService],
 })
-export class AuthModule implements NestModule{
-  configure(consumer: MiddlewareConsumer){
-    consumer.apply(requiresAuth()).forRoutes('auth/login')
-  }
+export class AuthModule{
+  // configure(consumer: MiddlewareConsumer){
+  //   consumer.apply(requiresAuth()).forRoutes('auth/login')
+  // }
 }

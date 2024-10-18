@@ -1,29 +1,35 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { findCreditsById, paidMp } from "../service/querisCredits";
+import { findCreditsById, paidMp, paidShare } from "../service/querisCredits";
 import { initMercadoPago } from "@mercadopago/sdk-react";
 import Loading from "../views/common/Loading";
+import Swal from "sweetalert2";
+import { useAuth } from "../Context/AuthContext";
 
 const CreditDetail = () => {
   const { id } = useParams();
+  const { token}=useAuth()
   const [creditInfo, setCreditInfo] = useState([]);
   const [mostrarLoading, setMostrarLoading] = useState(null);
 
   const handlePayment = async (c) => {
+    localStorage.setItem("idCred", JSON.stringify(c.id));
     setMostrarLoading(c.id);
     await createPreference({
+      id: id,
       title: `Paid Credit ${c.number_share}`,
       quantity: 1,
       price: Number(c.amount),
     });
+
     setMostrarLoading(null);
   };
-
 
   const createPreference = async (date) => {
     try {
       const response = await paidMp(date);
       const { init_point } = response;
+      sessionStorage.setItem("returnFromMercadoPago", "true");
       window.location.href = init_point;
     } catch (error) {
       console.log("Error al crear la preferencia:##", error);
@@ -31,13 +37,45 @@ const CreditDetail = () => {
   };
 
   useEffect(() => {
-    findCreditsById(id).then((r) => {
-      setCreditInfo(r.shares);
-    });
-    initMercadoPago("APP_USR-74b760ad-679c-4f71-af05-89351b8afb4c", {
+    const idCred = JSON.parse(localStorage.getItem("idCred"));
+
+    if (sessionStorage.getItem("returnFromMercadoPago") === "true") {
+      sessionStorage.removeItem("returnFromMercadoPago");
+      Swal.fire({
+        icon: "success",
+        title: "¡BIENVENIDO!",
+        showConfirmButton: false,
+        timer: 1500,
+      }).then(() => {
+        fetchCreditInfo(token);
+      });
+    } else {
+      Swal.fire({
+        icon: "success",
+        title: "¡BIENVENIDO!",
+        showConfirmButton: false,
+        timer: 1500,
+      }).then(() => {
+        fetchCreditInfo(token);
+      });
+    }
+    initMercadoPago("APP_USR-cf1aec24-42b0-490b-92bd-63f3626784ad", {
       locale: "es-AR",
     });
+
+    if (idCred) {
+      paidShare(idCred,token);
+    }
   }, [id]);
+
+  const fetchCreditInfo = async (token) => {
+    try {
+      const r = await findCreditsById(id,token);
+      setCreditInfo(r.shares);
+    } catch (error) {
+      console.log("Error al obtener información del crédito:", error);
+    }
+  };
 
   const mapeo = () => {
     return creditInfo.map((c) => {

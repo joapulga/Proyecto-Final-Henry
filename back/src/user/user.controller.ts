@@ -3,6 +3,7 @@ import {
   Get,
   BadRequestException,
   Post,
+  Put,
   Body,
   Patch,
   Param,
@@ -12,6 +13,7 @@ import {
   UseGuards,
   UseInterceptors,
   UploadedFile,
+  NotFoundException,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -23,6 +25,8 @@ import { Request } from 'express';
 import { AuthGuard } from 'src/guards/auth.guard';
 import { CloudinaryService } from 'src/service/cloudinary/cloudinary.service';
 
+@ApiBearerAuth()
+@UseGuards(AuthGuard)
 @ApiTags('User')
 @Controller('user')
 export class UserController {
@@ -37,16 +41,29 @@ export class UserController {
     return this.userService.create(createUserDto);
   }
 
-  @ApiBearerAuth()
+
+  @Put('updateUser/:id')
+  async updateUser(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+    // Buscar el usuario
+    const user = await this.userService.findOne(id);
+    if (!user) {
+      throw new NotFoundException(`Usuario con ID ${id} no encontrado`);
+    }
+
+    // Actualizar el usuario con los nuevos datos
+    return await this.userService.update(id, updateUserDto);
+  }
+
+  //@ApiBearerAuth()
   @Get()
-  @UseGuards(AuthGuard)
+  //@UseGuards(AuthGuard)
   findAll() {
     return this.userService.findAll();
   }
 
-  //@ApiBearerAuth()
+  @ApiBearerAuth()
   @Get('dashboard')
-  //@UseGuards(AuthGuard)
+  @UseGuards(AuthGuard)
   async findLoggedUser(@Req() request: Request) {
     const request1 = request.headers['authorization'];
     const token = request1.split(' ')[1];

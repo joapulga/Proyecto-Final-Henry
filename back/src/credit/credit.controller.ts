@@ -1,9 +1,13 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
 import { CreditService } from './credit.service';
 import { CreateCreditDto } from './dto/create-credit.dto';
 import { UploadCreditDto } from './dto/update-credit.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth } from '@nestjs/swagger';
+import { AuthGuard } from 'src/guards/auth.guard';
 
+@ApiBearerAuth()
+@UseGuards(AuthGuard)
 @ApiTags('Credits')
 @Controller('credit')
 export class CreditController {

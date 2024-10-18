@@ -1,6 +1,6 @@
 import { createContext, useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { registerUser, loginUser } from "../service/authService";
+import { registerUser, loginUser, loguinAuth } from "../service/authService";
 import { getUserDash } from "../service/querisUsers";
 import Swal from "sweetalert2";
 
@@ -36,6 +36,7 @@ export const AuthProvider = ({ children }) => {
     setError(null); // Reiniciar el estado de error al intentar de nuevo
     try {
       const res = await registerUser(userData);
+
       localStorage.setItem(
         "user",
         JSON.stringify({ id: res.id, is_admin: res.is_admin })
@@ -48,8 +49,9 @@ export const AuthProvider = ({ children }) => {
           showConfirmButton: false,
           timer: 1500,
         });
-        navigate("/login");
       }
+
+      navigate("/login");
     } catch (error) {
       setError(error.message); // Guardar el mensaje de error
       console.error("Error en el registro:", error);
@@ -91,10 +93,36 @@ export const AuthProvider = ({ children }) => {
       setUser(null);
       localStorage.removeItem("user");
       localStorage.removeItem("token");
+      localStorage.removeItem("auth0");
       navigate("/login");
     } catch (error) {
       console.error("Error al cerrar sesión:", error);
     }
+  };
+
+  const loguinAuth0 = async (data) => {
+    await loguinAuth(data).then((r) => {
+      localStorage.setItem("token", JSON.stringify(r.token));
+      getUserDash(r.token).then((r) => {
+        localStorage.setItem("user", JSON.stringify(r));
+        setUser(r);
+        if (r) {
+          Swal.fire({
+            icon: "success",
+            title: "¡BIENVENIDO!",
+            text: "Bienvenido, has iniciado sesión correctamente.",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+        if (r.is_admin !== true) {
+          navigate("/user/dashboarduser");
+        } else {
+          navigate("/admin/dashboardadmin");
+        }
+        return { success: true };
+      });
+    });
   };
 
   const value = {
@@ -105,6 +133,8 @@ export const AuthProvider = ({ children }) => {
     logout,
     error,
     navigate,
+    loguinAuth0,
+
     // Proporcionar el estado de error
   };
 
