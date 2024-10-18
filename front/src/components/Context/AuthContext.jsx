@@ -36,11 +36,12 @@ export const AuthProvider = ({ children }) => {
     setError(null); // Reiniciar el estado de error al intentar de nuevo
     try {
       const res = await registerUser(userData);
-      localStorage.setItem(
-        "user",
-        JSON.stringify({ id: res.id, is_admin: res.is_admin })
-      );
+
       if (res) {
+        localStorage.setItem(
+          "user",
+          JSON.stringify({ id: res.id, is_admin: res.is_admin })
+        );
         Swal.fire({
           icon: "success",
           title: "¡Registro exitoso!",
@@ -49,6 +50,7 @@ export const AuthProvider = ({ children }) => {
           timer: 1500,
         });
       }
+
       navigate("/login");
     } catch (error) {
       setError(error.message); // Guardar el mensaje de error

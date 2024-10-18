@@ -106,7 +106,6 @@ const Register = () => {
         </h2>
 
         {authError && (
-
           <div className="max-w-lg p-4 mx-auto mb-4 text-center text-white bg-red-500 rounded-lg">
             <p>{authError}</p>
           </div>
@@ -217,7 +216,6 @@ const Register = () => {
             />
             {errors.password && <p className="text-sm text-red-500">{errors.password}</p>}
           </div>
-
           <button
             type="submit"
             className="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded-lg hover:bg-blue-600"
