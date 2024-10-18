@@ -5,8 +5,13 @@ import { UpdateBalanceDto } from './dto/update-balance.dto';
 import { Roles } from 'src/decorators/roles.decorators';
 import { Role } from 'src/auth/roles.enum';
 import { RolesGuard } from 'src/guards/roles.guards';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { AuthGuard } from 'src/guards/auth.guard';
 
+@ApiBearerAuth()
+@UseGuards(AuthGuard)
 @Controller('balance')
+@ApiTags('Balance')
 export class BalanceController {
   constructor(private readonly balanceService: BalanceService) {}
 

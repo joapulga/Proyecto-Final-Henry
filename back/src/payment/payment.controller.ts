@@ -6,14 +6,20 @@ import {
   HttpStatus,
   Res,
   Inject,
+  UseGuards,
 } from '@nestjs/common';
 import { CreatePaymentDto } from './dto/createPreference_dto';
 import { PaymentService } from './payment.service';
 import MercadoPagoConfig, { Preference } from 'mercadopago';
 import { MercadoPagoConfigProvider } from 'src/config/mercado-pago';
 import mercadopago from 'mercadopago';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { AuthGuard } from 'src/guards/auth.guard';
 
+@ApiBearerAuth()
+@UseGuards(AuthGuard)
 @Controller('payment')
+@ApiTags('Payment')
 export class PaymentController {
   constructor(
     private readonly paymentService: PaymentService,
