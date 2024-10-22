@@ -3,18 +3,18 @@ import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { BadRequestException, ValidationPipe } from '@nestjs/common';
 import { auth } from 'express-openid-connect';
-import { config as auth0Config } from './config/auth0.config';  
+import { config as auth0Config } from './config/auth0.config';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  
+
   app.enableCors({
-    origin: "https://finacierahenry.netlify.app/",
+    origin: 'http://localhost:5173',
     // 'http://localhost:5173' // URL del frontend
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Métodos permitidos
     credentials: true, // Si estás usando cookies o autenticación basada en sesión
   });
-  app.use(auth({...auth0Config}));
+  app.use(auth({ ...auth0Config }));
 
   // app.useGlobalPipes(
   //   new ValidationPipe({
@@ -41,7 +41,6 @@ async function bootstrap() {
 
   const document = SwaggerModule.createDocument(app, swaggerConfig);
   SwaggerModule.setup('api', app, document);
-
 
   await app.listen(3000);
 }

@@ -16,8 +16,8 @@ import mercadopago from 'mercadopago';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from 'src/guards/auth.guard';
 
-@ApiBearerAuth()
-@UseGuards(AuthGuard)
+//@ApiBearerAuth()
+//@UseGuards(AuthGuard)
 @Controller('payment')
 @ApiTags('Payment')
 export class PaymentController {

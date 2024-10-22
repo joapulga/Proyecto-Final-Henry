@@ -25,8 +25,8 @@ import { Request } from 'express';
 import { AuthGuard } from 'src/guards/auth.guard';
 import { CloudinaryService } from 'src/service/cloudinary/cloudinary.service';
 
-@ApiBearerAuth()
-@UseGuards(AuthGuard)
+// @ApiBearerAuth()
+// @UseGuards(AuthGuard)
 @ApiTags('User')
 @Controller('user')
 export class UserController {
@@ -61,7 +61,7 @@ export class UserController {
     return this.userService.findAll();
   }
 
-  @ApiBearerAuth()
+
   @Get('dashboard')
   @UseGuards(AuthGuard)
   async findLoggedUser(@Req() request: Request) {

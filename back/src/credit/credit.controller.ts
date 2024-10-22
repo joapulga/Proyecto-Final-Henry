@@ -6,8 +6,8 @@ import { ApiTags } from '@nestjs/swagger';
 import { ApiBearerAuth } from '@nestjs/swagger';
 import { AuthGuard } from 'src/guards/auth.guard';
 
-@ApiBearerAuth()
-@UseGuards(AuthGuard)
+// @ApiBearerAuth()
+// @UseGuards(AuthGuard)
 @ApiTags('Credits')
 @Controller('credit')
 export class CreditController {

@@ -3,8 +3,8 @@ import { FileUploadService } from './file-upload.service';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from 'src/guards/auth.guard';
 
-@ApiBearerAuth()
-@UseGuards(AuthGuard)
+// @ApiBearerAuth()
+// @UseGuards(AuthGuard)
 @Controller('file-upload')
 @ApiTags('File Upload')
 export class FileUploadController {

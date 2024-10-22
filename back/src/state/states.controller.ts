@@ -6,8 +6,8 @@ import { ApiTags } from '@nestjs/swagger';
 import { ApiBearerAuth } from '@nestjs/swagger';
 import { AuthGuard } from 'src/guards/auth.guard';
 
-@ApiBearerAuth()
-@UseGuards(AuthGuard)
+// @ApiBearerAuth()
+// @UseGuards(AuthGuard)
 @ApiTags('States')
 @Controller('states')
 export class StatesController {

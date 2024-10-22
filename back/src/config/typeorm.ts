@@ -17,17 +17,17 @@ const db_config = {
   port: parseInt(process.env.DB_PORT, 10),
   username: process.env.DB_USERNAME,
   password: process.env.DB_PASSWORD,
-  ssl: {
-    rejectUnauthorized: false,  // Cambia esto según la configuración de tu servidor
-  },
   autoLoadEntities: true,
-  synchronize: false,
+  synchronize: true,
   logging: true,
-  connectTimeout: 60000,
-  // entities: ['dist/**/entities/*.entity.{ts,js}'],
-  // migrations: ['dist/migrations/*.{js,ts}'],
-  entities: [__dirname + '/../**/*.entity.{js,ts}'],
-  migrations: [__dirname + '/../migrations/*.{js,ts}'],
+  entities: ['dist/**/entities/*.entity.{ts,js}'],
+  migrations: ['dist/migrations/*.{js,ts}'],
+  ssl: {
+    rejectUnauthorized: false, // Permite conexiones SSL sin verificar el certificado
+  },
+  extra: {
+    connectionTimeoutMillis: 6000, // Tiempo máximo de espera de conexión en milisegundos
+  },
 };
 
 export default registerAs('typeorm', () => db_config);

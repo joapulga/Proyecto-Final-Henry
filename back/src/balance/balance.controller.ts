@@ -8,8 +8,8 @@ import { RolesGuard } from 'src/guards/roles.guards';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from 'src/guards/auth.guard';
 
-@ApiBearerAuth()
-@UseGuards(AuthGuard)
+// @ApiBearerAuth()
+// @UseGuards(AuthGuard)
 @Controller('balance')
 @ApiTags('Balance')
 export class BalanceController {
